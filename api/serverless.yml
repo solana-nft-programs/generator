@@ -1,0 +1,45 @@
+org: jpbogle
+app: cardinal
+service: cardinal-generator-apis
+frameworkVersion: "2 || 3"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: "20201221"
+  httpApi:
+    cors: true
+
+package:
+  individually: true
+  include:
+    - ./idls/**
+    - ./img-generator/fonts/**
+    - ./img-generator/assets/**
+  exclude:
+    - "./node_modules"
+    - "./package-lock.json"
+    - "./yarn.lock"
+
+functions:
+  img-generator:
+    environment:
+      FONTCONFIG_FILE: /var/task/fonts/fonts.conf
+    handler: img-generator/handler.generate
+    timeout: 10
+    events:
+      - httpApi:
+          path: /img/{mintId}
+          method: get
+  metadata-generator:
+    handler: metadata-generator/handler.generate
+    timeout: 10
+    events:
+      - httpApi:
+          path: /metadata/{mintId}
+          method: get
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+  - serverless-plugin-include-dependencies
