@@ -4,7 +4,7 @@ import { PublicKey } from "@solana/web3.js";
 import * as METADATA_GENERATOR_TYPES from "../../idl/cardinal_metadata_generator";
 
 export const METADATA_GENERATOR_ADDRESS = new PublicKey(
-  "mdg7hsS3aWuWwSGVFTgC6KWpCaDJZ5qbEgWBQoGX4id"
+  "Fr66EvvzsspaWwC2TiuSPg6RDwjypvDgshSucFjtnYEK"
 );
 
 export const METADATA_CONFIG_SEED = "metadata-config";
@@ -18,3 +18,9 @@ export type RewardDistributorTypes = AnchorTypes<METADATA_GENERATOR_PROGRAM>;
 
 type Accounts = RewardDistributorTypes["Accounts"];
 export type MetadataConfigData = Accounts["metadataConfig"];
+
+export type AttributeConfig = {
+  address: PublicKey;
+  accountType: string;
+  fields: string[];
+};

@@ -8,10 +8,13 @@ import { METADATA_CONFIG_SEED, METADATA_GENERATOR_ADDRESS } from ".";
  * @returns
  */
 export const findMetadatConfigId = async (
-  mintId: PublicKey
+  configName: string
 ): Promise<[PublicKey, number]> => {
   return PublicKey.findProgramAddress(
-    [utils.bytes.utf8.encode(METADATA_CONFIG_SEED), mintId.toBuffer()],
+    [
+      utils.bytes.utf8.encode(METADATA_CONFIG_SEED),
+      utils.bytes.utf8.encode(configName),
+    ],
     METADATA_GENERATOR_ADDRESS
   );
 };

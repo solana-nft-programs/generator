@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 use mpl_token_metadata::state::Metadata;
 
-declare_id!("mdg7hsS3aWuWwSGVFTgC6KWpCaDJZ5qbEgWBQoGX4id");
+declare_id!("Fr66EvvzsspaWwC2TiuSPg6RDwjypvDgshSucFjtnYEK");
 
 #[program]
 pub mod cardinal_metadata_generator {

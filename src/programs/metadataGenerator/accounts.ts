@@ -11,7 +11,7 @@ import {
   METADATA_GENERATOR_IDL,
 } from "./constants";
 
-export const getRewardEntry = async (
+export const getMetadataConfig = async (
   connection: web3.Connection,
   metadataConfigId: web3.PublicKey
 ): Promise<AccountData<MetadataConfigData>> => {
