@@ -402,29 +402,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "14c189c53d098945499cdfa7ecc63567cf3886b3332b312a5b4585d8d3a6a610"
 
 [[package]]
-name = "cardinal-stake-pool"
+name = "cardinal-generator"
 version = "0.1.0"
 dependencies = [
  "anchor-lang",
  "anchor-spl",
- "cardinal-token-manager",
  "mpl-token-metadata",
  "proptest",
  "solana-program",
- "spl-token",
-]
-
-[[package]]
-name = "cardinal-token-manager"
-version = "0.2.22"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dcea63d80fe3c52b2a03cbe98c9a0d4c5a9c513f0a18778c6df33b0b70734e22"
-dependencies = [
- "anchor-lang",
- "anchor-spl",
- "mpl-token-metadata",
- "solana-program",
- "spl-associated-token-account",
  "spl-token",
 ]
 

@@ -1,4 +1,5 @@
 use anchor_lang::prelude::*;
+use mpl_token_metadata::state::Metadata;
 
 declare_id!("mdg7hsS3aWuWwSGVFTgC6KWpCaDJZ5qbEgWBQoGX4id");
 
@@ -6,12 +7,9 @@ declare_id!("mdg7hsS3aWuWwSGVFTgC6KWpCaDJZ5qbEgWBQoGX4id");
 pub mod cardinal_metadata_generator {
     use super::*;
 
-    pub fn create_metadata_config(ctx: Context<CreateMetadatConfigCtx>, ix: CreateMetadataConfigIx) -> ProgramResult {
+    pub fn create_metadata_config(ctx: Context<CreateMetadatConfigCtx>, ix: CreateMetadataConfigIx) -> Result<()> {
         let metadata_config = &mut ctx.accounts.metadata_config;
-        metadata_config.program_id = ix.program_id;
-        metadata_config.seed_prefix = ix.seed_prefix;
-        metadata_config.seed_postfix = ix.seed_postfix;
-        metadata_config.fields = ix.fields;
+        metadata_config.attributes = ix.attributes;
         Ok(())
     }
 }
@@ -21,11 +19,7 @@ pub const METADATA_CONFIG_SEED: &str = "metadata-config";
 #[derive(AnchorSerialize, AnchorDeserialize)]
 pub struct CreateMetadataConfigIx {
     pub seed_string: String,
-    pub bump: u8,
-    pub program_id: Pubkey,
-    pub seed_prefix: Option<Vec<u8>>,
-    pub seed_postfix: Option<Vec<u8>>,
-    pub fields: Vec<String>,
+    pub attributes: Vec<Attribute>,
 }
 
 #[derive(Accounts)]
@@ -34,16 +28,20 @@ pub struct CreateMetadatConfigCtx<'info> {
     #[account(
         init,
         payer = payer,
-        space = 256,
+        space = 512,
         seeds = [METADATA_CONFIG_SEED.as_bytes(), ix.seed_string.as_bytes()],
-        bump = ix.bump,
+        bump,
     )]
-    metadata_config: Account<'info, MetadataConfig>,
+    metadata_config: Box<Account<'info, MetadataConfig>>,
+    /// CHECK: This is not dangerous because we don't read or write from this account
     #[account(mut)]
-    payer: AccountInfo<'info>,
+    mint_metadata: UncheckedAccount<'info>,
+    #[account(mut)]
+    payer: Signer<'info>,
     system_program: Program<'info, System>,
 }
 
+#[derive(Default, Clone, AnchorSerialize, AnchorDeserialize)]
 pub struct Attribute {
     pub address: Pubkey,
     pub account_type: String,
@@ -52,6 +50,6 @@ pub struct Attribute {
 
 #[account]
 pub struct MetadataConfig {
-    pub uri: String,
-    pub attrs: Vec<Attribute>,
+    pub base_metadata_uri: String,
+    pub attributes: Vec<Attribute>,
 }
