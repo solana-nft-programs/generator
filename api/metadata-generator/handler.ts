@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument */
 import { getMetadata } from "./generator";
 
 module.exports.generate = async (event) => {
@@ -9,6 +10,7 @@ module.exports.generate = async (event) => {
     event.queryStringParameters && event.queryStringParameters.attrs,
     event.queryStringParameters && event.queryStringParameters.cluster
   );
+
   const response = {
     statusCode: 200,
     headers: {

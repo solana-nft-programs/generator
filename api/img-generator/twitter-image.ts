@@ -3,7 +3,7 @@ import * as canvas from "canvas";
 
 const COLOR_TWITTER = "#1DA1F2";
 
-export async function getTwitterImage(namespace, handle) {
+export async function getTwitterImage(namespace: string, handle: string) {
   console.log("Rending twitter image");
 
   // setup
@@ -26,7 +26,7 @@ export async function getTwitterImage(namespace, handle) {
   nameCtx.textAlign = "center";
   nameCtx.textBaseline = "middle";
 
-  let nameText = namespaces.formatName(namespace, handle);
+  const nameText = namespaces.formatName(namespace, handle);
   nameCtx.fillText(nameText, WIDTH * 0.5, HEIGHT * 0.5);
   nameCtx.textAlign = "left";
 
