@@ -1,6 +1,6 @@
 org: jpbogle
 app: cardinal
-service: cardinal-generator-apis
+service: cardinal-generators
 frameworkVersion: "2 || 3"
 
 provider:
