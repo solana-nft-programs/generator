@@ -57,6 +57,30 @@
 </a>
 <p>Generator is mainly an API that is designed to fit within the metaplex NFT standard, but bring the composability of on-chain data directly into the NFTs. This allows for more complex NFT use cases to compose directly with the attributes of the NFT while still maintaining compatibility with all wallet and marketplaces. Because this generator is dynamic, it means any time you view or load the NFT it will pull fresh on-chain data. Being serverless also means there is no dependency on infrastructure and scales horizontally. The long term vision of this project is to either adopt these practices within apps directly so they do not need to rely on the API, or run the API on a decentralized computing platform. For the time being, it serves to fit dynamic NFTs into the existing Solana NFT rails.</p>
 
+<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+  <h2>Getting Started</h2>
+</a>
+
+<a href="#fields" id="fields" style="color: inherit; text-decoration: none;">
+  <h1>Fields</h1>
+</a>
+<ul>
+<li>uri<ul>
+<li>The uri field to provide the existing base metadata</li>
+</ul>
+</li>
+<li>attrs<ul>
+<li>attrs=[] in the format of {address}:{accountName}:{field} - Currently the API looks up the (anchor) IDL for that address to deserialize using that account name and then adding to attribute</li>
+</ul>
+</li>
+</ul>
+<p>example getting “stakeBoost” from this staked NFT
+<code>https://api.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&amp;attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:stakeBoost]</code></p>
+<p>example getting all fields from this staked NFT account
+<code>https://api.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&amp;attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:*]</code></p>
+<p>example getting multiple fields from this staked NFT account
+<code>https://api.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&amp;attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:stakeBoost,totalStakeSeconds]</code></p>
+
 <a href="#questions-amp-support" id="questions-amp-support" style="color: inherit; text-decoration: none;">
   <h2>Questions &amp; Support</h2>
 </a>
@@ -71,4 +95,6 @@
 </a>
 <p>Cardinal Protocol is licensed under the GNU Affero General Public License v3.0.</p>
 <p>In short, this means that any changes to this code must be made open source and available under the AGPL-v3.0 license, even if only used privately.</p>
+<pre><code>
+</code></pre>
 </div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li><li class=" tsd-kind-namespace"><a href="modules/metadataGenerator.html">metadata<wbr/>Generator</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-function"><a href="modules.html#executeTransaction" class="tsd-kind-icon">execute<wbr/>Transaction</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
