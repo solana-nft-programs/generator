@@ -10,7 +10,6 @@ module.exports.generate = async (event) => {
     event.queryStringParameters && event.queryStringParameters.attrs,
     event.queryStringParameters && event.queryStringParameters.cluster
   );
-
   const response = {
     statusCode: 200,
     headers: {
