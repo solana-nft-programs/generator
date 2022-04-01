@@ -2,51 +2,33 @@ import type { AccountData } from "@cardinal/common";
 import { Program, Provider } from "@project-serum/anchor";
 import type * as web3 from "@solana/web3.js";
 
-import type { REWARD_DISTRIBUTOR_PROGRAM } from ".";
-import { REWARD_DISTRIBUTOR_ADDRESS, REWARD_DISTRIBUTOR_IDL } from ".";
-import type { RewardDistributorData, RewardEntryData } from "./constants";
+import type {
+  METADATA_GENERATOR_PROGRAM,
+  MetadataConfigData,
+} from "./constants";
+import {
+  METADATA_GENERATOR_ADDRESS,
+  METADATA_GENERATOR_IDL,
+} from "./constants";
 
 export const getRewardEntry = async (
   connection: web3.Connection,
-  rewardEntryId: web3.PublicKey
-): Promise<AccountData<RewardEntryData>> => {
+  metadataConfigId: web3.PublicKey
+): Promise<AccountData<MetadataConfigData>> => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const provider = new Provider(connection, null, {});
-  const rewardDistributorProgram = new Program<REWARD_DISTRIBUTOR_PROGRAM>(
-    REWARD_DISTRIBUTOR_IDL,
-    REWARD_DISTRIBUTOR_ADDRESS,
+  const metadataGeneratorProgram = new Program<METADATA_GENERATOR_PROGRAM>(
+    METADATA_GENERATOR_IDL,
+    METADATA_GENERATOR_ADDRESS,
     provider
   );
 
-  const parsed = (await rewardDistributorProgram.account.rewardEntry.fetch(
-    rewardEntryId
-  )) as RewardEntryData;
+  const parsed = (await metadataGeneratorProgram.account.metadataConfig.fetch(
+    metadataConfigId
+  )) as MetadataConfigData;
   return {
     parsed,
-    pubkey: rewardEntryId,
-  };
-};
-
-export const getRewardDistributor = async (
-  connection: web3.Connection,
-  rewardDistributorId: web3.PublicKey
-): Promise<AccountData<RewardDistributorData>> => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const provider = new Provider(connection, null, {});
-  const rewardDistributorProgram = new Program<REWARD_DISTRIBUTOR_PROGRAM>(
-    REWARD_DISTRIBUTOR_IDL,
-    REWARD_DISTRIBUTOR_ADDRESS,
-    provider
-  );
-
-  const parsed =
-    (await rewardDistributorProgram.account.rewardDistributor.fetch(
-      rewardDistributorId
-    )) as RewardDistributorData;
-  return {
-    parsed,
-    pubkey: rewardDistributorId,
+    pubkey: metadataConfigId,
   };
 };

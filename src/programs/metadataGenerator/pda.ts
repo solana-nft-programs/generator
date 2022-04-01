@@ -1,39 +1,17 @@
 import { utils } from "@project-serum/anchor";
 import { PublicKey } from "@solana/web3.js";
 
-import {
-  REWARD_DISTRIBUTOR_ADDRESS,
-  REWARD_DISTRIBUTOR_SEED,
-  REWARD_ENTRY_SEED,
-} from ".";
+import { METADATA_CONFIG_SEED, METADATA_GENERATOR_ADDRESS } from ".";
 
 /**
- * Finds the reward entry id.
+ * Finds the metadata config id.
  * @returns
  */
-export const findRewardEntryId = async (
-  rewardDistributorId: PublicKey,
+export const findMetadatConfigId = async (
   mintId: PublicKey
 ): Promise<[PublicKey, number]> => {
   return PublicKey.findProgramAddress(
-    [
-      utils.bytes.utf8.encode(REWARD_ENTRY_SEED),
-      rewardDistributorId.toBuffer(),
-      mintId.toBuffer(),
-    ],
-    REWARD_DISTRIBUTOR_ADDRESS
-  );
-};
-
-/**
- * Finds the reward distributor id.
- * @returns
- */
-export const findRewardDistributorId = async (
-  stakePoolId: PublicKey
-): Promise<[PublicKey, number]> => {
-  return PublicKey.findProgramAddress(
-    [utils.bytes.utf8.encode(REWARD_DISTRIBUTOR_SEED), stakePoolId.toBuffer()],
-    REWARD_DISTRIBUTOR_ADDRESS
+    [utils.bytes.utf8.encode(METADATA_CONFIG_SEED), mintId.toBuffer()],
+    METADATA_GENERATOR_ADDRESS
   );
 };
