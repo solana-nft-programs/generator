@@ -114,12 +114,11 @@ jobs:
       - name: Setup
         run: mkdir -p target/deploy
       - run: cp -r tests/test-keypairs/* target/deploy
-      - run: find . -type f -name "*" -exec sed -i'' -e "s/stkBL96RZkjY5ine4TvPihGqW8UHJfch2cokjAPzV8i/$(solana-keygen pubkey tests/test-keypairs/cardinal_stake_pool-keypair.json)/g" {} +
-      - run: find . -type f -name "*" -exec sed -i'' -e "s/rwdNPNPS6zNvtF6FMvaxPRjzu2eC51mXaDT9rmWsojp/$(solana-keygen pubkey tests/test-keypairs/cardinal_reward_distributor-keypair.json)/g" {} +
+      - run: find . -type f -name "*" -exec sed -i'' -e "s/genSsTXZaAGH1kRUe74TXzwuernqZhJksHvpXiAxBQT/$(solana-keygen pubkey tests/test-keypairs/cardinal_generator-keypair.json)/g" {} +
       - run: find . -type f -name "Anchor.toml" -exec sed -i'' -e "s/yarn mocha tests\/\*.spec.ts/yarn mocha tests\/\*.spec.ts --reporter mocha-junit-reporter --reporter-options mochaFile=.\/tests\/out.xml/g" {} +
 
       - name: Run tests
-        run: solana-test-validator --url https://api.devnet.solana.com --clone metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s --clone PwDiXFxQsGra4sFFTT8r1QWRMd4vfumiWC1jfWNfdYT --clone mgr99QFMYByTqGPWmNqunV7vBLmWWXdSrHUfV8Jf3JM --clone ojLGErfqghuAqpJXE1dguXF7kKfvketCEeah8ig6GU3 --reset & echo $$! > validator.PID
+        run: solana-test-validator --url https://api.devnet.solana.com --clone metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s --clone PwDiXFxQsGra4sFFTT8r1QWRMd4vfumiWC1jfWNfdYT --reset & echo $$! > validator.PID
       - run: sleep 6
       - run: solana airdrop 1000 $(solana-keygen pubkey tests/test-key.json) --url http://localhost:8899
       - run: anchor test --skip-local-validator --provider.cluster localnet

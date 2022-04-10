@@ -26,7 +26,7 @@ Cardinal generator encompasses serverless functions and smart contracts for rend
 
 Program addresses are the same on devnet, testnet, and mainnet-beta.
 
-- Generator: [`mdg7hsS3aWuWwSGVFTgC6KWpCaDJZ5qbEgWBQoGX4id`](https://explorer.solana.com/address/mdg7hsS3aWuWwSGVFTgC6KWpCaDJZ5qbEgWBQoGX4id)
+- Generator: [`genSsTXZaAGH1kRUe74TXzwuernqZhJksHvpXiAxBQT`](https://explorer.solana.com/address/genSsTXZaAGH1kRUe74TXzwuernqZhJksHvpXiAxBQT)
 
 ## Documentation
 

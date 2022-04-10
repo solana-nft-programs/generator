@@ -9,7 +9,7 @@ install:
 
 test-keys:
 	anchor build
-	LC_ALL=C find programs src -type f -exec sed -i '' -e "s/mdg7hsS3aWuWwSGVFTgC6KWpCaDJZ5qbEgWBQoGX4id/$$(solana-keygen pubkey ./target/deploy/cardinal_generator-keypair.json)/g" {} +
+	LC_ALL=C find programs src -type f -exec sed -i '' -e "s/genSsTXZaAGH1kRUe74TXzwuernqZhJksHvpXiAxBQT/$$(solana-keygen pubkey ./target/deploy/cardinal_generator-keypair.json)/g" {} +
 	anchor build
 
 build:
@@ -32,7 +32,7 @@ test:
 	anchor test --skip-local-validator --skip-build --skip-deploy --provider.cluster localnet
 
 clean-test-keys:
-	LC_ALL=C find programs src -type f -exec sed -i '' -e "s/$$(solana-keygen pubkey ./target/deploy/cardinal_generator-keypair.json)/mdg7hsS3aWuWwSGVFTgC6KWpCaDJZ5qbEgWBQoGX4id/g" {} +
+	LC_ALL=C find programs src -type f -exec sed -i '' -e "s/$$(solana-keygen pubkey ./target/deploy/cardinal_generator-keypair.json)/genSsTXZaAGH1kRUe74TXzwuernqZhJksHvpXiAxBQT/g" {} +
 
 stop: validator.PID
 	kill `cat $<` && rm $<

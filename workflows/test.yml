@@ -114,7 +114,7 @@ jobs:
       - name: Setup
         run: mkdir -p target/deploy
       - run: cp -r tests/test-keypairs/* target/deploy
-      - run: find . -type f -name "*" -exec sed -i'' -e "s/mdg7hsS3aWuWwSGVFTgC6KWpCaDJZ5qbEgWBQoGX4id/$(solana-keygen pubkey tests/test-keypairs/cardinal_generator-keypair.json)/g" {} +
+      - run: find . -type f -name "*" -exec sed -i'' -e "s/genSsTXZaAGH1kRUe74TXzwuernqZhJksHvpXiAxBQT/$(solana-keygen pubkey tests/test-keypairs/cardinal_generator-keypair.json)/g" {} +
       - run: find . -type f -name "Anchor.toml" -exec sed -i'' -e "s/yarn mocha tests\/\*.spec.ts/yarn mocha tests\/\*.spec.ts --reporter mocha-junit-reporter --reporter-options mochaFile=.\/tests\/out.xml/g" {} +
 
       - name: Run tests

@@ -4,7 +4,7 @@ import { PublicKey } from "@solana/web3.js";
 import * as METADATA_GENERATOR_TYPES from "../../idl/cardinal_metadata_generator";
 
 export const METADATA_GENERATOR_ADDRESS = new PublicKey(
-  "Fr66EvvzsspaWwC2TiuSPg6RDwjypvDgshSucFjtnYEK"
+  "genSsTXZaAGH1kRUe74TXzwuernqZhJksHvpXiAxBQT"
 );
 
 export const METADATA_CONFIG_SEED = "metadata-config";
