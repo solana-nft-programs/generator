@@ -1,6 +1,6 @@
-export type CardinalMetadataGenerator = {
+export type CardinalGenerator = {
   version: "0.1.0";
-  name: "cardinal_metadata_generator";
+  name: "cardinal_generator";
   instructions: [
     {
       name: "createMetadataConfig";
@@ -104,9 +104,9 @@ export type CardinalMetadataGenerator = {
   ];
 };
 
-export const IDL: CardinalMetadataGenerator = {
+export const IDL: CardinalGenerator = {
   version: "0.1.0",
-  name: "cardinal_metadata_generator",
+  name: "cardinal_generator",
   instructions: [
     {
       name: "createMetadataConfig",

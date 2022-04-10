@@ -1,7 +1,7 @@
 import { utils } from "@project-serum/anchor";
 import { PublicKey } from "@solana/web3.js";
 
-import { METADATA_CONFIG_SEED, METADATA_GENERATOR_ADDRESS } from ".";
+import { GENERATOR_ADDRESS, METADATA_CONFIG_SEED } from ".";
 
 /**
  * Finds the metadata config id.
@@ -15,6 +15,7 @@ export const findMetadatConfigId = async (
       utils.bytes.utf8.encode(METADATA_CONFIG_SEED),
       utils.bytes.utf8.encode(configName),
     ],
-    METADATA_GENERATOR_ADDRESS
+    GENERATOR_ADDRESS
   );
 };
+s;

@@ -2,14 +2,8 @@ import type { AccountData } from "@cardinal/common";
 import { Program, Provider } from "@project-serum/anchor";
 import type * as web3 from "@solana/web3.js";
 
-import type {
-  METADATA_GENERATOR_PROGRAM,
-  MetadataConfigData,
-} from "./constants";
-import {
-  METADATA_GENERATOR_ADDRESS,
-  METADATA_GENERATOR_IDL,
-} from "./constants";
+import type { GENERATOR_PROGRAM, MetadataConfigData } from "./constants";
+import { GENERATOR_ADDRESS, GENERATOR_IDL } from "./constants";
 
 export const getMetadataConfig = async (
   connection: web3.Connection,
@@ -18,13 +12,13 @@ export const getMetadataConfig = async (
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const provider = new Provider(connection, null, {});
-  const metadataGeneratorProgram = new Program<METADATA_GENERATOR_PROGRAM>(
-    METADATA_GENERATOR_IDL,
-    METADATA_GENERATOR_ADDRESS,
+  const generatorProgram = new Program<GENERATOR_PROGRAM>(
+    GENERATOR_IDL,
+    GENERATOR_ADDRESS,
     provider
   );
 
-  const parsed = (await metadataGeneratorProgram.account.metadataConfig.fetch(
+  const parsed = (await generatorProgram.account.metadataConfig.fetch(
     metadataConfigId
   )) as MetadataConfigData;
   return {

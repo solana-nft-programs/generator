@@ -8,11 +8,8 @@ import type {
 } from "@solana/web3.js";
 import { SystemProgram } from "@solana/web3.js";
 
-import type { AttributeConfig, METADATA_GENERATOR_PROGRAM } from "./constants";
-import {
-  METADATA_GENERATOR_ADDRESS,
-  METADATA_GENERATOR_IDL,
-} from "./constants";
+import type { AttributeConfig, GENERATOR_PROGRAM } from "./constants";
+import { GENERATOR_ADDRESS, GENERATOR_IDL } from "./constants";
 import { findMetadatConfigId } from "./pda";
 
 export const createMetadataConfig = async (
@@ -23,16 +20,16 @@ export const createMetadataConfig = async (
   attributes: AttributeConfig[]
 ): Promise<TransactionInstruction> => {
   const provider = new Provider(connection, wallet, {});
-  const metadataGeneratorProgram = new Program<METADATA_GENERATOR_PROGRAM>(
-    METADATA_GENERATOR_IDL,
-    METADATA_GENERATOR_ADDRESS,
+  const generatorProgram = new Program<GENERATOR_PROGRAM>(
+    GENERATOR_IDL,
+    GENERATOR_ADDRESS,
     provider
   );
   const [[metadataConfigId], mintMetadataId] = await Promise.all([
     findMetadatConfigId(configName),
     Metadata.getPDA(mint),
   ]);
-  return metadataGeneratorProgram.instruction.createMetadataConfig(
+  return generatorProgram.instruction.createMetadataConfig(
     { seedString: configName, attributes: attributes },
     {
       accounts: {
