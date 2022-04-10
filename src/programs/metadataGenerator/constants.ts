@@ -1,7 +1,7 @@
 import type { AnchorTypes } from "@saberhq/anchor-contrib";
 import { PublicKey } from "@solana/web3.js";
 
-import * as METADATA_GENERATOR_TYPES from "../../idl/cardinal_metadata_generator";
+import * as METADATA_GENERATOR_TYPES from "../../idl/cardinal_generator";
 
 export const METADATA_GENERATOR_ADDRESS = new PublicKey(
   "genSsTXZaAGH1kRUe74TXzwuernqZhJksHvpXiAxBQT"
