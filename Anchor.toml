@@ -12,10 +12,10 @@ wallet = "./tests/test-key.json"
 cardinal_generator = "Fr66EvvzsspaWwC2TiuSPg6RDwjypvDgshSucFjtnYEK"
 
 [programs.devnet]
-cardinal_generator = "stkBL96RZkjY5ine4TvPihGqW8UHJfch2cokjAPzV8i"
+cardinal_generator = "Fr66EvvzsspaWwC2TiuSPg6RDwjypvDgshSucFjtnYEK"
 
 [programs.testnet]
-cardinal_generator = "stkBL96RZkjY5ine4TvPihGqW8UHJfch2cokjAPzV8i"
+cardinal_generator = "Fr66EvvzsspaWwC2TiuSPg6RDwjypvDgshSucFjtnYEK"
 
 [programs.localnet]
-cardinal_generator = "stkBL96RZkjY5ine4TvPihGqW8UHJfch2cokjAPzV8i"
+cardinal_generator = "Fr66EvvzsspaWwC2TiuSPg6RDwjypvDgshSucFjtnYEK"
