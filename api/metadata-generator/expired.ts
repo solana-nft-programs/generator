@@ -1,3 +1,5 @@
+import type { NFTMetadata } from "./generator";
+
 const burnURL = (cluster: string) => {
   if (cluster === "devnet") {
     return "https://dev.cardinal.so/burn";
@@ -5,7 +7,7 @@ const burnURL = (cluster: string) => {
   return "https://main.cardinal.so/burn";
 };
 
-export const getExpiredMetadata = (cluster: string) => {
+export const getExpiredMetadata = (cluster: string): NFTMetadata => {
   const imageUrl = `https://api.cardinal.so/img/?text=EXPIRED`;
   return {
     name: "EXPIRED",
@@ -15,7 +17,7 @@ export const getExpiredMetadata = (cluster: string) => {
     )}`,
     seller_fee_basis_points: 0,
     external_url: burnURL(cluster),
-    attributes: {},
+    attributes: [],
     collection: {
       name: "Expired Receipts",
       family: "Expired Receipts",

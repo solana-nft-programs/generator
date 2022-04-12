@@ -1,9 +1,11 @@
+import type { NFTMetadata } from "./generator";
+
 export const getTwitterMetadata = (
   fullName: string,
   mintId: string,
   ownerId: string,
   cluster: string
-) => {
+): NFTMetadata => {
   const imageUrl = `https://api.cardinal.so/img/${mintId}${
     cluster ? `?cluster=${cluster}` : ""
   }`;
@@ -13,7 +15,7 @@ export const getTwitterMetadata = (
     description: `This is a Cardinal-powered non-transferable NFT representing your ownership of ${fullName}`,
     seller_fee_basis_points: 0,
     external_url: `https://twitter.cardinal.so/${ownerId}`,
-    attributes: {},
+    attributes: [],
     collection: {
       name: "Cardinal",
       family: "cardinal",

@@ -1,27 +1,26 @@
-import {
-  AccountInfo,
-  ParsedAccountData,
-  PublicKey,
-  Connection,
-} from "@solana/web3.js";
-import * as anchor from "@project-serum/anchor";
-import * as metaplex from "@metaplex-foundation/mpl-token-metadata";
-import { findTokenManagerAddress } from "@cardinal/token-manager/dist/cjs/programs/tokenManager/pda";
+import type { CertificateData } from "@cardinal/certificates";
+import { certificateIdForMint, getCertificate } from "@cardinal/certificates";
+import type { AccountData } from "@cardinal/token-manager";
 import {
   timeInvalidator,
   tokenManager,
   useInvalidator,
 } from "@cardinal/token-manager/dist/cjs/programs";
+import type { TimeInvalidatorData } from "@cardinal/token-manager/dist/cjs/programs/timeInvalidator";
+import type { TokenManagerData } from "@cardinal/token-manager/dist/cjs/programs/tokenManager";
+import { findTokenManagerAddress } from "@cardinal/token-manager/dist/cjs/programs/tokenManager/pda";
+import type { UseInvalidatorData } from "@cardinal/token-manager/dist/cjs/programs/useInvalidator";
+import * as metaplex from "@metaplex-foundation/mpl-token-metadata";
+import * as anchor from "@project-serum/anchor";
+import type {
+  AccountInfo,
+  Connection,
+  ParsedAccountData,
+} from "@solana/web3.js";
+import { PublicKey } from "@solana/web3.js";
 import fetch from "node-fetch";
-import { AccountData } from "@cardinal/token-manager";
-import { TokenManagerData } from "@cardinal/token-manager/dist/cjs/programs/tokenManager";
-import { TimeInvalidatorData } from "@cardinal/token-manager/dist/cjs/programs/timeInvalidator";
-import { UseInvalidatorData } from "@cardinal/token-manager/dist/cjs/programs/useInvalidator";
-import {
-  CertificateData,
-  certificateIdForMint,
-  getCertificate,
-} from "@cardinal/certificates";
+
+import type { NFTMetadata } from "../metadata-generator/generator";
 
 export type TokenData = {
   tokenAccount?: {
@@ -33,13 +32,13 @@ export type TokenData = {
   useInvalidatorData?: AccountData<UseInvalidatorData> | null;
   timeInvalidatorData?: AccountData<TimeInvalidatorData> | null;
   certificateData?: AccountData<CertificateData> | null;
-  metadata?: any | null;
+  metadata?: { pubkey: PublicKey; data: NFTMetadata } | null;
 };
 
 export async function getTokenData(
   connection: Connection,
   mintId: PublicKey,
-  getMetadata: boolean = false
+  getMetadata = false
 ): Promise<TokenData> {
   const [[metaplexId], [tokenManagerId], [certificateId]] = await Promise.all([
     PublicKey.findProgramAddress(
@@ -94,16 +93,18 @@ export async function getTokenData(
     }),
   ]);
 
-  let metadata: any | null = null;
+  let metadata: { pubkey: PublicKey; data: NFTMetadata } | null = null;
   if (
     metaplexData &&
     getMetadata &&
     !metaplexData.data.data.uri.includes("cardinal")
   ) {
     try {
-      const json = await fetch(metaplexData.data.data.uri).then((r) =>
+      const uri = metaplexData.data.data.uri;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+      const json = (await fetch(uri).then((r: Response) =>
         r.json()
-      );
+      )) as NFTMetadata;
       metadata = { pubkey: metaplexData.pubkey, data: json };
     } catch (e) {
       console.log("Failed to get metadata data", e);

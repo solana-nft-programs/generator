@@ -1,5 +1,6 @@
-import { Keypair, Connection, PublicKey } from "@solana/web3.js";
-import { TOKEN_PROGRAM_ID, Token } from "@solana/spl-token";
+import { Token, TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import type { Connection } from "@solana/web3.js";
+import { Keypair, PublicKey } from "@solana/web3.js";
 
 export const getOwner = async (connection: Connection, mintId: string) => {
   const mint = new PublicKey(mintId);
