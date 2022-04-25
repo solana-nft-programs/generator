@@ -4,6 +4,7 @@
     "canvas": "^2.9.0",
     "node-gyp": "^8.4.1",
     "serverless": "^2.72.0",
+    "serverless-certificate-creator": "^1.6.0",
     "serverless-domain-manager": "^5.4.1",
     "serverless-offline": "^8.5.0",
     "serverless-plugin-include-dependencies": "^5.0.0",

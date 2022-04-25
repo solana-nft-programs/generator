@@ -40,13 +40,26 @@ functions:
           method: get
 
 custom:
+  domains:
+    prod:
+      domainName: nft.cardinal.so
+      certificateName: nft.cardinal.so
+    dev:
+      domainName: nft-dev.cardinal.so
+      certificateName: nft-dev.cardinal.so
+  customCertificate:
+    hostedZoneNames: "cardinal.so."
+    certificateName: ${self:custom.domains.${self:provider.stage}.certificateName}
+    region: ${self:provider.region}
   customDomain:
-    domainName: nft.cardinal.so
-    stage: ${self:provider.stage}
+    domainName: ${self:custom.domains.${self:provider.stage}.domainName}
+    certificateName: ${self:custom.domains.${self:provider.stage}.certificateName}
     createRoute53Record: true
+    autoDomain: true
 
 plugins:
   - serverless-domain-manager
+  - serverless-certificate-creator
   - serverless-plugin-typescript
   - serverless-offline
   - serverless-plugin-include-dependencies
