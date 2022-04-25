@@ -41,12 +41,12 @@ functions:
 
 custom:
   domains:
-    prod:
+    main:
       domainName: nft.cardinal.so
     dev:
-      domainName: nft-dev.cardinal.so
+      domainName: dev-nft.cardinal.so
   customDomain:
-    domainName: ${self:custom.domains.${self:provider.stage}.domainName}
+    domainName: ${self:custom.domains.${opt:stage}.domainName}
     certificateName: "*.cardinal.so"
     createRoute53Record: true
     autoDomain: true
