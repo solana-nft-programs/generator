@@ -39,7 +39,14 @@ functions:
           path: /metadata/{mintId}
           method: get
 
+custom:
+  customDomain:
+    domainName: nft.cardinal.so
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+
 plugins:
+  - serverless-domain-manager
   - serverless-plugin-typescript
   - serverless-offline
   - serverless-plugin-include-dependencies
