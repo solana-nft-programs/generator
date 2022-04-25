@@ -19,7 +19,7 @@ const networkURLs: { [key: string]: { primary: string; secondary?: string } } =
 
 export const connectionFor = (
   cluster: string | null,
-  defaultCluster: string = "mainnet"
+  defaultCluster = "mainnet"
 ) => {
   return new Connection(
     process.env.RPC_URL || networkURLs[cluster || defaultCluster].primary,
@@ -29,7 +29,7 @@ export const connectionFor = (
 
 export const secondaryConnectionFor = (
   cluster: string | null,
-  defaultCluster: string = "mainnet"
+  defaultCluster = "mainnet"
 ) => {
   return new Connection(
     process.env.RPC_URL ||
