@@ -1,10 +1,11 @@
-import * as canvas from "canvas";
-import { BN } from "@project-serum/anchor";
-import { TokenData } from "../common/tokenData";
-import * as web3 from "@solana/web3.js";
-import * as stakePool from "@cardinal/stake-pool";
-import * as questPool from "@cardinal/quest-pool";
 import { getLevelNumber } from "@cardinal/common";
+import * as questPool from "@cardinal/quest-pool";
+import * as stakePool from "@cardinal/stake-pool";
+import { BN } from "@project-serum/anchor";
+import * as web3 from "@solana/web3.js";
+import * as canvas from "canvas";
+
+import type { TokenData } from "../common/tokenData";
 
 export async function getJamboImage(
   originalTokenData: TokenData | null,
@@ -13,11 +14,12 @@ export async function getJamboImage(
   textParam?: string,
   imgUri?: string
 ) {
-  console.log("Rending jambo image");
+  console.log("Rendering jambo image");
 
   canvas.registerFont(__dirname.concat("/fonts/SF-Pro.ttf"), {
     family: "SFPro",
   });
+  console.log("Font registered");
   const WIDTH = 250;
   const HEIGHT = 250;
   const PADDING = 0.05 * WIDTH;
@@ -75,8 +77,8 @@ export async function getJamboImage(
   const UTCNow = Date.now() / 1000;
   dateCtx.font = "500 15px SFPro";
   dateCtx.fillStyle = "white";
-  if (textParam == "TRAINING") {
-    let entry = await stakePool.getStakeEntry(connection, originalMint);
+  if (textParam === "TRAINING") {
+    const entry = await stakePool.getStakeEntry(connection, originalMint);
     const lastStakedAt = entry?.parsed.lastStakedAt.toNumber() || UTCNow;
     const stakeBoost = (entry?.parsed.stakeBoost || new BN(1)).toNumber();
     const totalStakeSeconds = (
@@ -102,11 +104,11 @@ export async function getJamboImage(
       20
     );
   } else {
-    let [idd] = await questPool.findQuestEntryId(
+    const [idd] = await questPool.findQuestEntryId(
       new web3.PublicKey(originalMint)
     );
-    let entry = (await questPool.getQuestEntries(connection, [idd]))[0];
-    let pool = (
+    const entry = (await questPool.getQuestEntries(connection, [idd]))[0];
+    const pool = (
       await questPool.getQuestPools(connection, [
         new web3.PublicKey(entry.parsed.stakePool.toString()),
       ])
@@ -141,5 +143,7 @@ export async function getJamboImage(
     WIDTH * 0.8,
     WIDTH * 0.2
   );
+
+  console.log("Returning image");
   return imageCanvas.toBuffer("image/png");
 }

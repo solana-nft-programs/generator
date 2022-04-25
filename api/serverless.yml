@@ -7,13 +7,8 @@ provider:
   name: aws
   runtime: nodejs14.x
   lambdaHashingVersion: "20201221"
-  http:
+  httpApi:
     cors: true
-
-custom:
-  apiGatewayCaching:
-    enabled: true
-    ttlInSeconds: 300
 
 package:
   individually: true
@@ -33,14 +28,14 @@ functions:
     handler: img-generator/handler.generate
     timeout: 10
     events:
-      - http:
+      - httpApi:
           path: /img/{mintId}
           method: get
   metadata-generator:
     handler: metadata-generator/handler.generate
     timeout: 10
     events:
-      - http:
+      - httpApi:
           path: /metadata/{mintId}
           method: get
 
@@ -59,7 +54,6 @@ functions:
 plugins:
   # - serverless-domain-manager
   # - serverless-certificate-creator
-  - serverless-api-gateway-caching
   - serverless-plugin-typescript
   - serverless-offline
   - serverless-plugin-include-dependencies

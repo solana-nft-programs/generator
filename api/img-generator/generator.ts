@@ -1,25 +1,17 @@
-import * as anchor from "@project-serum/anchor";
 import * as certificates from "@cardinal/certificates";
 import * as namespaces from "@cardinal/namespaces";
+import { TokenManagerState } from "@cardinal/token-manager/dist/cjs/programs/tokenManager";
+import type * as anchor from "@project-serum/anchor";
+import * as splToken from "@solana/spl-token";
 import * as web3 from "@solana/web3.js";
 import * as canvas from "canvas";
-import * as splToken from "@solana/spl-token";
-import BigNumber from "bignumber.js";
-import { getTwitterImage } from "./twitter-image";
+
 import { connectionFor } from "../common/connection";
-import { getTokenData, TokenData } from "../common/tokenData";
-import { TokenManagerState } from "@cardinal/token-manager/dist/cjs/programs/tokenManager";
+import type { TokenData } from "../common/tokenData";
+import { getTokenData } from "../common/tokenData";
 import { getJamboImage } from "./jambo-image";
-
-function getMintDecimalAmount(mint, mintAmount) {
-  return new BigNumber(mintAmount.toString()).shiftedBy(-mint.decimals);
-}
-
-function fmtMintAmount(mint, mintAmount) {
-  return mint
-    ? getMintDecimalAmount(mint, mintAmount).toFormat()
-    : new BigNumber(mintAmount.toString()).toFormat();
-}
+import { getTwitterImage } from "./twitter-image";
+import { fmtMintAmount } from "./utils";
 
 const COLOR_RED = "rgba(200, 0, 0, 1)";
 const COLOR_ORANGE = "rgba(89, 56, 21, 1)";
@@ -30,9 +22,11 @@ export async function getImage(
   imgUri: string,
   textParam: string,
   cluster: string | null
-) {
+): Promise<Buffer> {
   console.log(
-    `Handling img generatation for mintId (${mintId}) imgUri (${imgUri}) text (${textParam}) and cluster (${cluster})`
+    `Handling img generatation for mintId (${mintId}) imgUri (${imgUri}) text (${textParam}) and cluster (${
+      cluster ? cluster : ""
+    })`
   );
 
   const connection = connectionFor(cluster);
@@ -63,7 +57,7 @@ export async function getImage(
       originalTokenData = await getTokenData(connection, originalMint, true);
     } catch (e) {
       console.log(
-        `Error fetching metaplex metadata for original mint (${originalMint})`,
+        `Error fetching metaplex metadata for original mint (${originalMint.toString()})`,
         e
       );
     }
@@ -328,7 +322,7 @@ export async function getImage(
       bottomLeftCtx.font = `${0.055 * WIDTH}px SFPro`;
       bottomLeftCtx.fillStyle = "rgba(255,0,0,1)";
       bottomLeftCtx.fillText(
-        `INVALID (${usages}/${maxUsages.toString()})`,
+        `INVALID (${usages.toNumber()}/${maxUsages.toString()})`,
         PADDING,
         HEIGHT - bottomLeft
       );
@@ -337,7 +331,9 @@ export async function getImage(
       bottomLeftCtx.font = `${0.055 * WIDTH}px SFPro`;
       bottomLeftCtx.fillStyle = "white";
       bottomLeftCtx.fillText(
-        `Used (${usages}${maxUsages ? `/${maxUsages.toString()}` : ""})`,
+        `Used (${usages.toNumber()}${
+          maxUsages ? `/${maxUsages.toString()}` : ""
+        })`,
         PADDING,
         HEIGHT - bottomLeft
       );
@@ -367,8 +363,7 @@ export async function getImage(
       connection,
       paymentMint,
       splToken.TOKEN_PROGRAM_ID,
-      // @ts-ignore -- unused
-      null
+      web3.Keypair.generate() // not used
     );
     const mintInfo = await token.getMintInfo();
     bottomLeftCtx.font = `${0.055 * WIDTH}px SFPro`;

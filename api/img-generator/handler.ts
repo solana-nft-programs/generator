@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument */
 import { getImage } from "./generator";
 
 module.exports.generate = async (event) => {
@@ -8,11 +9,13 @@ module.exports.generate = async (event) => {
     event?.queryStringParameters?.cluster
   );
 
+  console.log("Returning image buffer", buffer);
   const response = {
     statusCode: 200,
     headers: {
       "content-type": "image/png",
       "content-disposition": `inline;filename="${
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         (event.pathParameters && event.pathParameters.mintId) || "untitled"
       }.png"`,
     },
