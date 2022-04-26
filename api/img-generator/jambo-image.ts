@@ -19,7 +19,6 @@ export async function getJamboImage(
   canvas.registerFont(__dirname.concat("/fonts/SF-Pro.ttf"), {
     family: "SFPro",
   });
-  console.log("Font registered");
   const WIDTH = 250;
   const HEIGHT = 250;
   const PADDING = 0.05 * WIDTH;
@@ -144,6 +143,5 @@ export async function getJamboImage(
     WIDTH * 0.2
   );
 
-  console.log("Returning image");
   return imageCanvas.toBuffer("image/png");
 }
