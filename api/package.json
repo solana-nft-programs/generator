@@ -5,6 +5,8 @@
     "node-gyp": "=8.4.1",
     "serverless": "^2.72.0",
     "serverless-api-gateway-caching": "^1.7.5",
+    "serverless-apigw-binary": "^0.4.4",
+    "serverless-apigwy-binary": "^1.0.1",
     "serverless-certificate-creator": "^1.6.0",
     "serverless-domain-manager": "^5.4.1",
     "serverless-offline": "^8.5.0",

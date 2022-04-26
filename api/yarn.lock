@@ -641,7 +641,7 @@
     snake-case "^3.0.4"
     toml "^3.0.0"
 
-"@project-serum/anchor@0.21.0", "@project-serum/anchor@^0.21.0":
+"@project-serum/anchor@0.21.0", "@project-serum/anchor@=0.21.0":
   version "0.21.0"
   resolved "https://registry.yarnpkg.com/@project-serum/anchor/-/anchor-0.21.0.tgz#ad5fb33744991ec1900cdb2fd22707c908b12b5f"
   integrity sha512-flRuW/F+iC8mitNokx82LOXyND7Dyk6n5UUPJpQv/+NfySFrNFlzuQZaBZJ4CG5g9s8HS/uaaIz1nVkDR8V/QA==
@@ -1725,7 +1725,7 @@ blob@0.0.5:
   resolved "https://registry.yarnpkg.com/blob/-/blob-0.0.5.tgz#d680eeef25f8cd91ad533f5b01eed48e64caf683"
   integrity sha512-gaqbzQPqOoamawKg0LGVd7SzLgXS+JH61oWprSLH+P+abTczqJbhTR8CmJ2u9/bUYNmHTGJx/UEmn6doAvvuig==
 
-bluebird@^3.4.0, bluebird@^3.7.2:
+bluebird@^3.4.0, bluebird@^3.5.0, bluebird@^3.7.2:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
@@ -6012,6 +6012,19 @@ serverless-api-gateway-caching@^1.7.5:
   dependencies:
     lodash.get "^4.4.2"
     lodash.isempty "^4.4.0"
+
+serverless-apigw-binary@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/serverless-apigw-binary/-/serverless-apigw-binary-0.4.4.tgz#f3cffd8365322a2a1d8bde5fd94b306b7a64d4fb"
+  integrity sha512-2DJmQTzeXa/+8u9ekReqf7j4gQjBtzQE4MK9nlOnEz4F7MVWCQXYlLPmf2TXSoxxJZzlWvIiNzCTq6vAT9F5FQ==
+
+serverless-apigwy-binary@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/serverless-apigwy-binary/-/serverless-apigwy-binary-1.0.1.tgz#5ba1e49d3ed1e75fe2010c2e23471fde8a259466"
+  integrity sha512-fh//yUBuFuQsqM+SI86T0vCrCQEpCW0gVDiBP6ZMkSBmTztUOuJjZqLL+IH0eaB3M+b68qYGM9/R0XhQVKlVcQ==
+  dependencies:
+    bluebird "^3.5.0"
+    semver "^7.3.5"
 
 serverless-certificate-creator@^1.6.0:
   version "1.6.0"
