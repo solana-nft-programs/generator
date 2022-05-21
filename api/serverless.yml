@@ -52,14 +52,14 @@ custom:
       domainName: nft.cardinal.so
     dev:
       domainName: dev-nft.cardinal.so
-  # customDomain:
-  #   domainName: ${self:custom.domains.${opt:stage}.domainName}
-  #   certificateName: "*.cardinal.so"
-  #   createRoute53Record: true
-  #   autoDomain: true
+  customDomain:
+    domainName: ${self:custom.domains.${opt:stage}.domainName}
+    certificateName: "*.cardinal.so"
+    createRoute53Record: true
+    autoDomain: true
 
 plugins:
-  # - serverless-domain-manager
+  - serverless-domain-manager
   - serverless-apigw-binary
   - serverless-apigwy-binary
   - serverless-plugin-typescript

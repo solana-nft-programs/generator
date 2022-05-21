@@ -244,20 +244,6 @@ export async function getMetadata(
     };
   }
 
-  if (tokenData.timeInvalidatorData?.parsed?.durationSeconds) {
-    response = {
-      ...response,
-      attributes: [
-        ...(response.attributes || []),
-        {
-          trait_type: "duration",
-          value: `${tokenData.timeInvalidatorData?.parsed?.durationSeconds.toNumber()}`,
-          display_type: "Duration",
-        },
-      ],
-    };
-  }
-
   // // certificate
   // if (
   //   tokenData.certificateData?.parsed.usages &&
