@@ -311,6 +311,31 @@ export async function getImage(
     bottomLeft += 0.075 * WIDTH;
   }
 
+  const durationSeconds =
+    tokenData.timeInvalidatorData?.parsed?.durationSeconds;
+  if (durationSeconds && durationSeconds.toNumber()) {
+    const dateTime = new Date(
+      (Date.now() / 1000 + durationSeconds.toNumber()) * 1000
+    );
+    bottomLeftCtx.font = `${0.055 * WIDTH}px SFPro`;
+    bottomLeftCtx.fillStyle = "white";
+    bottomLeftCtx.fillText(
+      `${dateTime.toLocaleDateString(["en-US"], {
+        month: "2-digit",
+        day: "2-digit",
+        year: "2-digit",
+      })} ${dateTime.toLocaleTimeString(["en-US"], {
+        hour: "2-digit",
+        minute: "2-digit",
+        timeZone: "UTC",
+        timeZoneName: "short",
+      })}`,
+      PADDING,
+      HEIGHT - bottomLeft
+    );
+    bottomLeft += 0.075 * WIDTH;
+  }
+
   const usages =
     tokenData.useInvalidatorData?.parsed?.usages ||
     tokenData?.certificateData?.parsed?.usages;
