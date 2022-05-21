@@ -42,16 +42,25 @@ functions:
       - http:
           path: /metadata/{mintId}
           method: get
+          caching:
+            enabled: true
+            ttlInSeconds: 10
+            perKeyInvalidation:
+              requireAuthorization: false
+            cacheKeyParameters:
+              - name: request.path.url
 
 custom:
   apigwBinary:
     types:
       - "image/png"
+  apiGatewayCaching:
+    enabled: true
   domains:
     main:
-      domainName: nft.cardinal.so
+      domainName: api.cardinal.so
     dev:
-      domainName: dev-nft.cardinal.so
+      domainName: dev-api.cardinal.so
   # customDomain:
   #   domainName: ${self:custom.domains.${opt:stage}.domainName}
   #   certificateName: "*.cardinal.so"
@@ -64,4 +73,5 @@ plugins:
   - serverless-apigwy-binary
   - serverless-plugin-typescript
   - serverless-offline
+  - serverless-api-gateway-caching
   - serverless-plugin-include-dependencies
