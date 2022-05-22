@@ -35,6 +35,13 @@ functions:
           path: /img/{mintId}
           method: get
           contentHandling: CONVERT_TO_BINARY
+          caching:
+            enabled: true
+            ttlInSeconds: 10
+            perKeyInvalidation:
+              requireAuthorization: false
+            cacheKeyParameters:
+              - name: request.path.url
   metadata-generator:
     handler: metadata-generator/handler.generate
     timeout: 10
