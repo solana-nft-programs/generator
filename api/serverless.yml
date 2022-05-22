@@ -42,7 +42,9 @@ functions:
               requireAuthorization: false
             cacheKeyParameters:
               - name: request.path.url
-              - name: request.querystring
+              - name: request.querystring.uri
+              - name: request.querystring.text
+              - name: request.querystring.cluster
   metadata-generator:
     handler: metadata-generator/handler.generate
     timeout: 10
@@ -57,7 +59,10 @@ functions:
               requireAuthorization: false
             cacheKeyParameters:
               - name: request.path.url
-              - name: request.querystring
+              - name: request.querystring.uri
+              - name: request.querystring.text
+              - name: request.querystring.cluster
+              - name: request.querystring.attrs
 
 custom:
   apigwBinary:
