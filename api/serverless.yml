@@ -42,6 +42,7 @@ functions:
               requireAuthorization: false
             cacheKeyParameters:
               - name: request.path.url
+              - name: request.querystring
   metadata-generator:
     handler: metadata-generator/handler.generate
     timeout: 10
@@ -56,6 +57,7 @@ functions:
               requireAuthorization: false
             cacheKeyParameters:
               - name: request.path.url
+              - name: request.querystring
 
 custom:
   apigwBinary:
