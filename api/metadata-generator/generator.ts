@@ -258,41 +258,6 @@ export async function getMetadata(
     };
   }
 
-  // // certificate
-  // if (
-  //   tokenData.certificateData?.parsed.usages &&
-  //   tokenData.certificateData?.parsed.maxUsages
-  // ) {
-  //   response = {
-  //     ...response,
-  //     attributes: [
-  //       ...(response.attributes || []),
-  //       {
-  //         trait_type: "used",
-  //         value: `(${tokenData.certificateData?.parsed.usages.toNumber()}${
-  //           tokenData.certificateData?.parsed.maxUsages
-  //             ? `/${tokenData.certificateData?.parsed.maxUsages.toNumber()}`
-  //             : ""
-  //         })`,
-  //         display_type: "Used",
-  //       },
-  //     ],
-  //   };
-  // }
-  // if (tokenData.certificateData?.parsed.expiration) {
-  //   response = {
-  //     ...response,
-  //     attributes: [
-  //       ...(response.attributes || []),
-  //       {
-  //         trait_type: "expiration",
-  //         value: `${tokenData.certificateData?.parsed.expiration.toNumber()}`,
-  //         display_type: "Expiration",
-  //       },
-  //     ],
-  //   };
-  // }
-
   // collection
   if (tokenData?.metaplexData?.data.data.symbol === "$JAMB") {
     response = {
