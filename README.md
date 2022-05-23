@@ -39,10 +39,11 @@ Dynamic attributes have a separate parameters that allows for generic setting of
 - uri
   - The uri field to provide the existing base metadata
 - attrs
+
   - attrs= is a list of "attribute group" objects separates by `;` semi-colons
   - Each "attribute group" can contain optional scopes, denoted with `.` and then contains one or more "field groups"
   - If scoped, the scopes should precede the field group and be in the format of `{address}.{accountName}.` where address is the account address and accountName is the name of this account to deserialize into. This account will be queried from on-chain and deserialized using the given accountName and the IDL for the owning program
-  - Following the scopes, will be field groups, where each field group can contain `key:value:display_type`. Each piece is optional. If scoped, the value will be looked up in the corresponding account by name. If not scoped, the value will be used as a string value.
+  - Following the scopes, will be "field groups", where each field group can contain `key:value:display_type` separated by `:`. Each piece is optional. If scoped, the value will be looked up in the corresponding account by name. If not scoped, the value will be used as a string value.
   - Attributes come in the form with the following fallback logic allowing for 1, 2 or 3 fields specified in the field group
 
   ```
@@ -58,17 +59,17 @@ Dynamic attributes have a separate parameters that allows for generic setting of
 
 This is a summary of logic in the metadata-generator handler
 
-example getting “stakeBoost” from this staked NFT
-`https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.stakeBoost`
+Example getting “stakeBoost” from this staked NFT
+https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.stakeBoost
 
-example getting “stakeBoost” from this staked NFT and naming it Boost
-`https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.Boost:stakeBoost`
+Example getting “stakeBoost” from this staked NFT and naming it Boost
+https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.Boost:stakeBoost
 
-example getting all fields from this staked NFT account
-`https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.*`
+Example getting all fields from this staked NFT account
+https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.\*
 
-example getting multiple fields from this staked NFT account
-`https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.Boost:stakeBoost,Seconds%20staked:totalStakeSeconds`
+Example getting multiple fields from this staked NFT account
+https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.Boost:stakeBoost,Seconds%20staked:totalStakeSeconds
 
 ## Overlay Text
 
