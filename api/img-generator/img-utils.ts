@@ -5,7 +5,7 @@ const COLOR_RED = "rgba(200, 0, 0, 1)";
 const COLOR_ORANGE = "rgba(89, 56, 21, 1)";
 const COLOR_GREEN = "rgba(39, 73, 22, 1)";
 
-const textStyles = ["none", "overlay", "banner"] as const;
+const textStyles = ["none", "overlay", "header"] as const;
 type TextStyleOptions = {
   defaultStyle?: typeof textStyles[number];
   backgroundColor?: string;
@@ -54,7 +54,7 @@ export const drawText = (
       nameCtx.textBaseline = "middle";
       nameCtx.fillText(text, imageCanvas.width * 0.5, imageCanvas.height * 0.5);
       return;
-    case "banner":
+    case "header":
       nameCtx.fillStyle = styleOptions?.backgroundColor ?? "rgba(0, 0, 0, 0)";
       nameCtx.fillRect(0, 0, imageCanvas.width, 0.2 * imageCanvas.height);
       nameCtx.font = `${0.075 * imageCanvas.width}px SFPro`;
