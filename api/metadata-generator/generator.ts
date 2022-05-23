@@ -64,7 +64,7 @@ export async function getMetadata(
         attrs,
         "devnet"
       );
-    } else {
+    } else if (tokenData.metaplexData?.data.data.symbol === "RCP") {
       return getExpiredMetadata(cluster);
     }
   }
