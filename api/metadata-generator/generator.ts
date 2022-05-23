@@ -73,42 +73,57 @@ export async function getMetadata(
   const originalMint = tokenData?.certificateData?.parsed
     .originalMint as web3.PublicKey;
 
-  const dynamicAttributes: { trait_type: string; value: string }[] = [];
+  const dynamicAttributes: {
+    display_type: string;
+    value: string;
+    trait_type: string;
+  }[] = [];
   if (attrs) {
     try {
-      const match = /\[(.*)\]/.exec(attrs)![1];
-      const attributeConfigs = match;
-      // for (let i = 0; i < attributeConfigs.length; i++) {
-      try {
-        // const attributeConfig = attributeConfigs[i];
-        const attributeConfig = attributeConfigs;
-        const [address, accountType, fieldString] = attributeConfig.split(":");
-        const accountInfo = await connection.getAccountInfo(
-          new web3.PublicKey(address)
-        );
-        const programId = accountInfo?.owner!;
-        const IDL = (await import(
-          `../idls/${programId.toString()}.json`
-        )) as Idl;
-        const coder = new BorshAccountsCoder(IDL);
-        const accountData = coder.decode(accountType, accountInfo?.data!);
-        const fields =
-          fieldString === "*"
-            ? Object.keys(accountData)
-            : fieldString.split(",");
-        fields.forEach((field) => {
-          console.log(accountData[field], accountData[field].toString());
-          if (field in accountData) {
+      const attributeGroups = attrs.split(";");
+      for (let i = 0; i < attributeGroups.length; i++) {
+        const attributeGroup = attributeGroups[i];
+        try {
+          const scopes = attributeGroup.split(".");
+          if (scopes.length > 1) {
+            // scoped fields
+            const [address, accountType, fieldGroupParam] = scopes;
+            const accountInfo = await connection.getAccountInfo(
+              new web3.PublicKey(address)
+            );
+            const programId = accountInfo?.owner!;
+            const IDL = (await import(
+              `../idls/${programId.toString()}.json`
+            )) as Idl;
+            const coder = new BorshAccountsCoder(IDL);
+            const scopeData = coder.decode(accountType, accountInfo?.data!);
+            const fieldGroupStrings =
+              fieldGroupParam === "*"
+                ? Object.keys(scopeData)
+                : fieldGroupParam.split(",");
+            fieldGroupStrings.forEach((fieldGroupString) => {
+              const fieldGroup = fieldGroupString.split(":");
+              if (fieldGroup[1] in scopeData || fieldGroup[0] in scopeData) {
+                dynamicAttributes.push({
+                  display_type: fieldGroup[0],
+                  value: scopeData[fieldGroup[1] ?? fieldGroup[0]].toString(),
+                  trait_type: fieldGroup[2] ?? fieldGroup[1] ?? fieldGroup[0],
+                });
+              }
+            });
+          } else {
+            // inline fields
+            const fieldGroup = scopes[0].split(":");
             dynamicAttributes.push({
-              trait_type: field,
-              value: accountData[field].toString(),
+              display_type: fieldGroup[0],
+              value: fieldGroup[1] ?? fieldGroup[0],
+              trait_type: fieldGroup[2] ?? fieldGroup[1] ?? fieldGroup[0],
             });
           }
-        });
-      } catch (e) {
-        console.log("Failed to parse attribute: ", attributeConfigs, e);
+        } catch (e) {
+          console.log("Failed to parse attribute: ", attributeGroup, e);
+        }
       }
-      // }
     } catch (e) {
       console.log("Failed to parse attributes", e);
     }
