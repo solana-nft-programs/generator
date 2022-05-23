@@ -53,7 +53,7 @@ Dynamic attributes have a separate parameters that allows for generic setting of
     value: scopeData
       ? scopeData[fieldGroup[1] ?? fieldGroup[0]].toString()
       : fieldGroup[1] ?? fieldGroup[0],
-    trait_type: fieldGroup[2] ?? fieldGroup[1] ?? fieldGroup[0],
+    trait_type: fieldGroup[2] ?? fieldGroup[0],
   }
   ```
 

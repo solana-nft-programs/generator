@@ -107,7 +107,7 @@ export async function getMetadata(
                 dynamicAttributes.push({
                   display_type: fieldGroup[0],
                   value: scopeData[fieldGroup[1] ?? fieldGroup[0]].toString(),
-                  trait_type: fieldGroup[2] ?? fieldGroup[1] ?? fieldGroup[0],
+                  trait_type: fieldGroup[2] ?? fieldGroup[0],
                 });
               }
             });
@@ -117,7 +117,7 @@ export async function getMetadata(
             dynamicAttributes.push({
               display_type: fieldGroup[0],
               value: fieldGroup[1] ?? fieldGroup[0],
-              trait_type: fieldGroup[2] ?? fieldGroup[1] ?? fieldGroup[0],
+              trait_type: fieldGroup[2] ?? fieldGroup[0],
             });
           }
         } catch (e) {
