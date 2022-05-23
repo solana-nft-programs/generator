@@ -60,13 +60,13 @@ Dynamic attributes have a separate parameters that allows for generic setting of
 This is a summary of logic in the metadata-generator handler
 
 Example getting “stakeBoost” from this staked NFT
-https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.stakeBoost
+https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.stakeBoost
 
 Example getting “stakeBoost” from this staked NFT and naming it Boost
-https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.Boost:stakeBoost
+https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.Boost:stakeBoost
 
 Example getting all fields from this staked NFT account
-https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.\*
+[https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.\*](https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.*)
 
 Example getting multiple fields from this staked NFT account
 https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.Boost:stakeBoost,Seconds%20staked:totalStakeSeconds
@@ -79,7 +79,7 @@ Styles
 
 - None
   - Basic white test
-  - e.g. https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=TEXT
+  - e.g. https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=none:TEXT
 
 <div style="text-align: center; width: 100%;">
   <img style="height: 250px" src="https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=none:TEXT" />
@@ -87,7 +87,7 @@ Styles
 
 - Overlay
   - Overlay text centered over the image with a partially transparent background and border
-  - e.g. https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=TEXT
+  - e.g. https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=overlay:TEXT
 
 <div style="text-align: center; width: 100%;">
   <img style="height: 250px" src="https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=overlay:TEXT" />
@@ -95,7 +95,7 @@ Styles
 
 - Header
   - Header text at the top of the image
-  - e.g https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=TEXT
+  - e.g https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=header:HEADER
 
 <div style="text-align: center; width: 100%;">
   <img style="height: 250px" src="https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=header:HEADER" />
@@ -114,7 +114,3 @@ For issues please, file a GitHub issue.
 Cardinal generators is licensed under the GNU Affero General Public License v3.0.
 
 In short, this means that any changes to this code must be made open source and available under the AGPL-v3.0 license, even if only used privately.
-
-```
-
-```

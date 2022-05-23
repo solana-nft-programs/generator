@@ -69,10 +69,6 @@ export async function getMetadata(
     }
   }
 
-  // get originalMint uri if present
-  const originalMint = tokenData?.certificateData?.parsed
-    .originalMint as web3.PublicKey;
-
   const dynamicAttributes: {
     display_type: string;
     value: string;
@@ -129,6 +125,9 @@ export async function getMetadata(
     }
   }
 
+  // ovverride uri with originalMint uri if present
+  const originalMint = tokenData?.certificateData?.parsed
+    .originalMint as web3.PublicKey;
   let originalTokenData: TokenData | null = null;
   if (originalMint) {
     try {
@@ -148,7 +147,6 @@ export async function getMetadata(
   const [namespace, _entryName] = namespaces.breakName(
     fullName || textParam || ""
   );
-  console.log(tokenData);
   if (namespace === "twitter") {
     const owner = await getOwner(secondaryConnectionFor(cluster), mintId);
     return getTwitterMetadata(fullName, mintId, owner.toString(), cluster);
