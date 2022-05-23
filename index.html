@@ -57,26 +57,37 @@
 </a>
 <p>Generator is mainly an API that is designed to fit within the metaplex NFT standard, but bring the composability of on-chain data directly into the NFTs. This allows for more complex NFT use cases to compose directly with the attributes of the NFT while still maintaining compatibility with all wallet and marketplaces. Because this generator is dynamic, it means any time you view or load the NFT it will pull fresh on-chain data. Being serverless also means there is no dependency on infrastructure and scales horizontally. The long term vision of this project is to either adopt these practices within apps directly so they do not need to rely on the API, or run the API on a decentralized computing platform. For the time being, it serves to fit dynamic NFTs into the existing Solana NFT rails.</p>
 
-<a href="#attributes" id="attributes" style="color: inherit; text-decoration: none;">
-  <h2>Attributes</h2>
+<a href="#dynamic-attributes" id="dynamic-attributes" style="color: inherit; text-decoration: none;">
+  <h2>Dynamic Attributes</h2>
 </a>
-<p>Attributes has a separate parameters that allows for generic setting of any attributes on the NFT based on other on-chain data</p>
+<p>Dynamic attributes have a separate parameters that allows for generic setting of any attributes on the NFT based on other on-chain data</p>
 <ul>
-<li>uri<ul>
+<li><p>uri</p>
+<ul>
 <li>The uri field to provide the existing base metadata</li>
 </ul>
 </li>
-<li>attrs<ul>
-<li>attrs=[] in the format of {address}:{accountName}:{field} - Currently the API looks up the (anchor) IDL for that address to deserialize using that account name and then adding to attribute</li>
+<li><p>attrs</p>
+<ul>
+<li>attrs= is a list of &quot;attribute group&quot; objects separates by <code>;</code> semi-colons</li>
+<li>Each &quot;attribute group&quot; can contain optional scopes, denoted with <code>.</code> and then contains one or more &quot;field groups&quot;</li>
+<li>If scoped, the scopes should precede the field group and be in the format of <code>{address}.{accountName}.</code> where address is the account address and accountName is the name of this account to deserialize into. This account will be queried from on-chain and deserialized using the given accountName and the IDL for the owning program</li>
+<li>Following the scopes, will be field groups, where each field group can contain <code>key:value:display_type</code>. Each piece is optional. If scoped, the value will be looked up in the corresponding account by name. If not scoped, the value will be used as a string value.</li>
+<li>Attributes come in the form with the following fallback logic allowing for 1, 2 or 3 fields specified in the field group</li>
 </ul>
+<pre><code><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">fieldGroup</span><span class="hl-1"> = </span><span class="hl-3">fieldGroupString</span><span class="hl-1">.</span><span class="hl-4">split</span><span class="hl-1">(</span><span class="hl-5">&quot;:&quot;</span><span class="hl-1">)</span><br/><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">attribute</span><span class="hl-1"> = {</span><br/><span class="hl-1">  </span><span class="hl-5">&quot;display_type&quot;</span><span class="hl-3">:</span><span class="hl-1"> </span><span class="hl-3">fieldGroup</span><span class="hl-1">[</span><span class="hl-6">0</span><span class="hl-1">],</span><br/><span class="hl-1">  </span><span class="hl-3">value:</span><span class="hl-1"> </span><span class="hl-3">scopeData</span><br/><span class="hl-1">    ? </span><span class="hl-3">scopeData</span><span class="hl-1">[</span><span class="hl-3">fieldGroup</span><span class="hl-1">[</span><span class="hl-6">1</span><span class="hl-1">] ?? </span><span class="hl-3">fieldGroup</span><span class="hl-1">[</span><span class="hl-6">0</span><span class="hl-1">]].</span><span class="hl-4">toString</span><span class="hl-1">()</span><br/><span class="hl-1">    : </span><span class="hl-3">fieldGroup</span><span class="hl-1">[</span><span class="hl-6">1</span><span class="hl-1">] ?? </span><span class="hl-3">fieldGroup</span><span class="hl-1">[</span><span class="hl-6">0</span><span class="hl-1">],</span><br/><span class="hl-1">  </span><span class="hl-3">trait_type:</span><span class="hl-1"> </span><span class="hl-3">fieldGroup</span><span class="hl-1">[</span><span class="hl-6">2</span><span class="hl-1">] ?? </span><span class="hl-3">fieldGroup</span><span class="hl-1">[</span><span class="hl-6">1</span><span class="hl-1">] ?? </span><span class="hl-3">fieldGroup</span><span class="hl-1">[</span><span class="hl-6">0</span><span class="hl-1">],</span><br/><span class="hl-1">}</span>
+</code></pre>
 </li>
 </ul>
+<p>This is a summary of logic in the metadata-generator handler</p>
 <p>example getting “stakeBoost” from this staked NFT
-<code>https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&amp;attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:stakeBoost]</code></p>
+<code>https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&amp;attrs=attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.stakeBoost</code></p>
+<p>example getting “stakeBoost” from this staked NFT and naming it Boost
+<code>https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&amp;attrs=attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.Boost:stakeBoost</code></p>
 <p>example getting all fields from this staked NFT account
-<code>https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&amp;attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:*]</code></p>
+<code>https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&amp;attrs=attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.*</code></p>
 <p>example getting multiple fields from this staked NFT account
-<code>https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&amp;attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:stakeBoost,totalStakeSeconds]</code></p>
+<code>https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&amp;attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.Boost:stakeBoost,Seconds%20staked:totalStakeSeconds</code></p>
 
 <a href="#overlay-text" id="overlay-text" style="color: inherit; text-decoration: none;">
   <h2>Overlay Text</h2>
