@@ -168,7 +168,7 @@ export async function getMetadata(
       response = {
         ...response,
         ...metadata,
-        image: `https://api.cardinal.so/img/${mintId}?uri=${
+        image: `https://nft.cardinal.so/img/${mintId}?uri=${
           metadata?.image || ""
         }${textParam ? `&text=${textParam}` : ""}${
           cluster ? `&cluster=${cluster}` : ""
