@@ -61,9 +61,45 @@
   <h2>Getting Started</h2>
 </a>
 
-<a href="#fields" id="fields" style="color: inherit; text-decoration: none;">
-  <h1>Fields</h1>
+<a href="#text" id="text" style="color: inherit; text-decoration: none;">
+  <h1>Text</h1>
 </a>
+<p>Text param is used to overaly specific text on the base image. The test param supports bare text and has a concept of &quot;styles&quot; to style the text in various ways</p>
+<p>Styles</p>
+<ul>
+<li>None<ul>
+<li>Basic white test</li>
+<li>e.g. <a href="https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&amp;text=TEXT">https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&amp;text=TEXT</a></li>
+</ul>
+</li>
+</ul>
+<div style="text-align: center; width: 100%;">
+  <img style="height: 250px" src="https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=none:TEXT" />
+</div>
+
+<ul>
+<li>Overlay<ul>
+<li>Overlay text centered over the image with a partially transparent background and border</li>
+<li>e.g. <a href="https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&amp;text=TEXT">https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&amp;text=TEXT</a></li>
+</ul>
+</li>
+</ul>
+<div style="text-align: center; width: 100%;">
+  <img style="height: 250px" src="https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=overlay:TEXT" />
+</div>
+
+<ul>
+<li>Banner<ul>
+<li>Banner text at the top of the image</li>
+<li>e.g <a href="https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&amp;text=TEXT">https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&amp;text=TEXT</a></li>
+</ul>
+</li>
+</ul>
+<div style="text-align: center; width: 100%;">
+  <img style="height: 250px" src="https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=banner:BANNER" />
+</div>
+
+<p>Fields is a construct that allows for generic setting of any attributes on the NFT based on other on-chain data</p>
 <ul>
 <li>uri<ul>
 <li>The uri field to provide the existing base metadata</li>
@@ -75,11 +111,11 @@
 </li>
 </ul>
 <p>example getting “stakeBoost” from this staked NFT
-<code>https://api.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&amp;attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:stakeBoost]</code></p>
+<code>https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&amp;attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:stakeBoost]</code></p>
 <p>example getting all fields from this staked NFT account
-<code>https://api.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&amp;attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:*]</code></p>
+<code>https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&amp;attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:*]</code></p>
 <p>example getting multiple fields from this staked NFT account
-<code>https://api.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&amp;attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:stakeBoost,totalStakeSeconds]</code></p>
+<code>https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&amp;attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:stakeBoost,totalStakeSeconds]</code></p>
 
 <a href="#questions-amp-support" id="questions-amp-support" style="color: inherit; text-decoration: none;">
   <h2>Questions &amp; Support</h2>
@@ -93,7 +129,7 @@
 <a href="#license" id="license" style="color: inherit; text-decoration: none;">
   <h2>License</h2>
 </a>
-<p>Cardinal Protocol is licensed under the GNU Affero General Public License v3.0.</p>
+<p>Cardinal generators is licensed under the GNU Affero General Public License v3.0.</p>
 <p>In short, this means that any changes to this code must be made open source and available under the AGPL-v3.0 license, even if only used privately.</p>
 <pre><code>
 </code></pre>
