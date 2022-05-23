@@ -1,6 +1,5 @@
 import * as certificates from "@cardinal/certificates";
 import * as namespaces from "@cardinal/namespaces";
-import { TokenManagerState } from "@cardinal/token-manager/dist/cjs/programs/tokenManager";
 import type * as anchor from "@project-serum/anchor";
 import * as splToken from "@solana/spl-token";
 import * as web3 from "@solana/web3.js";
@@ -9,13 +8,10 @@ import * as canvas from "canvas";
 import { connectionFor } from "../common/connection";
 import type { TokenData } from "../common/tokenData";
 import { getTokenData } from "../common/tokenData";
+import { drawLogo, drawShadow, drawText } from "./img-utils";
 import { getJamboImage } from "./jambo-image";
 import { getTwitterImage } from "./twitter-image";
 import { fmtMintAmount } from "./utils";
-
-const COLOR_RED = "rgba(200, 0, 0, 1)";
-const COLOR_ORANGE = "rgba(89, 56, 21, 1)";
-const COLOR_GREEN = "rgba(39, 73, 22, 1)";
 
 export async function getImage(
   mintId: string,
@@ -123,88 +119,16 @@ export async function getImage(
       );
     }
 
-    if (tokenData.certificateData || tokenData.tokenManagerData) {
-      const shadowCtx = imageCanvas.getContext("2d");
-
-      if (tokenData.tokenManagerData) {
-        const state = tokenData.tokenManagerData?.parsed.state;
-        if (state === TokenManagerState.Invalidated) {
-          shadowCtx.shadowColor = COLOR_RED;
-        } else if (state === TokenManagerState.Issued) {
-          shadowCtx.shadowColor = COLOR_ORANGE;
-        } else {
-          shadowCtx.shadowColor = COLOR_GREEN;
-        }
-      } else {
-        const state = tokenData.certificateData?.parsed.state;
-        if (state === certificates.CertificateState.Invalidated) {
-          shadowCtx.shadowColor = COLOR_RED;
-        } else if (state === certificates.CertificateState.Issued) {
-          shadowCtx.shadowColor = COLOR_ORANGE;
-        } else {
-          shadowCtx.shadowColor = COLOR_GREEN;
-        }
-      }
-
-      // shadowCtx.shadowColor = 'rgba(25, 27, 32, 1)'
-      // shadowCtx.shadowColor = certificate.state ? '#49aa19' : '#d87a16'
-      shadowCtx.shadowBlur = 0.04 * WIDTH;
-      shadowCtx.lineWidth = 0.04 * WIDTH;
-      shadowCtx.strokeStyle = "rgba(26, 27, 32, 0)";
-      shadowCtx.strokeRect(0, 0, WIDTH, HEIGHT);
-      shadowCtx.shadowBlur = 0;
-
-      // logo
-      const logoCtx = imageCanvas.getContext("2d");
-      const logo = await canvas.loadImage(
-        __dirname.concat("/assets/cardinal-crosshair.png")
-      );
-      logoCtx.drawImage(
-        logo,
-        HEIGHT - PADDING / 1.5 - HEIGHT * 0.16,
-        WIDTH - PADDING / 1.5 - WIDTH * 0.16,
-        WIDTH * 0.16,
-        HEIGHT * 0.16
-      );
-    } else {
-      // const logoCtx = imageCanvas.getContext("2d");
-      // const logo = await canvas.loadImage(
-      //   __dirname.concat("/assets/cardinal-icon-colored-transparent.png")
-      // );
-      // logoCtx.drawImage(
-      //   logo,
-      //   HEIGHT - PADDING / 10 - HEIGHT * 0.2,
-      //   WIDTH - PADDING / 10 - WIDTH * 0.2,
-      //   WIDTH * 0.2,
-      //   HEIGHT * 0.2
-      // );
-    }
-
     // name text
     if (textParam) {
-      const nameCtx = imageCanvas.getContext("2d");
-      nameCtx.fillStyle = "rgba(180, 180, 180, 0.6)";
-      nameCtx.fillRect(
-        0.15 * WIDTH,
-        HEIGHT * 0.5 - 0.075 * HEIGHT,
-        0.7 * WIDTH,
-        0.15 * HEIGHT
-      );
-      nameCtx.strokeStyle = "rgba(255, 255, 255, 1)";
-      nameCtx.lineWidth = 0.015 * WIDTH;
-      nameCtx.strokeRect(
-        0.15 * WIDTH,
-        HEIGHT * 0.5 - 0.075 * HEIGHT,
-        0.7 * WIDTH,
-        0.15 * HEIGHT
-      );
+      drawText(imageCanvas, textParam, {
+        defaultStyle: "overlay",
+      });
+    }
 
-      nameCtx.font = `${0.075 * WIDTH}px SFPro`;
-      nameCtx.fillStyle = "white";
-      nameCtx.textAlign = "center";
-      nameCtx.textBaseline = "middle";
-      nameCtx.fillText(textParam, WIDTH * 0.5, HEIGHT * 0.5);
-      nameCtx.textAlign = "left";
+    if (tokenData.tokenManagerData) {
+      drawShadow(imageCanvas, tokenData.tokenManagerData.parsed.state);
+      await drawLogo(imageCanvas);
     }
   } else {
     // background
@@ -222,46 +146,14 @@ export async function getImage(
     backgroundCtx.fillStyle = grd;
     backgroundCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
-    const nameCtx = imageCanvas.getContext("2d");
-    nameCtx.font = `${0.1 * WIDTH}px SFPro`;
-    nameCtx.fillStyle = "white";
-    nameCtx.textAlign = "center";
-    nameCtx.textBaseline = "middle";
-    const nameText =
-      textParam || tokenData?.metaplexData?.data?.data?.name || "";
-    nameCtx.fillText(nameText, WIDTH * 0.5, HEIGHT * 0.5);
-    nameCtx.textAlign = "left";
+    drawText(
+      imageCanvas,
+      textParam || tokenData?.metaplexData?.data?.data?.name || "",
+      { defaultStyle: "none" }
+    );
 
-    // logo
-    const logoCtx = imageCanvas.getContext("2d");
-    const logo = await canvas.loadImage(
-      __dirname.concat("/assets/cardinal-crosshair.png")
-    );
-    logoCtx.drawImage(
-      logo,
-      HEIGHT - PADDING / 2 - HEIGHT * 0.18,
-      WIDTH - PADDING / 2 - WIDTH * 0.18,
-      WIDTH * 0.18,
-      HEIGHT * 0.18
-    );
+    await drawLogo(imageCanvas);
   }
-
-  // const topRightCtx = imageCanvas.getContext('2d')
-  // topRightCtx.textAlign = 'right'
-  // topRightCtx.textBaseline = 'middle'
-  // if (paymentMint && paymentAmount > 0) {
-  //   topRightCtx.font = `${0.055 * WIDTH}px SFPro`
-  //   topRightCtx.fillStyle = 'white'
-  //   topRightCtx.fillText(
-  //     `${paymentAmount} ${
-  //       PAYMENT_MINTS.find(
-  //         ({ mint }) => mint.toString() === paymentMint.toString()
-  //       )?.symbol || paymentMint.toString()
-  //     }`,
-  //     WIDTH - PADDING,
-  //     PADDING * 2
-  //   )
-  // }
 
   const bottomLeftCtx = imageCanvas.getContext("2d");
   bottomLeftCtx.textAlign = "left";
