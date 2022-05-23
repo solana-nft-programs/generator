@@ -34,7 +34,37 @@ Generator is mainly an API that is designed to fit within the metaplex NFT stand
 
 ## Getting Started
 
-# Fields
+# Text
+
+Text param is used to overaly specific text on the base image. The test param supports bare text and has a concept of "styles" to style the text in various ways
+
+Styles
+
+- None
+  - Basic white test
+  - e.g. https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=TEXT
+
+<div style="text-align: center; width: 100%;">
+  <img style="height: 250px" src="https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=none:TEXT" />
+</div>
+
+- Overlay
+  - Overlay text centered over the image with a partially transparent background and border
+  - e.g. https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=TEXT
+
+<div style="text-align: center; width: 100%;">
+  <img style="height: 250px" src="https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=overlay:TEXT" />
+</div>
+
+- Banner
+  - Banner text at the top of the image
+  - e.g https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=TEXT
+
+<div style="text-align: center; width: 100%;">
+  <img style="height: 250px" src="https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=banner:BANNER" />
+</div>
+
+Fields is a construct that allows for generic setting of any attributes on the NFT based on other on-chain data
 
 - uri
   - The uri field to provide the existing base metadata
@@ -42,13 +72,13 @@ Generator is mainly an API that is designed to fit within the metaplex NFT stand
   - attrs=[] in the format of {address}:{accountName}:{field} - Currently the API looks up the (anchor) IDL for that address to deserialize using that account name and then adding to attribute
 
 example getting “stakeBoost” from this staked NFT
-`https://api.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:stakeBoost]`
+`https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:stakeBoost]`
 
 example getting all fields from this staked NFT account
-`https://api.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:*]`
+`https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:*]`
 
 example getting multiple fields from this staked NFT account
-`https://api.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:stakeBoost,totalStakeSeconds]`
+`https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=[9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn:StakeEntry:stakeBoost,totalStakeSeconds]`
 
 ## Questions & Support
 
@@ -60,7 +90,7 @@ For issues please, file a GitHub issue.
 
 ## License
 
-Cardinal Protocol is licensed under the GNU Affero General Public License v3.0.
+Cardinal generators is licensed under the GNU Affero General Public License v3.0.
 
 In short, this means that any changes to this code must be made open source and available under the AGPL-v3.0 license, even if only used privately.
 
