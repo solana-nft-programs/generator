@@ -152,7 +152,7 @@ export async function getMetadata(
         console.log("Failed to get metadata URI");
       }
     }
-    console.log(JSON.stringify(metadata));
+
     if (metadata) {
       response = {
         ...response,
@@ -163,7 +163,8 @@ export async function getMetadata(
     if (
       (metadata &&
         (tokenData?.certificateData || tokenData.tokenManagerData)) ||
-      imgParam
+      imgParam ||
+      textParam
     ) {
       response = {
         ...response,
