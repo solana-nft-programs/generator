@@ -13,6 +13,9 @@ module.exports.generate = async (event) => {
   const response = {
     statusCode: 200,
     headers: {
+      "Access-Control-Allow-Methods": "*",
+      "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+      "Access-Control-Allow-Credentials": true, // Required for cookies, authorization headers with HTTPS
       "content-type": "image/png",
       "content-disposition": `inline;filename="${
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
