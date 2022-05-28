@@ -65,6 +65,24 @@ functions:
               - name: request.querystring.uri
               - name: request.querystring.text
               - name: request.querystring.cluster
+  metadata-generator-base:
+    handler: metadata-generator/handler.generate
+    timeout: 10
+    events:
+      - http:
+          path: /metadata
+          method: get
+          caching:
+            enabled: true
+            ttlInSeconds: 10
+            perKeyInvalidation:
+              requireAuthorization: false
+            cacheKeyParameters:
+              - name: request.path.url
+              - name: request.querystring.uri
+              - name: request.querystring.text
+              - name: request.querystring.cluster
+              - name: request.querystring.attrs
   metadata-generator:
     handler: metadata-generator/handler.generate
     timeout: 10
