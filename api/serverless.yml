@@ -25,6 +25,26 @@ package:
     - "./yarn.lock"
 
 functions:
+  img-generator-base:
+    environment:
+      FONTCONFIG_FILE: /var/task/fonts/fonts.conf
+    handler: img-generator/handler.generate
+    timeout: 10
+    events:
+      - http:
+          path: /img
+          method: get
+          contentHandling: CONVERT_TO_BINARY
+          caching:
+            enabled: true
+            ttlInSeconds: 10
+            perKeyInvalidation:
+              requireAuthorization: false
+            cacheKeyParameters:
+              - name: request.path.url
+              - name: request.querystring.uri
+              - name: request.querystring.text
+              - name: request.querystring.cluster
   img-generator:
     environment:
       FONTCONFIG_FILE: /var/task/fonts/fonts.conf
