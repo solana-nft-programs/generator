@@ -310,10 +310,10 @@
     tiny-invariant "^1.2.0"
     tslib "^2.3.1"
 
-"@saberhq/tsconfig@^1.12.44":
-  version "1.12.56"
-  resolved "https://registry.yarnpkg.com/@saberhq/tsconfig/-/tsconfig-1.12.56.tgz#571392410a9ac2e910be8cf4bc177916566d6301"
-  integrity sha512-smKKMZgaKqKFW/Lmukf/lgKxIW9LKGOdrw2xNKdF2JLojmWLMwOaeEBwd/ENQPJerI2kmzwTnDBe9NSU7XCjOA==
+"@saberhq/tsconfig@^1.13.20":
+  version "1.13.20"
+  resolved "https://registry.yarnpkg.com/@saberhq/tsconfig/-/tsconfig-1.13.20.tgz#595560e855b655fb318069c430313194387c8aa8"
+  integrity sha512-cexa6lV1xPrzGsTvKLaNOUqrqvduAjggv7KM5xJ+WXnKbFZ8MEkoeVCEl2Pa1+jKQnsyEG7dhaxZEKW0iMb1bg==
 
 "@solana/buffer-layout@^3.0.0":
   version "3.0.0"
