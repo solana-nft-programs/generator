@@ -41,7 +41,6 @@ functions:
             perKeyInvalidation:
               requireAuthorization: false
             cacheKeyParameters:
-              - name: request.path.url
               - name: request.querystring.uri
               - name: request.querystring.text
               - name: request.querystring.cluster
@@ -61,7 +60,7 @@ functions:
             perKeyInvalidation:
               requireAuthorization: false
             cacheKeyParameters:
-              - name: request.path.url
+              - name: request.path.mintId
               - name: request.querystring.uri
               - name: request.querystring.text
               - name: request.querystring.cluster
@@ -78,7 +77,6 @@ functions:
             perKeyInvalidation:
               requireAuthorization: false
             cacheKeyParameters:
-              - name: request.path.url
               - name: request.querystring.uri
               - name: request.querystring.text
               - name: request.querystring.cluster
@@ -96,7 +94,7 @@ functions:
             perKeyInvalidation:
               requireAuthorization: false
             cacheKeyParameters:
-              - name: request.path.url
+              - name: request.path.mintId
               - name: request.querystring.uri
               - name: request.querystring.text
               - name: request.querystring.cluster
