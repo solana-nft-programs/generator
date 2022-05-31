@@ -45,24 +45,8 @@ export async function getImage(
 
   const originalMint = tokenData?.certificateData?.parsed
     .originalMint as web3.PublicKey;
-  let originalTokenData: TokenData | null = null;
 
-  // ovverride uri with originalMint uri if present
-  if (originalMint) {
-    try {
-      originalTokenData = await getTokenData(connection, originalMint, true);
-    } catch (e) {
-      console.log(
-        `Error fetching metaplex metadata for original mint (${originalMint.toString()})`,
-        e
-      );
-    }
-  }
-
-  const fullName =
-    originalTokenData?.metaplexData?.data.data.name ||
-    tokenData?.metaplexData?.data.data.name ||
-    textParam;
+  const fullName = tokenData?.metaplexData?.data.data.name || textParam;
   const [namespace, entryName] = namespaces.breakName(
     fullName || textParam || ""
   );
@@ -71,13 +55,7 @@ export async function getImage(
   }
 
   if (tokenData?.metaplexData?.data.data.symbol === "$JAMB") {
-    return getJamboImage(
-      originalTokenData,
-      connection,
-      originalMint,
-      textParam,
-      imgUri
-    );
+    return getJamboImage(connection, originalMint, textParam, imgUri);
   }
 
   // setup
@@ -91,7 +69,7 @@ export async function getImage(
   const imageCanvas = canvas.createCanvas(WIDTH, HEIGHT);
 
   // draw base image
-  const baseImgUri = originalTokenData?.metadata?.data.image || imgUri;
+  const baseImgUri = imgUri;
   if (baseImgUri) {
     const backgroundCtx = imageCanvas.getContext("2d");
     backgroundCtx.fillStyle = "rgba(26, 27, 32, 1)";

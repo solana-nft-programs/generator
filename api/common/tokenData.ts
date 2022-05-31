@@ -120,3 +120,35 @@ export async function getTokenData(
     metadata,
   };
 }
+
+export const getMetadata = async (
+  connection: Connection,
+  mintId: PublicKey
+) => {
+  const metaplexData = await metaplex.Metadata.load(
+    connection,
+    (
+      await metaplex.MetadataProgram.find_metadata_account(mintId)
+    )[0]
+  ).catch((e) => {
+    console.log("Failed to get metaplex data", e);
+    return null;
+  });
+  let metadata: { pubkey: PublicKey; data: NFTMetadata } | null = null;
+  if (metaplexData && !metaplexData.data.data.uri.includes("cardinal")) {
+    try {
+      const uri = metaplexData.data.data.uri;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+      const json = (await fetch(uri).then((r: Response) =>
+        r.json()
+      )) as NFTMetadata;
+      metadata = { pubkey: metaplexData.pubkey, data: json };
+    } catch (e) {
+      console.log("Failed to get metadata data", e);
+    }
+  }
+  return {
+    metaplexData,
+    metadata,
+  };
+};

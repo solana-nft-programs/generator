@@ -1,0 +1,327 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.81
+# Copyright (C) 2006  Free Software Foundation, Inc.
+# This is free software; see the source for copying conditions.
+# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# This program built for i386-apple-darwin11.3.0
+ 
+
+# Make data base, printed on Sun May 29 03:42:56 2022
+
+# Variables
+
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# environment
+LC_CTYPE = en_US.UTF-8
+# environment
+VSCODE_LOG_NATIVE = false
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# automatic
+@F = $(notdir $@)
+# makefile
+CURDIR := /Users/jbogle/Code/cardinal-generator
+# makefile
+SHELL = /bin/sh
+# environment
+VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
+# environment
+_ = /usr/bin/make
+# makefile (from `Makefile', line 1)
+MAKEFILE_LIST :=  Makefile
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# environment
+__CFBundleIdentifier = com.microsoft.VSCode
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/8x/vqpk1jwj7n75vdy4f8hxs0b40000gn/T/vscode-ipc-52ab85dd-2749-463c-b5f8-fb4bb3f6f867.sock
+# environment
+VSCODE_CWD = /
+# environment
+PATH = /Users/jbogle/Code/solana/bin:/Users/jbogle/Code/solana/target/release:/opt/homebrew/opt/openssl@1.1/bin:/opt/homebrew/opt/openssl@3/bin:/Users/jbogle/.cargo/bin:/opt/homebrew/bin:/Users/jbogle/.local/share/solana/install/active_release/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+# environment
+LSCOLORS = gxfxbEaEBxxEhEhBaDaCaD
+# environment
+LaunchInstanceID = 9DE7D95B-CBA9-4D65-8990-C425EF429DCA
+# environment
+VSCODE_LOG_STACK = false
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# default
+.FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
+# environment
+LS_COLORS = gxfxbEaEBxxEhEhBaDaCaD
+# environment
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.Vd2JYegg4e/Listeners
+# automatic
+%F = $(notdir $%)
+# makefile (from `Makefile', line 3)
+TEST_KEY := twLqUrEvBPdtWFusa4MSWqkyE7TyhJTv3xBXiLYUNcX
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+PWD = /Users/jbogle/Code/cardinal-generator
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+HOME = /Users/jbogle
+# default
+MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
+# environment
+VSCODE_CODE_CACHE_PATH = /Users/jbogle/Library/Application Support/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+# environment
+LOGNAME = jbogle
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+XPC_FLAGS = 0x0
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# environment
+SHLVL = 2
+# default
+MAKE_VERSION := 3.81
+# environment
+USER = jbogle
+# makefile
+.DEFAULT_GOAL := all
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# default
+MAKE_COMMAND := /Applications/Xcode.app/Contents/Developer/usr/bin/make
+# default
+.VARIABLES := 
+# environment
+TMPDIR = /var/folders/8x/vqpk1jwj7n75vdy4f8hxs0b40000gn/T/
+# automatic
+*F = $(notdir $*)
+# environment
+VSCODE_IPC_HOOK = /Users/jbogle/Library/Application Support/Code/1.67.2-main.sock
+# makefile
+MAKEFLAGS = Rrqp
+# environment
+MFLAGS = -Rrqp
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.96661772.96661778
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# automatic
++F = $(notdir $+)
+# environment
+__CF_USER_TEXT_ENCODING = 0x1F5:0x0:0x0
+# environment
+COMMAND_MODE = unix2003
+# default
+MAKEFILES := 
+# automatic
+<F = $(notdir $<)
+# environment
+LC_ALL = C
+# environment
+SECURITYSESSIONID = 186b2
+# automatic
+^F = $(notdir $^)
+# default
+SUFFIXES := 
+# default
+.INCLUDE_DIRS = /usr/local/include
+# environment
+MAKELEVEL := 0
+# environment
+LANG = C
+# environment
+VSCODE_PID = 587
+# variable set hash-table stats:
+# Load=68/1024=7%, Rehash=0, Collisions=1/96=1%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 16777232, inode 63105882): 42 files, no impossibilities.
+
+# 42 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+stop: validator.PID
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 38):
+	kill `cat $<` && rm $<
+	
+
+all: install test-keys build start test clean-test-keys stop
+#  Command-line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/2=0%
+
+test-keys:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 11):
+	anchor build
+	LC_ALL=C find programs src -type f -exec sed -i '' -e "s/genSsTXZaAGH1kRUe74TXzwuernqZhJksHvpXiAxBQT/$$(solana-keygen pubkey ./target/deploy/cardinal_generator-keypair.json)/g" {} +
+	anchor build
+	
+
+.PHONY: install test-keys build start test clean-test-keys stop
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+validator.PID:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-04-10 01:45:20
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+start:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 20):
+	solana-test-validator --url https://api.devnet.solana.com \
+	--clone metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s --clone PwDiXFxQsGra4sFFTT8r1QWRMd4vfumiWC1jfWNfdYT \
+	--bpf-program ./target/deploy/cardinal_generator-keypair.json ./target/deploy/cardinal_generator.so \
+	--reset --quiet & echo $$! > validator.PID
+	sleep 5
+	solana-keygen pubkey ./tests/test-key.json
+	solana airdrop 1000 $(TEST_KEY) --url http://localhost:8899
+	
+
+test:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 32):
+	anchor test --skip-local-validator --skip-build --skip-deploy --provider.cluster localnet
+	
+
+build:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 16):
+	anchor build
+	yarn idl:generate
+	
+
+clean-test-keys:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 35):
+	LC_ALL=C find programs src -type f -exec sed -i '' -e "s/$$(solana-keygen pubkey ./target/deploy/cardinal_generator-keypair.json)/genSsTXZaAGH1kRUe74TXzwuernqZhJksHvpXiAxBQT/g" {} +
+	
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+deploy:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 29):
+	anchor deploy --provider.cluster localnet
+	
+
+install:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: `'
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := install
+# automatic
+# % := 
+# automatic
+# * := 
+# automatic
+# + := 
+# automatic
+# | := 
+# automatic
+# < := 
+# automatic
+# ^ := 
+# automatic
+# ? := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/10=10%
+#  commands to execute (from `Makefile', line 8):
+	yarn install
+	
+
+# files hash-table stats:
+# Load=14/1024=1%, Rehash=0, Collisions=0/43=0%
+# VPATH Search Paths
+
+# No `vpath' search paths.
+
+ 
+# No general (`VPATH' variable) search path.
+
+# # of strings in strcache: 1
+# # of strcache buffers: 1
+# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
+# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+
+# Finished Make data base on Sun May 29 03:42:56 2022
+
+ 

@@ -5,10 +5,9 @@ import { BN } from "@project-serum/anchor";
 import * as web3 from "@solana/web3.js";
 import * as canvas from "canvas";
 
-import type { TokenData } from "../common/tokenData";
+import { getMetadata } from "../common/tokenData";
 
 export async function getJamboImage(
-  originalTokenData: TokenData | null,
   connection: web3.Connection,
   originalMint: web3.PublicKey,
   textParam?: string,
@@ -26,7 +25,8 @@ export async function getJamboImage(
   const GROUP_AND_HUNGRY_THRESHOLD = 10000;
 
   // draw base image
-  const baseImgUri = originalTokenData?.metadata?.data.image || imgUri;
+  const originalTokenMetadata = await getMetadata(connection, originalMint);
+  const baseImgUri = originalTokenMetadata?.metadata?.data.image || imgUri;
   if (baseImgUri) {
     const backgroundCtx = imageCanvas.getContext("2d");
     backgroundCtx.fillStyle = "rgba(26, 27, 32, 1)";
