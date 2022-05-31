@@ -60,8 +60,8 @@ export async function getImage(
   }
 
   const fullName =
-    originalTokenData?.metaplexData?.data.data.name ||
-    tokenData?.metaplexData?.data.data.name ||
+    originalTokenData?.metaplexData?.parsed.data.name ||
+    tokenData?.metaplexData?.parsed.data.name ||
     textParam;
   const [namespace, entryName] = namespaces.breakName(
     fullName || textParam || ""
@@ -70,7 +70,7 @@ export async function getImage(
     return getTwitterImage(namespace, entryName);
   }
 
-  if (tokenData?.metaplexData?.data.data.symbol === "$JAMB") {
+  if (tokenData?.metaplexData?.parsed.data.symbol === "$JAMB") {
     return getJamboImage(
       originalTokenData,
       connection,
@@ -148,7 +148,7 @@ export async function getImage(
 
     drawText(
       imageCanvas,
-      textParam || tokenData?.metaplexData?.data?.data?.name || "",
+      textParam || tokenData?.metaplexData?.parsed?.data?.name || "",
       { defaultStyle: "none" }
     );
 

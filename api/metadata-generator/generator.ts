@@ -64,7 +64,7 @@ export async function getMetadata(
         attrs,
         "devnet"
       );
-    } else if (tokenData.metaplexData?.data.data.symbol === "RCP") {
+    } else if (tokenData.metaplexData?.parsed.data.symbol === "RCP") {
       return getExpiredMetadata(cluster);
     }
   }
@@ -141,8 +141,8 @@ export async function getMetadata(
   }
 
   const fullName =
-    originalTokenData?.metaplexData?.data.data.name ||
-    tokenData?.metaplexData?.data.data.name ||
+    originalTokenData?.metaplexData?.parsed.data.name ||
+    tokenData?.metaplexData?.parsed.data.name ||
     textParam;
   const [namespace, _entryName] = namespaces.breakName(
     fullName || textParam || ""
@@ -273,7 +273,7 @@ export async function getMetadata(
   }
 
   // collection
-  if (tokenData?.metaplexData?.data.data.symbol === "$JAMB") {
+  if (tokenData?.metaplexData?.parsed.data.symbol === "$JAMB") {
     response = {
       ...response,
       collection: {
@@ -288,7 +288,7 @@ export async function getMetadata(
   }
 
   // collection
-  if (tokenData?.metaplexData?.data.data.symbol === "RCP") {
+  if (tokenData?.metaplexData?.parsed.data.symbol === "RCP") {
     response = {
       ...response,
       collection: {
