@@ -12,7 +12,7 @@ import { BorshAccountsCoder } from "@project-serum/anchor";
 import * as web3 from "@solana/web3.js";
 import fetch from "node-fetch";
 
-import { connectionFor, secondaryConnectionFor } from "../common/connection";
+import { secondaryConnectionFor } from "../common/connection";
 import type { TokenData } from "../common/tokenData";
 import { getTokenData } from "../common/tokenData";
 import { getOwner } from "../common/utils";
@@ -42,7 +42,7 @@ export async function getMetadata(
   console.log(
     `Getting metadata for mintId (${mintId}) uri (${metadataUri}) textParam (${textParam}) imgParam (${imgParam}) cluster (${cluster})`
   );
-  const connection = connectionFor(cluster);
+  const connection = secondaryConnectionFor(cluster);
   const tokenData = await getTokenData(
     connection,
     new web3.PublicKey(mintId),

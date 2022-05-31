@@ -5,7 +5,7 @@ import * as splToken from "@solana/spl-token";
 import * as web3 from "@solana/web3.js";
 import * as canvas from "canvas";
 
-import { connectionFor } from "../common/connection";
+import { secondaryConnectionFor } from "../common/connection";
 import type { TokenData } from "../common/tokenData";
 import { getTokenData } from "../common/tokenData";
 import { drawLogo, drawShadow, drawText } from "./img-utils";
@@ -25,7 +25,7 @@ export async function getImage(
     })`
   );
 
-  const connection = connectionFor(cluster);
+  const connection = secondaryConnectionFor(cluster);
   let tokenData: TokenData = {};
   try {
     tokenData = await getTokenData(connection, new web3.PublicKey(mintId));
