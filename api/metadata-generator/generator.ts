@@ -33,6 +33,7 @@ export type NFTMetadata = {
 
 export async function getMetadata(
   mintId: string,
+  nameParam: string,
   metadataUri: string,
   textParam: string,
   imgParam: string,
@@ -58,6 +59,7 @@ export async function getMetadata(
       console.log("Falling back to devnet metadata");
       return getMetadata(
         mintId,
+        nameParam,
         metadataUri,
         textParam,
         imgParam,
@@ -140,16 +142,18 @@ export async function getMetadata(
     }
   }
 
-  const fullName =
-    originalTokenData?.metaplexData?.parsed.data.name ||
-    tokenData?.metaplexData?.parsed.data.name ||
-    textParam;
-  const [namespace, _entryName] = namespaces.breakName(
-    fullName || textParam || ""
-  );
-  if (namespace === "twitter") {
-    const owner = await getOwner(secondaryConnectionFor(cluster), mintId);
-    return getTwitterMetadata(fullName, mintId, owner.toString(), cluster);
+  if (tokenData?.metaplexData?.parsed.data.symbol === "NAME") {
+    const mintName =
+      originalTokenData?.metaplexData?.parsed.data.name ||
+      tokenData?.metaplexData?.parsed.data.name;
+    const namespace = nameParam
+      ? tokenData?.metaplexData?.parsed.data.name
+      : namespaces.breakName(mintName || textParam || "")[0];
+
+    if (namespace === "twitter") {
+      const owner = await getOwner(secondaryConnectionFor(cluster), mintId);
+      return getTwitterMetadata(mintName, mintId, owner.toString(), cluster);
+    }
   }
 
   let response: NFTMetadata = {

@@ -4,6 +4,7 @@ import { getMetadata } from "./generator";
 module.exports.generate = async (event) => {
   const json = await getMetadata(
     event.pathParameters && event.pathParameters.mintId,
+    event.queryStringParameters && event.queryStringParameters.name,
     event.queryStringParameters && event.queryStringParameters.uri,
     event.queryStringParameters && event.queryStringParameters.text,
     event.queryStringParameters && event.queryStringParameters.img,
