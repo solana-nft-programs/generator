@@ -35,4 +35,4 @@ clean-test-keys:
 	LC_ALL=C find programs src -type f -exec sed -i '' -e "s/$$(solana-keygen pubkey ./target/deploy/cardinal_generator-keypair.json)/genSsTXZaAGH1kRUe74TXzwuernqZhJksHvpXiAxBQT/g" {} +
 
 stop: validator.PID
-	kill `cat $<` && rm $<
+	pkill solana-test-validator
