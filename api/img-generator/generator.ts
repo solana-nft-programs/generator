@@ -15,6 +15,7 @@ import { fmtMintAmount } from "./utils";
 
 export async function getImage(
   mintId: string,
+  nameParam: string,
   imgUri: string,
   textParam: string,
   cluster: string | null
@@ -40,7 +41,7 @@ export async function getImage(
     cluster !== "devnet"
   ) {
     console.log("Falling back to devnet metadata");
-    return getImage(mintId, imgUri, textParam, "devnet");
+    return getImage(mintId, nameParam, imgUri, textParam, "devnet");
   }
 
   const originalMint = tokenData?.certificateData?.parsed
@@ -59,15 +60,20 @@ export async function getImage(
     }
   }
 
-  const fullName =
-    originalTokenData?.metaplexData?.parsed.data.name ||
-    tokenData?.metaplexData?.parsed.data.name ||
-    textParam;
-  const [namespace, entryName] = namespaces.breakName(
-    fullName || textParam || ""
-  );
-  if (namespace === "twitter") {
-    return getTwitterImage(namespace, entryName);
+  if (tokenData?.metaplexData?.parsed.data.symbol === "NAME") {
+    const mintName =
+      originalTokenData?.metaplexData?.parsed.data.name ||
+      tokenData?.metaplexData?.parsed.data.name;
+    const namespace = nameParam
+      ? tokenData?.metaplexData?.parsed.data.name
+      : namespaces.breakName(mintName || textParam || "")[0];
+    const entryName = nameParam
+      ? nameParam
+      : namespaces.breakName(mintName || textParam || "")[1];
+
+    if (namespace === "twitter") {
+      return getTwitterImage(namespace, entryName);
+    }
   }
 
   if (tokenData?.metaplexData?.parsed.data.symbol === "$JAMB") {

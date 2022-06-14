@@ -4,9 +4,10 @@ import { getImage } from "./generator";
 module.exports.generate = async (event) => {
   const buffer = await getImage(
     event?.pathParameters?.mintId,
-    event?.queryStringParameters?.uri,
-    event?.queryStringParameters?.text,
-    event?.queryStringParameters?.cluster
+    event.queryStringParameters && event.queryStringParameters.name,
+    event.queryStringParameters && event.queryStringParameters.uri,
+    event.queryStringParameters && event.queryStringParameters.text,
+    event.queryStringParameters && event.queryStringParameters.cluster
   );
 
   console.log("Returning image buffer", buffer);
