@@ -129,7 +129,6 @@ export async function getJamboImage(
     );
   }
 
-  // text
   const nameCtx = imageCanvas.getContext("2d");
   const textImageUrl = textParam === "TRAINING" ? "TRAINING" : "HUNTING";
   const textImage = await canvas.loadImage(
