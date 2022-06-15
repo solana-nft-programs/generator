@@ -4,11 +4,12 @@ export const getDefaultMetadata = (
   namespace: string,
   fullName: string,
   mintId: string,
+  nameParam: string,
   cluster: string
 ): NFTMetadata => {
   const imageUrl = `https://nft.cardinal.so/img/${mintId}${
-    cluster ? `?cluster=${cluster}` : ""
-  }`;
+    nameParam ? `?name=${nameParam}` : ""
+  }${cluster ? `${nameParam ? "&" : "?"}cluster=${cluster}` : ""}`;
   return {
     name: fullName,
     symbol: "NAME",

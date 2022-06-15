@@ -155,7 +155,13 @@ export async function getMetadata(
       const owner = await getOwner(secondaryConnectionFor(cluster), mintId);
       return getTwitterMetadata(mintName, mintId, owner.toString(), cluster);
     } else {
-      return getDefaultMetadata(namespace, mintName, mintId, cluster);
+      return getDefaultMetadata(
+        namespace,
+        mintName,
+        mintId,
+        nameParam,
+        cluster
+      );
     }
   }
 
@@ -192,7 +198,7 @@ export async function getMetadata(
         image: `https://nft.cardinal.so/img/${mintId}?uri=${
           metadata?.image || ""
         }${textParam ? `&text=${textParam}` : ""}${
-          nameParam ? `&text=${nameParam}` : ""
+          nameParam ? `&name=${nameParam}` : ""
         }${cluster ? `&cluster=${cluster}` : ""}`,
       };
     }
