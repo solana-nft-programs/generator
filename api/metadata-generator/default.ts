@@ -17,8 +17,8 @@ export const getDefaultMetadata = (
     seller_fee_basis_points: 0,
     attributes: [],
     collection: {
-      name: "Cardinal",
-      family: "cardinal",
+      name: namespace,
+      family: namespace,
     },
     properties: {
       files: [
