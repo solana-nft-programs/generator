@@ -16,6 +16,7 @@ import { secondaryConnectionFor } from "../common/connection";
 import type { TokenData } from "../common/tokenData";
 import { getTokenData } from "../common/tokenData";
 import { getOwner } from "../common/utils";
+import { getDefaultMetadata } from "./default";
 import { getExpiredMetadata } from "./expired";
 import { getTwitterMetadata } from "./twitter";
 
@@ -153,6 +154,8 @@ export async function getMetadata(
     if (namespace === "twitter") {
       const owner = await getOwner(secondaryConnectionFor(cluster), mintId);
       return getTwitterMetadata(mintName, mintId, owner.toString(), cluster);
+    } else {
+      return getDefaultMetadata(namespace, mintName, mintId, cluster);
     }
   }
 
