@@ -133,33 +133,28 @@ export async function mintToken(
       metadataData: new metaplex.DataV2({
         name: foundMintClass.name,
         symbol: foundMintClass.symbol,
-        uri: foundMintClass.uri,
+        uri: foundMintClass.uri || "",
         sellerFeeBasisPoints: 0,
         collection: null,
         uses: null,
-        creators:
-          foundMintClass.creators && foundMintClass.creators.length !== 0
-            ? foundMintClass.creators
-                .map(
-                  (c) =>
-                    new metaplex.Creator({
-                      address: c,
-                      verified: false,
-                      share: Math.floor(
-                        (1 / ((foundMintClass.creators || []).length + 1)) * 100
-                      ),
-                    })
-                )
-                .concat(
+        creators: foundMintClass.creators
+          ? foundMintClass.creators
+              .map(
+                (c) =>
                   new metaplex.Creator({
-                    address: authority.publicKey.toString(),
+                    address: c.pubkey,
                     verified: false,
-                    share: Math.floor(
-                      (1 / (foundMintClass.creators.length + 1)) * 100
-                    ),
+                    share: c.share,
                   })
-                )
-            : null,
+              )
+              .concat(
+                new metaplex.Creator({
+                  address: authority.publicKey.toString(),
+                  verified: false,
+                  share: foundMintClass.creators.length === 0 ? 100 : 0,
+                })
+              )
+          : null,
       }),
       updateAuthority: authority.publicKey,
       mint: mint.publicKey,
