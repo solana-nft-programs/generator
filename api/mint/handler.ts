@@ -2,9 +2,10 @@
 import { mintToken } from "./generator";
 
 module.exports.generate = async (event) => {
-  const { requestorAddress } = event.body;
+  const { address } = event.body;
+  console.log("hey", address);
   const json = await mintToken(
-    requestorAddress,
+    address,
     event.pathParameters && event.pathParameters.mintClass,
     event.queryStringParameters && event.queryStringParameters.cluster
   );

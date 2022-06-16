@@ -99,6 +99,21 @@ functions:
               - name: request.querystring.text
               - name: request.querystring.cluster
               - name: request.querystring.attrs
+  mint:
+    handler: mint/handler.generate
+    timeout: 10
+    events:
+      - http:
+          path: /mint/{mintClass}
+          method: post
+          caching:
+            enabled: true
+            ttlInSeconds: 10
+            perKeyInvalidation:
+              requireAuthorization: false
+            cacheKeyParameters:
+              - name: request.path.mintClass
+              - name: request.querystring.cluster
 
 custom:
   apigwBinary:
