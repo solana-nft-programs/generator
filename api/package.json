@@ -30,6 +30,7 @@
     "@saberhq/token-utils": "^1.12.48",
     "@solana/spl-token": "^0.1.8",
     "bignumber.js": "^9.0.2",
+    "fs": "^0.0.1-security",
     "jsbi": "^4.1.0",
     "node-fetch": "^2.6.6",
     "ts-node": "^10.5.0"

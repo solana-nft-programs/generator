@@ -4,6 +4,7 @@ import type * as anchor from "@project-serum/anchor";
 import * as splToken from "@solana/spl-token";
 import * as web3 from "@solana/web3.js";
 import * as canvas from "canvas";
+import { promises } from "fs";
 
 import { secondaryConnectionFor } from "../common/connection";
 import type { TokenData } from "../common/tokenData";
@@ -73,6 +74,15 @@ export async function getImage(
 
     if (namespace === "twitter") {
       return getTwitterImage(namespace, entryName);
+    } else {
+      try {
+        const data = await promises.readFile(
+          __dirname.concat(`/assets/namespaces/${namespace}.jpg`)
+        );
+        return Buffer.from(data);
+      } catch (e) {
+        console.log("Failed to find image for namespace", e);
+      }
     }
   }
 
