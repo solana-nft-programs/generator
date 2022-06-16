@@ -161,7 +161,9 @@ export async function mintToken(
       mintAuthority: authority.publicKey,
     }
   );
+  // create mint metadata end
 
+  // create master edition start
   const masterEditionId = await metaplex.MasterEdition.getPDA(mint.publicKey);
   const masterEditionTx = new metaplex.CreateMasterEditionV3(
     {
@@ -181,7 +183,7 @@ export async function mintToken(
     ...metadataIxs.instructions,
     ...masterEditionTx.instructions,
   ];
-  // create mint metadata end
+  // create master edition end
 
   if (foundMintClass.tokenManger) {
     // create token manager ATA start
@@ -220,7 +222,9 @@ export async function mintToken(
       authorityATA,
       new BN(1),
       TokenManagerKind.Edition,
-      invalidationType
+      invalidationType,
+      1,
+      requestor
     );
     transaction.instructions = [...[tokenManagerInitInstruction]];
     // init token manager end
@@ -232,7 +236,8 @@ export async function mintToken(
       tokenManagerId,
       {
         durationSeconds: foundMintClass.tokenManger?.timeLockSeconds,
-      }
+      },
+      requestor
     );
     transaction.instructions = [...[timeInstruction]];
     // init time invalidator end
