@@ -15,6 +15,7 @@ import { utils } from "@project-serum/anchor";
 import { SignerWallet } from "@saberhq/solana-contrib";
 import { MintLayout, SPLToken } from "@saberhq/token-utils";
 import * as splToken from "@solana/spl-token";
+import type { Connection } from "@solana/web3.js";
 import {
   Keypair,
   PublicKey,
@@ -24,6 +25,7 @@ import {
 import { BN } from "bn.js";
 
 import { secondaryConnectionFor } from "../common/connection";
+import type { MintClass } from "./mintClasses";
 import { mintClasses } from "./mintClasses";
 
 const authority = new SignerWallet(
@@ -33,7 +35,7 @@ const authority = new SignerWallet(
 export async function mintToken(
   requestorAddress: string,
   mintClass: string,
-  cluster: string
+  cluster = "devnet"
 ): Promise<string> {
   console.log(
     ` (Creating mitn transaction for class ${mintClass} cluster (${cluster})`
@@ -122,68 +124,26 @@ export async function mintToken(
   ];
   // create ATAs end
 
-  // create mint metadata start
-  const masterEditionMetadataId = await metaplex.Metadata.getPDA(
-    mint.publicKey
-  );
-  const metadataIxs = new metaplex.CreateMetadataV2(
-    { feePayer: requestor },
-    {
-      metadata: masterEditionMetadataId,
-      metadataData: new metaplex.DataV2({
-        name: foundMintClass.name,
-        symbol: foundMintClass.symbol,
-        uri: foundMintClass.uri || "",
-        sellerFeeBasisPoints: 0,
-        collection: null,
-        uses: null,
-        creators: foundMintClass.creators
-          ? foundMintClass.creators
-              .map(
-                (c) =>
-                  new metaplex.Creator({
-                    address: c.pubkey,
-                    verified: false,
-                    share: c.share,
-                  })
-              )
-              .concat(
-                new metaplex.Creator({
-                  address: authority.publicKey.toString(),
-                  verified: false,
-                  share: foundMintClass.creators.length === 0 ? 100 : 0,
-                })
-              )
-          : null,
-      }),
-      updateAuthority: authority.publicKey,
-      mint: mint.publicKey,
-      mintAuthority: authority.publicKey,
-    }
-  );
-  // create mint metadata end
-
-  // create master edition start
-  const masterEditionId = await metaplex.MasterEdition.getPDA(mint.publicKey);
-  const masterEditionTx = new metaplex.CreateMasterEditionV3(
-    {
-      feePayer: requestor,
-      recentBlockhash: (await connection.getRecentBlockhash("max")).blockhash,
-    },
-    {
-      edition: masterEditionId,
-      metadata: masterEditionMetadataId,
-      updateAuthority: authority.publicKey,
-      mint: mint.publicKey,
-      mintAuthority: authority.publicKey,
-      maxSupply: new BN(1),
-    }
-  );
-  transaction.instructions = [
-    ...metadataIxs.instructions,
-    ...masterEditionTx.instructions,
-  ];
-  // create master edition end
+  // create master edition or edition start
+  if (foundMintClass.editions) {
+    await handleEdition(
+      connection,
+      transaction,
+      mint.publicKey,
+      requestor,
+      authorityATA,
+      foundMintClass
+    );
+  } else {
+    await handleMasterEdition(
+      connection,
+      transaction,
+      mint.publicKey,
+      requestor,
+      foundMintClass
+    );
+  }
+  // create master edition or edition end
 
   if (foundMintClass.tokenManger) {
     // create token manager ATA start
@@ -286,4 +246,120 @@ export async function mintToken(
   const base64 = serialized.toString("base64");
 
   return base64;
+}
+
+export async function handleMasterEdition(
+  connection: Connection,
+  transaction: Transaction,
+  mint: PublicKey,
+  requestor: PublicKey,
+  mintClass: MintClass
+): Promise<void> {
+  // create mint metadata start
+  const masterEditionMetadataId = await metaplex.Metadata.getPDA(mint);
+  const metadataTxs = new metaplex.CreateMetadataV2(
+    { feePayer: requestor },
+    {
+      metadata: masterEditionMetadataId,
+      metadataData: new metaplex.DataV2({
+        name: mintClass.name,
+        symbol: mintClass.symbol,
+        uri: mintClass.uri || "",
+        sellerFeeBasisPoints: 0,
+        collection: null,
+        uses: null,
+        creators: mintClass.creators
+          ? mintClass.creators
+              .map(
+                (c) =>
+                  new metaplex.Creator({
+                    address: c.pubkey,
+                    verified: false,
+                    share: c.share,
+                  })
+              )
+              .concat(
+                new metaplex.Creator({
+                  address: authority.publicKey.toString(),
+                  verified: false,
+                  share: mintClass.creators.length === 0 ? 100 : 0,
+                })
+              )
+          : null,
+      }),
+      updateAuthority: authority.publicKey,
+      mint: mint,
+      mintAuthority: authority.publicKey,
+    }
+  );
+  // create mint metadata end
+
+  const masterEditionId = await metaplex.MasterEdition.getPDA(mint);
+  const masterEditionTx = new metaplex.CreateMasterEditionV3(
+    {
+      feePayer: requestor,
+      recentBlockhash: (await connection.getRecentBlockhash("max")).blockhash,
+    },
+    {
+      edition: masterEditionId,
+      metadata: masterEditionMetadataId,
+      updateAuthority: authority.publicKey,
+      mint: mint,
+      mintAuthority: authority.publicKey,
+      maxSupply: new BN(1),
+    }
+  );
+  transaction.instructions = [
+    ...metadataTxs.instructions,
+    ...masterEditionTx.instructions,
+  ];
+}
+
+export async function handleEdition(
+  connection: Connection,
+  transaction: Transaction,
+  mint: PublicKey,
+  requestor: PublicKey,
+  authorityATA: PublicKey,
+  mintClass: MintClass
+): Promise<void> {
+  if (!mintClass.editions) {
+    throw new Error("Mint class does not configured for editions");
+  }
+  let masterEditionId: PublicKey;
+  try {
+    masterEditionId = new PublicKey(mintClass.editions.masterEdition);
+  } catch (e) {
+    throw new Error("Failed to parse master edition id");
+  }
+  const editionId = await metaplex.Edition.getPDA(mint);
+  const masterEditionMetadataId = await metaplex.Metadata.getPDA(
+    masterEditionId
+  );
+  const editionMetadataId = await metaplex.Metadata.getPDA(mint);
+  const editionMarker = await metaplex.EditionMarker.getPDA(
+    mint,
+    new BN(0) // TODO
+  );
+
+  const editionTxs = new metaplex.MintNewEditionFromMasterEditionViaToken(
+    {
+      feePayer: requestor,
+      recentBlockhash: (await connection.getRecentBlockhash("max")).blockhash,
+    },
+    {
+      edition: editionId,
+      metadata: editionMetadataId,
+      updateAuthority: authority.publicKey,
+      mint: mint,
+      mintAuthority: authority.publicKey,
+      masterEdition: masterEditionId,
+      masterMetadata: masterEditionMetadataId,
+      editionMarker: editionMarker,
+      tokenOwner: authority.publicKey,
+      tokenAccount: authorityATA,
+      editionValue: new BN(0), // TODO
+    }
+  );
+  transaction.instructions = [...editionTxs.instructions];
 }
