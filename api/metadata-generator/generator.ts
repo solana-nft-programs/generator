@@ -46,11 +46,16 @@ export async function getMetadata(
     `Getting metadata for mintId (${mintId}) uri (${uriParam}) textParam (${textParam}) eventParam (${eventParam}) imgParam (${imgParam}) cluster (${cluster})`
   );
   const connection = secondaryConnectionFor(cluster);
-  const tokenData = await getTokenData(
-    connection,
-    new web3.PublicKey(mintId),
-    true
-  );
+  let tokenData: TokenData = {};
+  try {
+    tokenData = await getTokenData(
+      connection,
+      new web3.PublicKey(mintId),
+      true
+    );
+  } catch (e) {
+    console.log(e);
+  }
   if (
     !tokenData.certificateData &&
     !tokenData.tokenManagerData &&
@@ -64,8 +69,8 @@ export async function getMetadata(
         nameParam,
         uriParam,
         textParam,
-        eventParam,
         imgParam,
+        eventParam,
         attrs,
         "devnet"
       );
