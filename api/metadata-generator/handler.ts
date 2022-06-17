@@ -8,6 +8,7 @@ module.exports.generate = async (event) => {
     event.queryStringParameters && event.queryStringParameters.uri,
     event.queryStringParameters && event.queryStringParameters.text,
     event.queryStringParameters && event.queryStringParameters.img,
+    event.queryStringParameters && event.queryStringParameters.event,
     event.queryStringParameters && event.queryStringParameters.attrs,
     event.queryStringParameters && event.queryStringParameters.cluster
   );
