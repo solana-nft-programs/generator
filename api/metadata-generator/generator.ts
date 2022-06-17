@@ -35,21 +35,27 @@ export type NFTMetadata = {
 export async function getMetadata(
   mintId: string,
   nameParam: string,
-  metadataUri: string,
+  uriParam: string,
   textParam: string,
   imgParam: string,
+  eventParam: string,
   attrs: string,
   cluster: string
 ): Promise<NFTMetadata> {
   console.log(
-    `Getting metadata for mintId (${mintId}) uri (${metadataUri}) textParam (${textParam}) imgParam (${imgParam}) cluster (${cluster})`
+    `Getting metadata for mintId (${mintId}) uri (${uriParam}) textParam (${textParam}) eventParam (${eventParam}) imgParam (${imgParam}) cluster (${cluster})`
   );
   const connection = secondaryConnectionFor(cluster);
-  const tokenData = await getTokenData(
-    connection,
-    new web3.PublicKey(mintId),
-    true
-  );
+  let tokenData: TokenData = {};
+  try {
+    tokenData = await getTokenData(
+      connection,
+      new web3.PublicKey(mintId),
+      true
+    );
+  } catch (e) {
+    console.log(e);
+  }
   if (
     !tokenData.certificateData &&
     !tokenData.tokenManagerData &&
@@ -61,9 +67,10 @@ export async function getMetadata(
       return getMetadata(
         mintId,
         nameParam,
-        metadataUri,
+        uriParam,
         textParam,
         imgParam,
+        eventParam,
         attrs,
         "devnet"
       );
@@ -168,6 +175,9 @@ export async function getMetadata(
   let response: NFTMetadata = {
     attributes: [],
   };
+  const metadataUri = eventParam
+    ? `https://scan.cardinal.so/events/metadata/${eventParam}.json`
+    : uriParam;
   if (originalTokenData?.metadata || metadataUri || tokenData.metadata) {
     let metadata =
       originalTokenData?.metadata?.data || tokenData.metadata?.data;
