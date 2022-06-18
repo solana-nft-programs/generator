@@ -77,10 +77,10 @@ functions:
             perKeyInvalidation:
               requireAuthorization: false
             cacheKeyParameters:
+              - name: request.querystring.name
               - name: request.querystring.uri
               - name: request.querystring.text
               - name: request.querystring.cluster
-              - name: request.querystring.attrs
   metadata-generator:
     handler: metadata-generator/handler.generate
     timeout: 10
@@ -95,10 +95,13 @@ functions:
               requireAuthorization: false
             cacheKeyParameters:
               - name: request.path.mintId
+              - name: request.querystring.name
               - name: request.querystring.uri
               - name: request.querystring.text
-              - name: request.querystring.cluster
+              - name: request.querystring.img
+              - name: request.querystring.event
               - name: request.querystring.attrs
+              - name: request.querystring.cluster
 
 custom:
   apigwBinary:
