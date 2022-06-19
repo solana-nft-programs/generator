@@ -61,7 +61,7 @@ export const drawText = (
       nameCtx.fillStyle = styleOptions?.fillStyles ?? "white";
       nameCtx.textAlign = "center";
       nameCtx.textBaseline = "middle";
-      nameCtx.fillText(text, imageCanvas.width * 0.5, imageCanvas.width * 0.1);
+      nameCtx.fillText(text, imageCanvas.width * 0.5, imageCanvas.width * 0.15);
       return;
     default:
       nameCtx.font = `${0.1 * imageCanvas.width}px SFPro`;
