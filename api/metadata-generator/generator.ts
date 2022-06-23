@@ -43,7 +43,7 @@ export async function getMetadata(
   cluster: string
 ): Promise<NFTMetadata> {
   console.log(
-    `Getting metadata for mintId (${mintId}) uri (${uriParam}) textParam (${textParam}) eventParam (${eventParam}) imgParam (${imgParam}) cluster (${cluster})`
+    `Getting metadata for mintId (${mintId}) uri (${uriParam}) textParam (${textParam}) imgParam (${imgParam}) eventParam (${eventParam}) attrsParam (${attrs}) cluster (${cluster})`
   );
   const connection = secondaryConnectionFor(cluster);
   let tokenData: TokenData = {};
