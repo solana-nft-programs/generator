@@ -61,7 +61,10 @@ export async function getImage(
     }
   }
 
-  if (tokenData?.metaplexData?.parsed.data.symbol === "NAME") {
+  if (
+    tokenData?.metaplexData?.parsed.data.symbol === "NAME" ||
+    textParam.includes("@")
+  ) {
     const mintName =
       originalTokenData?.metaplexData?.parsed.data.name ||
       tokenData?.metaplexData?.parsed.data.name;
