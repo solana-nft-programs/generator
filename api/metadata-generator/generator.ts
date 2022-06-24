@@ -160,7 +160,13 @@ export async function getMetadata(
 
     if (namespace === "twitter") {
       const owner = await getOwner(secondaryConnectionFor(cluster), mintId);
-      return getTwitterMetadata(mintName, mintId, owner.toString(), cluster);
+      return getTwitterMetadata(
+        nameParam ? `${nameParam}.${namespace}` : mintName,
+        mintId,
+        owner.toString(),
+        nameParam,
+        cluster
+      );
     } else {
       return getDefaultMetadata(
         namespace,

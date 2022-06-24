@@ -4,11 +4,12 @@ export const getTwitterMetadata = (
   fullName: string,
   mintId: string,
   ownerId: string,
+  nameParam: string,
   cluster: string
 ): NFTMetadata => {
-  const imageUrl = `https://api.cardinal.so/img/${mintId}${
-    cluster ? `?cluster=${cluster}` : ""
-  }`;
+  const imageUrl = `https://nft.cardinal.so/img/${mintId}?${
+    nameParam ? `&name=${nameParam}` : ""
+  }${cluster ? `&cluster=${cluster}` : ""}`;
   return {
     name: fullName,
     symbol: "NAME",
