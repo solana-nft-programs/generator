@@ -1,7 +1,5 @@
+import { formatName, IDENTITIES } from "@cardinal/namespaces";
 import * as canvas from "canvas";
-
-import { formatName } from "../common/utils";
-import { identities } from "./generator";
 
 const IDENTITY_COLORS: { [key: string]: string } = {
   twitter: "#1DA1F2",
@@ -32,7 +30,6 @@ export async function getIdentityImage(namespace: string, handle: string) {
   nameCtx.textBaseline = "middle";
 
   const nameText = formatName(namespace, handle);
-  console.log("nameText", nameText);
   nameCtx.fillText(nameText, WIDTH * 0.5, HEIGHT * 0.5);
   nameCtx.textAlign = "left";
 
@@ -66,7 +63,7 @@ export async function getIdentityImage(namespace: string, handle: string) {
 
   const topLextCtx = imageCanvas.getContext("2d");
   let topLeft = PADDING;
-  if (identities.includes(namespace)) {
+  if (IDENTITIES.includes(namespace)) {
     if (namespace === "twitter") {
       topLextCtx.drawImage(
         await canvas.loadImage(

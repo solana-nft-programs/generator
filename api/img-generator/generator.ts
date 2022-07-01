@@ -1,4 +1,5 @@
 import * as certificates from "@cardinal/certificates";
+import { breakIdentity } from "@cardinal/namespaces";
 import type * as anchor from "@project-serum/anchor";
 import * as splToken from "@solana/spl-token";
 import * as web3 from "@solana/web3.js";
@@ -8,13 +9,10 @@ import { promises } from "fs";
 import { secondaryConnectionFor } from "../common/connection";
 import type { TokenData } from "../common/tokenData";
 import { getTokenData } from "../common/tokenData";
-import { breakIdentity } from "../common/utils";
 import { getIdentityImage } from "./identity-image";
 import { drawLogo, drawShadow, drawText } from "./img-utils";
 import { getJamboImage } from "./jambo-image";
 import { fmtMintAmount } from "./utils";
-
-export const identities = ["twitter", "discord"];
 
 export async function getImage(
   mintId: string,
