@@ -1,5 +1,4 @@
 import * as certificates from "@cardinal/certificates";
-import * as namespaces from "@cardinal/namespaces";
 import type * as anchor from "@project-serum/anchor";
 import * as splToken from "@solana/spl-token";
 import * as web3 from "@solana/web3.js";
@@ -9,10 +8,13 @@ import { promises } from "fs";
 import { secondaryConnectionFor } from "../common/connection";
 import type { TokenData } from "../common/tokenData";
 import { getTokenData } from "../common/tokenData";
+import { breakIdentity } from "../common/utils";
+import { getIdentityImage } from "./identity-image";
 import { drawLogo, drawShadow, drawText } from "./img-utils";
 import { getJamboImage } from "./jambo-image";
-import { getTwitterImage } from "./twitter-image";
 import { fmtMintAmount } from "./utils";
+
+export const identities = ["twitter", "discord"];
 
 export async function getImage(
   mintId: string,
@@ -71,13 +73,13 @@ export async function getImage(
       tokenData?.metaplexData?.parsed.data.name;
     const namespace = nameParam
       ? tokenData?.metaplexData?.parsed.data.name
-      : namespaces.breakName(mintName || textParam || "")[0];
+      : breakIdentity(mintName || textParam || "")[0];
     const entryName = nameParam
       ? nameParam
-      : namespaces.breakName(mintName || textParam || "")[1];
+      : breakIdentity(mintName || textParam || "")[1];
 
-    if (namespace === "twitter") {
-      return getTwitterImage(namespace, entryName);
+    if (namespace && identities.includes(namespace)) {
+      return getIdentityImage(namespace, entryName);
     } else {
       try {
         const data = await promises.readFile(

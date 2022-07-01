@@ -1,10 +1,15 @@
-import * as namespaces from "@cardinal/namespaces";
 import * as canvas from "canvas";
 
-const COLOR_TWITTER = "#1DA1F2";
+import { formatName } from "../common/utils";
+import { identities } from "./generator";
 
-export async function getTwitterImage(namespace: string, handle: string) {
-  console.log("Rending twitter image");
+const IDENTITY_COLORS: { [key: string]: string } = {
+  twitter: "#1DA1F2",
+  discord: "#5866f2",
+};
+
+export async function getIdentityImage(namespace: string, handle: string) {
+  console.log(`Rending ${namespace} image`);
 
   // setup
   canvas.registerFont(__dirname.concat("/fonts/SF-Pro.ttf"), {
@@ -17,7 +22,7 @@ export async function getTwitterImage(namespace: string, handle: string) {
 
   // background
   const backgroundCtx = imageCanvas.getContext("2d");
-  backgroundCtx.fillStyle = COLOR_TWITTER;
+  backgroundCtx.fillStyle = IDENTITY_COLORS[namespace];
   backgroundCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
   const nameCtx = imageCanvas.getContext("2d");
@@ -26,7 +31,8 @@ export async function getTwitterImage(namespace: string, handle: string) {
   nameCtx.textAlign = "center";
   nameCtx.textBaseline = "middle";
 
-  const nameText = namespaces.formatName(namespace, handle);
+  const nameText = formatName(namespace, handle);
+  console.log("nameText", nameText);
   nameCtx.fillText(nameText, WIDTH * 0.5, HEIGHT * 0.5);
   nameCtx.textAlign = "left";
 
@@ -60,16 +66,26 @@ export async function getTwitterImage(namespace: string, handle: string) {
 
   const topLextCtx = imageCanvas.getContext("2d");
   let topLeft = PADDING;
-  if (namespace === "twitter") {
-    topLextCtx.drawImage(
-      await canvas.loadImage(
-        __dirname.concat("/assets/twitter-white-logo.png")
-      ),
-      topLeft,
-      PADDING,
-      0.15 * WIDTH,
-      0.15 * WIDTH
-    );
+  if (identities.includes(namespace)) {
+    if (namespace === "twitter") {
+      topLextCtx.drawImage(
+        await canvas.loadImage(
+          __dirname.concat("/assets/twitter-white-logo.png")
+        ),
+        topLeft,
+        PADDING,
+        0.15 * WIDTH,
+        0.15 * HEIGHT
+      );
+    } else if (namespace === "discord") {
+      topLextCtx.drawImage(
+        await canvas.loadImage(__dirname.concat("/assets/discord-logo.png")),
+        topLeft,
+        PADDING,
+        0.15 * WIDTH,
+        0.12 * HEIGHT
+      );
+    }
     topLeft += 0.11 * WIDTH;
   }
 
