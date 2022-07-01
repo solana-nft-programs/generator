@@ -57,6 +57,7 @@ export async function getMetadata(
     console.log(e);
   }
   if (
+    !tokenData.metaplexData &&
     !tokenData.certificateData &&
     !tokenData.tokenManagerData &&
     !tokenData.timeInvalidatorData &&
@@ -74,9 +75,14 @@ export async function getMetadata(
         attrs,
         "devnet"
       );
-    } else if (tokenData.metaplexData?.parsed.data.symbol === "RCP") {
-      return getExpiredMetadata(cluster);
     }
+  }
+
+  if (
+    !tokenData.tokenManagerData &&
+    tokenData.metaplexData?.parsed.data.symbol === "RCP"
+  ) {
+    return getExpiredMetadata(cluster);
   }
 
   const dynamicAttributes: {

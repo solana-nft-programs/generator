@@ -35,6 +35,7 @@ export async function getImage(
     console.log(e);
   }
   if (
+    !tokenData.metaplexData &&
     !tokenData.certificateData &&
     !tokenData.tokenManagerData &&
     !tokenData.timeInvalidatorData &&
