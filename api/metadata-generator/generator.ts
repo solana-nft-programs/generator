@@ -182,7 +182,7 @@ export async function getMetadata(
     attributes: [],
   };
   const metadataUri = eventParam
-    ? `https://scan.cardinal.so/events/metadata/${eventParam}.json`
+    ? `https://event.cardinal.so/events/${eventParam}/event.json`
     : uriParam;
   if (originalTokenData?.metadata || metadataUri || tokenData.metadata) {
     let metadata =
