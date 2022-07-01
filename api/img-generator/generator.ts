@@ -35,6 +35,7 @@ export async function getImage(
     console.log(e);
   }
   if (
+    !tokenData.metaplexData &&
     !tokenData.certificateData &&
     !tokenData.tokenManagerData &&
     !tokenData.timeInvalidatorData &&
@@ -63,7 +64,7 @@ export async function getImage(
 
   if (
     tokenData?.metaplexData?.parsed.data.symbol === "NAME" ||
-    textParam.includes("@")
+    (textParam && textParam.includes("@"))
   ) {
     const mintName =
       originalTokenData?.metaplexData?.parsed.data.name ||
@@ -80,7 +81,7 @@ export async function getImage(
     } else {
       try {
         const data = await promises.readFile(
-          __dirname.concat(`/assets/namespaces/${namespace}.jpg`)
+          __dirname.concat(`/assets/namespaces/${namespace || ""}.jpg`)
         );
         return Buffer.from(data);
       } catch (e) {
