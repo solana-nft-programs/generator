@@ -168,13 +168,23 @@ export async function getMetadata(
         cluster
       );
     } else {
-      return getDefaultMetadata(
-        namespace,
-        mintName,
-        mintId,
-        nameParam,
-        cluster
-      );
+      const metadataUri = `https://events.cardinal.so/events/${namespace}/event.json`;
+      try {
+        const metadataResponse = await fetch(metadataUri, {});
+        if (metadataResponse.status !== 200) {
+          throw new Error("Metadata not found");
+        }
+        const metadata = await metadataResponse.json();
+        return metadata as NFTMetadata;
+      } catch (e) {
+        return getDefaultMetadata(
+          namespace,
+          mintName,
+          mintId,
+          nameParam,
+          cluster
+        );
+      }
     }
   }
 
@@ -182,7 +192,7 @@ export async function getMetadata(
     attributes: [],
   };
   const metadataUri = eventParam
-    ? `https://event.cardinal.so/events/${eventParam}/event.json`
+    ? `https://events.cardinal.so/events/${eventParam}/event.json`
     : uriParam;
   if (originalTokenData?.metadata || metadataUri || tokenData.metadata) {
     let metadata =
