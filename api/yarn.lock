@@ -100,10 +100,10 @@
     tiny-invariant "^1.2.0"
     tslib "^2.3.1"
 
-"@cardinal/namespaces@4.1.19":
-  version "4.1.19"
-  resolved "https://registry.yarnpkg.com/@cardinal/namespaces/-/namespaces-4.1.19.tgz#efc815aa90a846572f5c0bf66c6d61134f3e3812"
-  integrity sha512-x4MnUTgXCA2mCAsbVw162pNvkebKTSGpqd8ivQ+VcgCG+4F1t2SakB6SVzzE6VJV14vR84vYglSwm8gsO9zu8Q==
+"@cardinal/namespaces@4.1.20":
+  version "4.1.20"
+  resolved "https://registry.yarnpkg.com/@cardinal/namespaces/-/namespaces-4.1.20.tgz#ff3903255aed4c35eee98ae7ab661dc27dd889c3"
+  integrity sha512-iPToVqbkKDUNhLnokkUabWUqf7+Aauxy7Wxebxk4HcpIQY1s/NBldvA68Bb6+esTdSEbnWenvdssAn7RRVJyzg==
   dependencies:
     "@cardinal/certificates" "^2.0.0"
     "@cardinal/common" "^2.0.1"
