@@ -230,7 +230,7 @@ export async function getMetadata(
         image: `https://nft.cardinal.so/img/${mintId}?uri=${
           metadata?.image || ""
         }${textParam ? `&text=${textParam}` : ""}${
-          nameParam ? `&name=${nameParam}` : ""
+          nameParam ? `&name=${encodeURIComponent(nameParam)}` : ""
         }${cluster ? `&cluster=${cluster}` : ""}`,
       };
     }

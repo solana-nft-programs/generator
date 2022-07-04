@@ -8,7 +8,7 @@ export const getDefaultMetadata = (
   cluster: string
 ): NFTMetadata => {
   const imageUrl = `https://nft.cardinal.so/img/${mintId}${
-    nameParam ? `?name=${nameParam}` : ""
+    nameParam ? `?name=${encodeURIComponent(nameParam)}` : ""
   }${cluster ? `${nameParam ? "&" : "?"}cluster=${cluster}` : ""}`;
   return {
     name: fullName,
