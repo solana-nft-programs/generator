@@ -6,8 +6,12 @@ const IDENTITY_COLORS: { [key: string]: string } = {
   discord: "#5866f2",
 };
 
-export async function getIdentityImage(namespace: string, handle: string) {
-  console.log(`Rending ${namespace} image`);
+export async function getIdentityImage(
+  namespace: string,
+  handle: string,
+  proxy?: boolean
+) {
+  console.log(`Rendering ${namespace} image`);
 
   // setup
   canvas.registerFont(__dirname.concat("/fonts/SF-Pro.ttf"), {
@@ -29,7 +33,13 @@ export async function getIdentityImage(namespace: string, handle: string) {
   nameCtx.textAlign = "center";
   nameCtx.textBaseline = "middle";
 
-  const nameText = formatName(namespace, handle);
+  let nameText = decodeURIComponent(formatName(namespace, handle));
+  let topRightText: string | undefined;
+  if (namespace === "discord") {
+    const temp = nameText.split("#");
+    nameText = temp.slice(0, -1).join();
+    topRightText = temp.pop();
+  }
   nameCtx.fillText(nameText, WIDTH * 0.5, HEIGHT * 0.5);
   nameCtx.textAlign = "left";
 
@@ -46,26 +56,28 @@ export async function getIdentityImage(namespace: string, handle: string) {
     HEIGHT * 0.18
   );
 
-  const bottomLeftCtx = imageCanvas.getContext("2d");
-  bottomLeftCtx.textAlign = "left";
-  let bottomLeft = PADDING * 1.5;
+  if (!proxy) {
+    const bottomLeftCtx = imageCanvas.getContext("2d");
+    bottomLeftCtx.textAlign = "left";
+    let bottomLeft = PADDING * 1.5;
 
-  bottomLeftCtx.font = `${0.055 * WIDTH}px SFPro`;
-  bottomLeftCtx.fillStyle = "white";
-  bottomLeftCtx.drawImage(
-    await canvas.loadImage(__dirname.concat("/assets/infinity.png")),
-    PADDING,
-    HEIGHT - bottomLeft - 0.08 * WIDTH,
-    0.15 * WIDTH,
-    0.15 * WIDTH
-  );
-  bottomLeft += 0.075 * WIDTH;
+    bottomLeftCtx.font = `${0.055 * WIDTH}px SFPro`;
+    bottomLeftCtx.fillStyle = "white";
+    bottomLeftCtx.drawImage(
+      await canvas.loadImage(__dirname.concat("/assets/infinity.png")),
+      PADDING,
+      HEIGHT - bottomLeft - 0.08 * WIDTH,
+      0.15 * WIDTH,
+      0.15 * WIDTH
+    );
+    bottomLeft += 0.075 * WIDTH;
+  }
 
-  const topLextCtx = imageCanvas.getContext("2d");
+  const topLeftCtx = imageCanvas.getContext("2d");
   let topLeft = PADDING;
   if (IDENTITIES.includes(namespace)) {
     if (namespace === "twitter") {
-      topLextCtx.drawImage(
+      topLeftCtx.drawImage(
         await canvas.loadImage(
           __dirname.concat("/assets/twitter-white-logo.png")
         ),
@@ -75,7 +87,7 @@ export async function getIdentityImage(namespace: string, handle: string) {
         0.15 * HEIGHT
       );
     } else if (namespace === "discord") {
-      topLextCtx.drawImage(
+      topLeftCtx.drawImage(
         await canvas.loadImage(__dirname.concat("/assets/discord-logo.png")),
         topLeft,
         PADDING,
@@ -84,6 +96,14 @@ export async function getIdentityImage(namespace: string, handle: string) {
       );
     }
     topLeft += 0.11 * WIDTH;
+  }
+
+  if (topRightText) {
+    const topRightCtx = imageCanvas.getContext("2d");
+    topRightCtx.font = `${0.08 * WIDTH}px SFPro`;
+    topRightCtx.fillStyle = "white";
+    topRightCtx.textAlign = "right";
+    topRightCtx.fillText("#" + topRightText, WIDTH * 0.95, HEIGHT * 0.1);
   }
 
   const buffer = imageCanvas.toBuffer("image/png");

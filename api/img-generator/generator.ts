@@ -19,7 +19,8 @@ export async function getImage(
   nameParam: string,
   imgUri: string,
   textParam: string,
-  cluster: string | null
+  cluster: string | null,
+  proxy?: string
 ): Promise<Buffer> {
   console.log(
     `Handling img generatation for mintId (${mintId}) imgUri (${imgUri}) text (${textParam}) and cluster (${
@@ -42,8 +43,8 @@ export async function getImage(
     !tokenData.useInvalidatorData &&
     cluster !== "devnet"
   ) {
-    console.log("Falling back to devnet metadata");
-    return getImage(mintId, nameParam, imgUri, textParam, "devnet");
+    console.log("Falling back to devnet image");
+    return getImage(mintId, nameParam, imgUri, textParam, "devnet", proxy);
   }
 
   const originalMint = tokenData?.certificateData?.parsed
@@ -62,9 +63,12 @@ export async function getImage(
     }
   }
 
+  const parsedProxy = proxy ? proxy === "true" : false;
+  console.log("parsedProxy", parsedProxy, proxy);
   if (
     tokenData?.metaplexData?.parsed.data.symbol === "NAME" ||
-    (textParam && textParam.includes("@"))
+    (textParam && textParam.includes("@")) ||
+    parsedProxy
   ) {
     const mintName =
       originalTokenData?.metaplexData?.parsed.data.name ||
@@ -77,7 +81,7 @@ export async function getImage(
       : breakIdentity(mintName || textParam || "")[1];
 
     if (namespace && IDENTITIES.includes(namespace)) {
-      return getIdentityImage(namespace, entryName);
+      return getIdentityImage(namespace, entryName, parsedProxy);
     } else {
       try {
         const data = await promises.readFile(
