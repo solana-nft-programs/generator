@@ -28,7 +28,7 @@ export async function getIdentityImage(
   backgroundCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
   const nameCtx = imageCanvas.getContext("2d");
-  nameCtx.font = `${0.1 * WIDTH}px SFPro`;
+  nameCtx.font = `${(proxy ? 0.6 : 0.1) * WIDTH}px SFPro`;
   nameCtx.fillStyle = "white";
   nameCtx.textAlign = "center";
   nameCtx.textBaseline = "middle";
@@ -40,21 +40,26 @@ export async function getIdentityImage(
     nameText = temp.slice(0, -1).join();
     topRightText = temp.pop();
   }
+  if (proxy) {
+    nameText = nameText[1].toUpperCase();
+  }
   nameCtx.fillText(nameText, WIDTH * 0.5, HEIGHT * 0.5);
   nameCtx.textAlign = "left";
 
   // logo
-  const logoCtx = imageCanvas.getContext("2d");
-  const logo = await canvas.loadImage(
-    __dirname.concat("/assets/cardinal-crosshair.png")
-  );
-  logoCtx.drawImage(
-    logo,
-    HEIGHT - PADDING / 2 - HEIGHT * 0.18,
-    WIDTH - PADDING / 2 - WIDTH * 0.18,
-    WIDTH * 0.18,
-    HEIGHT * 0.18
-  );
+  if (!proxy) {
+    const logoCtx = imageCanvas.getContext("2d");
+    const logo = await canvas.loadImage(
+      __dirname.concat("/assets/cardinal-crosshair.png")
+    );
+    logoCtx.drawImage(
+      logo,
+      HEIGHT - PADDING / 2 - HEIGHT * 0.18,
+      WIDTH - PADDING / 2 - WIDTH * 0.18,
+      WIDTH * 0.18,
+      HEIGHT * 0.18
+    );
+  }
 
   if (!proxy) {
     const bottomLeftCtx = imageCanvas.getContext("2d");
@@ -73,32 +78,34 @@ export async function getIdentityImage(
     bottomLeft += 0.075 * WIDTH;
   }
 
-  const topLeftCtx = imageCanvas.getContext("2d");
-  let topLeft = PADDING;
-  if (IDENTITIES.includes(namespace)) {
-    if (namespace === "twitter") {
-      topLeftCtx.drawImage(
-        await canvas.loadImage(
-          __dirname.concat("/assets/twitter-white-logo.png")
-        ),
-        topLeft,
-        PADDING,
-        0.15 * WIDTH,
-        0.15 * HEIGHT
-      );
-    } else if (namespace === "discord") {
-      topLeftCtx.drawImage(
-        await canvas.loadImage(__dirname.concat("/assets/discord-logo.png")),
-        topLeft,
-        PADDING,
-        0.15 * WIDTH,
-        0.12 * HEIGHT
-      );
+  if (!proxy) {
+    const topLeftCtx = imageCanvas.getContext("2d");
+    let topLeft = PADDING;
+    if (IDENTITIES.includes(namespace)) {
+      if (namespace === "twitter") {
+        topLeftCtx.drawImage(
+          await canvas.loadImage(
+            __dirname.concat("/assets/twitter-white-logo.png")
+          ),
+          topLeft,
+          PADDING,
+          0.15 * WIDTH,
+          0.15 * HEIGHT
+        );
+      } else if (namespace === "discord") {
+        topLeftCtx.drawImage(
+          await canvas.loadImage(__dirname.concat("/assets/discord-logo.png")),
+          topLeft,
+          PADDING,
+          0.15 * WIDTH,
+          0.12 * HEIGHT
+        );
+      }
+      topLeft += 0.11 * WIDTH;
     }
-    topLeft += 0.11 * WIDTH;
   }
 
-  if (topRightText) {
+  if (topRightText && !proxy) {
     const topRightCtx = imageCanvas.getContext("2d");
     topRightCtx.font = `${0.08 * WIDTH}px SFPro`;
     topRightCtx.fillStyle = "white";
