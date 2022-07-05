@@ -21,7 +21,6 @@ export async function getJamboImage(
   });
   const WIDTH = 250;
   const HEIGHT = 250;
-  const PADDING = 0.05 * WIDTH;
   const imageCanvas = canvas.createCanvas(WIDTH, HEIGHT);
   const GROUP_AND_HUNGRY_THRESHOLD = 10000;
 
@@ -107,26 +106,30 @@ export async function getJamboImage(
       new web3.PublicKey(originalMint)
     );
     const entry = (await questPool.getQuestEntries(connection, [idd]))[0];
-    const pool = (
-      await questPool.getQuestPools(connection, [
-        new web3.PublicKey(entry.parsed.stakePool.toString()),
-      ])
-    )[0];
-    const questStart = entry?.parsed.questStart.toNumber() || UTCNow;
-    const questDuration = pool.parsed.rewardDurationSeconds.toNumber();
-    const questEnd = new Date(
-      (UTCNow + (questDuration - (UTCNow - questStart))) * 1000
-    );
-    const date = questEnd.toLocaleDateString().split("/");
-    const time = questEnd.toTimeString().split(":");
-    dateCtx.fillText(
-      `Claimable on ${date[0]}/${date[1]}/${date[2].substring(
-        date[2].length - 2,
-        date[2].length
-      )} ${time[0]}:${time[1]} GMT`,
-      20,
-      20
-    );
+    try {
+      const pool = (
+        await questPool.getQuestPools(connection, [
+          new web3.PublicKey(entry.parsed.stakePool.toString()),
+        ])
+      )[0];
+      const questStart = entry?.parsed.questStart.toNumber() || UTCNow;
+      const questDuration = pool.parsed.rewardDurationSeconds.toNumber();
+      const questEnd = new Date(
+        (UTCNow + (questDuration - (UTCNow - questStart))) * 1000
+      );
+      const date = questEnd.toLocaleDateString().split("/");
+      const time = questEnd.toTimeString().split(":");
+      dateCtx.fillText(
+        `Claimable on ${date[0]}/${date[1]}/${date[2].substring(
+          date[2].length - 2,
+          date[2].length
+        )} ${time[0]}:${time[1]} GMT`,
+        20,
+        20
+      );
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   const nameCtx = imageCanvas.getContext("2d");
