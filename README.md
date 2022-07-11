@@ -107,7 +107,7 @@ If you are developing using Cardinal generator contracts and libraries, feel fre
 
 For issues please, file a GitHub issue.
 
-> https://discord.gg/bz2SxDQ8
+> https://discord.gg/hBWw5pwXUq
 
 ## License
 
