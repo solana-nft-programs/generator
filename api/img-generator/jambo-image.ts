@@ -6,15 +6,30 @@ import * as web3 from "@solana/web3.js";
 import * as canvas from "canvas";
 
 import type { TokenData } from "../common/tokenData";
+import { getTokenData } from "../common/tokenData";
 
 export async function getJamboImage(
-  originalTokenData: TokenData | null,
+  tokenData: TokenData,
   connection: web3.Connection,
-  originalMint: web3.PublicKey,
   textParam?: string,
   imgUri?: string
 ) {
   console.log("Rendering jambo image");
+  const originalMint = tokenData?.certificateData?.parsed
+    .originalMint as web3.PublicKey;
+  let originalTokenData: TokenData | null = null;
+
+  // ovverride uri with originalMint uri if present
+  if (originalMint) {
+    try {
+      originalTokenData = await getTokenData(connection, originalMint, true);
+    } catch (e) {
+      console.log(
+        `Error fetching metaplex metadata for original mint (${originalMint.toString()})`,
+        e
+      );
+    }
+  }
 
   canvas.registerFont(__dirname.concat("/fonts/SF-Pro.ttf"), {
     family: "SFPro",
@@ -102,10 +117,12 @@ export async function getJamboImage(
       20
     );
   } else {
-    const [idd] = await questPool.findQuestEntryId(
+    const [questEntryId] = await questPool.findQuestEntryId(
       new web3.PublicKey(originalMint)
     );
-    const entry = (await questPool.getQuestEntries(connection, [idd]))[0];
+    const entry = (
+      await questPool.getQuestEntries(connection, [questEntryId])
+    )[0];
     try {
       const pool = (
         await questPool.getQuestPools(connection, [
@@ -135,7 +152,7 @@ export async function getJamboImage(
   const nameCtx = imageCanvas.getContext("2d");
   const textImageUrl = textParam === "TRAINING" ? "TRAINING" : "HUNTING";
   const textImage = await canvas.loadImage(
-    __dirname.concat(`/assets/${textImageUrl}.png`)
+    __dirname.concat(`/assets/jambo/${textImageUrl}.png`)
   );
   nameCtx.drawImage(
     textImage,

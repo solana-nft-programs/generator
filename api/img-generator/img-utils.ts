@@ -28,6 +28,9 @@ export const drawText = (
   textParam: string,
   styleOptions?: TextStyleOptions
 ) => {
+  canvas.registerFont(__dirname.concat("/fonts/SF-Pro.ttf"), {
+    family: "SFPro",
+  });
   const nameCtx = imageCanvas.getContext("2d");
   const [style, text] = getStyleAndText(textParam, styleOptions?.defaultStyle);
   switch (style) {
@@ -62,6 +65,16 @@ export const drawText = (
       nameCtx.textAlign = "center";
       nameCtx.textBaseline = "middle";
       nameCtx.fillText(text, imageCanvas.width * 0.5, imageCanvas.width * 0.15);
+      return;
+    case "topRight":
+      nameCtx.font = `${0.1 * imageCanvas.width}px SFPro`;
+      nameCtx.fillStyle = "white";
+      nameCtx.textAlign = "right";
+      nameCtx.fillText(
+        "#" + text,
+        imageCanvas.width * 0.95,
+        imageCanvas.height * 0.1
+      );
       return;
     default:
       nameCtx.font = `${0.1 * imageCanvas.width}px SFPro`;
@@ -113,4 +126,55 @@ export const drawLogo = async (
     imageCanvas.width * 0.16,
     imageCanvas.height * 0.16
   );
+};
+
+export const drawDefaultBackground = (imageCanvas: canvas.Canvas) => {
+  const backgroundCtx = imageCanvas.getContext("2d");
+  const maxWidth =
+    Math.sqrt(
+      imageCanvas.width * imageCanvas.width +
+        imageCanvas.height * imageCanvas.height
+    ) / 2;
+  const angle = 0.45;
+  const grd = backgroundCtx.createLinearGradient(
+    imageCanvas.width / 2 + Math.cos(angle) * maxWidth, // start pos
+    imageCanvas.height / 2 + Math.sin(angle) * maxWidth,
+    imageCanvas.width / 2 - Math.cos(angle) * maxWidth, // end pos
+    imageCanvas.height / 2 - Math.sin(angle) * maxWidth
+  );
+  grd.addColorStop(0, "#4C1734");
+  grd.addColorStop(1, "#000");
+  backgroundCtx.fillStyle = grd;
+  backgroundCtx.fillRect(0, 0, imageCanvas.width, imageCanvas.height);
+};
+
+export const drawBackgroundImage = async (
+  imageCanvas: canvas.Canvas,
+  imageUrl: string
+) => {
+  const imgBackgroundCtx = imageCanvas.getContext("2d");
+  imgBackgroundCtx.fillStyle = "rgba(26, 27, 32, 1)";
+  imgBackgroundCtx.fillRect(0, 0, imageCanvas.width, imageCanvas.height);
+
+  const img = await canvas.loadImage(imageUrl);
+  const imgContext = imageCanvas.getContext("2d");
+  if (img.height > img.width) {
+    const imgHeightMultiplier = imageCanvas.width / img.height;
+    imgContext.drawImage(
+      img,
+      (imageCanvas.width - img.width * imgHeightMultiplier) / 2,
+      0,
+      img.width * imgHeightMultiplier,
+      imageCanvas.height
+    );
+  } else {
+    const imgWidthMultiplier = imageCanvas.height / img.width;
+    imgContext.drawImage(
+      img,
+      0,
+      (imageCanvas.height - img.height * imgWidthMultiplier) / 2,
+      imageCanvas.width,
+      img.height * imgWidthMultiplier
+    );
+  }
 };

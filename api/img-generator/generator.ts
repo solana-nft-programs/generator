@@ -1,39 +1,42 @@
-import * as certificates from "@cardinal/certificates";
-import { breakIdentity, IDENTITIES } from "@cardinal/namespaces";
 import type * as anchor from "@project-serum/anchor";
-import * as splToken from "@solana/spl-token";
-import * as web3 from "@solana/web3.js";
+import { PublicKey } from "@solana/web3.js";
 import * as canvas from "canvas";
-import { promises } from "fs";
 
 import { secondaryConnectionFor } from "../common/connection";
 import type { TokenData } from "../common/tokenData";
 import { getTokenData } from "../common/tokenData";
-import { getIdentityImage } from "./identity-image";
-import { drawLogo, drawShadow, drawText } from "./img-utils";
+import {
+  drawBackgroundImage,
+  drawDefaultBackground,
+  drawLogo,
+  drawShadow,
+  drawText,
+} from "./img-utils";
 import { getJamboImage } from "./jambo-image";
-import { fmtMintAmount } from "./utils";
+import { getNamespaceImage } from "./namespace-image";
 
 export async function getImage(
-  mintId: string,
+  mintIdParam: string,
   nameParam: string,
-  imgUri: string,
+  imgUriParam: string,
   textParam: string,
   cluster: string | null,
   proxy?: string
 ): Promise<Buffer> {
   console.log(
-    `Handling img generatation for mintId (${mintId}) imgUri (${imgUri}) text (${textParam}) and cluster (${
+    `Handling img generatation for mintIdParam (${mintIdParam}) imgUriParam (${imgUriParam}) text (${textParam}) and cluster (${
       cluster ? cluster : ""
     })`
   );
 
   const connection = secondaryConnectionFor(cluster);
   let tokenData: TokenData = {};
-  try {
-    tokenData = await getTokenData(connection, new web3.PublicKey(mintId));
-  } catch (e) {
-    console.log(e);
+  if (mintIdParam) {
+    try {
+      tokenData = await getTokenData(connection, new PublicKey(mintIdParam));
+    } catch (e) {
+      console.log(e);
+    }
   }
   if (
     !tokenData.metaplexData &&
@@ -44,145 +47,64 @@ export async function getImage(
     cluster !== "devnet"
   ) {
     console.log("Falling back to devnet image");
-    return getImage(mintId, nameParam, imgUri, textParam, "devnet", proxy);
-  }
-
-  const originalMint = tokenData?.certificateData?.parsed
-    .originalMint as web3.PublicKey;
-  let originalTokenData: TokenData | null = null;
-
-  // ovverride uri with originalMint uri if present
-  if (originalMint) {
-    try {
-      originalTokenData = await getTokenData(connection, originalMint, true);
-    } catch (e) {
-      console.log(
-        `Error fetching metaplex metadata for original mint (${originalMint.toString()})`,
-        e
-      );
-    }
-  }
-
-  const parsedProxy = proxy ? proxy === "true" : false;
-  console.log("parsedProxy", parsedProxy, proxy);
-  if (
-    tokenData?.metaplexData?.parsed.data.symbol === "NAME" ||
-    (textParam && textParam.includes("@")) ||
-    parsedProxy
-  ) {
-    const mintName =
-      originalTokenData?.metaplexData?.parsed.data.name ||
-      tokenData?.metaplexData?.parsed.data.name;
-    const namespace = nameParam
-      ? tokenData?.metaplexData?.parsed.data.name
-      : breakIdentity(mintName || textParam || "")[0];
-    const entryName = nameParam
-      ? nameParam
-      : breakIdentity(mintName || textParam || "")[1];
-
-    if (namespace && IDENTITIES.includes(namespace)) {
-      return getIdentityImage(namespace, entryName, parsedProxy);
-    } else {
-      try {
-        const data = await promises.readFile(
-          __dirname.concat(`/assets/namespaces/${namespace || ""}.jpg`)
-        );
-        return Buffer.from(data);
-      } catch (e) {
-        console.log("Failed to find image for namespace", e);
-      }
-    }
-  }
-
-  if (tokenData?.metaplexData?.parsed.data.symbol === "$JAMB") {
-    return getJamboImage(
-      originalTokenData,
-      connection,
-      originalMint,
+    return getImage(
+      mintIdParam,
+      nameParam,
+      imgUriParam,
       textParam,
-      imgUri
+      "devnet",
+      proxy
     );
   }
 
+  if (
+    tokenData?.metaplexData?.parsed.data.symbol === "NAME" ||
+    (textParam && textParam.includes("@"))
+  ) {
+    return getNamespaceImage(tokenData, nameParam, textParam);
+  }
+
+  if (tokenData?.metaplexData?.parsed.data.symbol === "$JAMB") {
+    return getJamboImage(tokenData, connection, textParam, imgUriParam);
+  }
+
   // setup
-  // overlay text
-  canvas.registerFont(__dirname.concat("/fonts/SF-Pro.ttf"), {
-    family: "SFPro",
-  });
   const WIDTH = 250;
   const HEIGHT = 250;
-  const PADDING = 0.05 * WIDTH;
   const imageCanvas = canvas.createCanvas(WIDTH, HEIGHT);
 
   // draw base image
-  const baseImgUri = originalTokenData?.metadata?.data.image || imgUri;
-  if (baseImgUri) {
-    const backgroundCtx = imageCanvas.getContext("2d");
-    backgroundCtx.fillStyle = "rgba(26, 27, 32, 1)";
-    backgroundCtx.fillRect(0, 0, WIDTH, HEIGHT);
-
-    const img = await canvas.loadImage(baseImgUri);
-    const imgContext = imageCanvas.getContext("2d");
-    if (img.height > img.width) {
-      const imgHeightMultiplier = WIDTH / img.height;
-      imgContext.drawImage(
-        img,
-        (WIDTH - img.width * imgHeightMultiplier) / 2,
-        0,
-        img.width * imgHeightMultiplier,
-        HEIGHT
-      );
-    } else {
-      const imgWidthMultiplier = HEIGHT / img.width;
-      imgContext.drawImage(
-        img,
-        0,
-        (HEIGHT - img.height * imgWidthMultiplier) / 2,
-        WIDTH,
-        img.height * imgWidthMultiplier
-      );
-    }
-
-    // name text
+  if (imgUriParam) {
+    await drawBackgroundImage(imageCanvas, imgUriParam);
     if (textParam) {
       drawText(imageCanvas, textParam, {
         defaultStyle: "overlay",
       });
     }
-
-    if (tokenData.tokenManagerData) {
-      drawShadow(imageCanvas, tokenData.tokenManagerData.parsed.state);
-      await drawLogo(imageCanvas);
-    }
   } else {
-    // background
-    const backgroundCtx = imageCanvas.getContext("2d");
-    const maxWidth = Math.sqrt(WIDTH * WIDTH + HEIGHT * HEIGHT) / 2;
-    const angle = 0.45;
-    const grd = backgroundCtx.createLinearGradient(
-      WIDTH / 2 + Math.cos(angle) * maxWidth, // start pos
-      HEIGHT / 2 + Math.sin(angle) * maxWidth,
-      WIDTH / 2 - Math.cos(angle) * maxWidth, // end pos
-      HEIGHT / 2 - Math.sin(angle) * maxWidth
-    );
-    grd.addColorStop(0, "#4C1734");
-    grd.addColorStop(1, "#000");
-    backgroundCtx.fillStyle = grd;
-    backgroundCtx.fillRect(0, 0, WIDTH, HEIGHT);
-
+    drawDefaultBackground(imageCanvas);
     drawText(
       imageCanvas,
       textParam || tokenData?.metaplexData?.parsed?.data?.name || "",
       { defaultStyle: "none" }
     );
-
-    await drawLogo(imageCanvas);
   }
 
+  if (tokenData.tokenManagerData) {
+    drawShadow(imageCanvas, tokenData.tokenManagerData.parsed.state);
+  }
+
+  await drawLogo(imageCanvas);
+
+  // draw badges
+  const PADDING = 0.05 * WIDTH;
   const bottomLeftCtx = imageCanvas.getContext("2d");
   bottomLeftCtx.textAlign = "left";
   let bottomLeft = PADDING * 1.5;
 
+  canvas.registerFont(__dirname.concat("/fonts/SF-Pro.ttf"), {
+    family: "SFPro",
+  });
   const expiration =
     tokenData.timeInvalidatorData?.parsed?.expiration ||
     (tokenData?.certificateData?.parsed?.expiration as anchor.BN | null);
@@ -282,82 +204,5 @@ export async function getImage(
     }
   }
 
-  // if (!expiration && !maxUsages) {
-  //   bottomLeftCtx.font = `${0.055 * WIDTH}px SFPro`;
-  //   bottomLeftCtx.fillStyle = "white";
-  //   bottomLeftCtx.drawImage(
-  //     await canvas.loadImage(__dirname.concat("/assets/infinity.png")),
-  //     PADDING,
-  //     HEIGHT - bottomLeft - 0.08 * WIDTH,
-  //     0.15 * WIDTH,
-  //     0.15 * WIDTH
-  //   );
-  //   bottomLeft += 0.075 * WIDTH;
-  // }
-
-  const paymentMint = tokenData?.certificateData?.parsed
-    ?.paymentMint as web3.PublicKey;
-  const paymentAmount = tokenData?.certificateData?.parsed
-    .paymentAmount as anchor.BN | null;
-  if (paymentMint && paymentAmount && paymentAmount?.toNumber() > 0) {
-    const token = new splToken.Token(
-      connection,
-      paymentMint,
-      splToken.TOKEN_PROGRAM_ID,
-      web3.Keypair.generate() // not used
-    );
-    const mintInfo = await token.getMintInfo();
-    bottomLeftCtx.font = `${0.055 * WIDTH}px SFPro`;
-    bottomLeftCtx.fillStyle = "white";
-    bottomLeftCtx.fillText(
-      `${fmtMintAmount(mintInfo, paymentAmount)} ${
-        certificates.PAYMENT_MINTS.find(
-          ({ mint }) => mint.toString() === paymentMint.toString()
-        )?.symbol || paymentMint.toString()
-      }`,
-      PADDING,
-      HEIGHT - bottomLeft
-    );
-    bottomLeft += 0.075 * WIDTH;
-  }
-
-  const topLextCtx = imageCanvas.getContext("2d");
-  let topLeft = PADDING;
-
-  const revokeAuthority = tokenData?.certificateData?.parsed?.revokeAuthority;
-  if (revokeAuthority) {
-    topLextCtx.drawImage(
-      await canvas.loadImage(__dirname.concat("/assets/revocable.png")),
-      topLeft,
-      PADDING * 1.2,
-      0.08 * WIDTH,
-      0.08 * WIDTH
-    );
-    topLeft += 0.11 * WIDTH;
-  }
-
-  const isExtendable = tokenData?.certificateData?.parsed?.isExtendable;
-  if (isExtendable && expiration) {
-    topLextCtx.drawImage(
-      await canvas.loadImage(__dirname.concat("/assets/extendable.png")),
-      topLeft,
-      PADDING * 1.2,
-      0.08 * WIDTH,
-      0.08 * WIDTH
-    );
-    topLeft += 0.11 * WIDTH;
-  }
-
-  const isReturnable = tokenData?.certificateData?.parsed?.isReturnable;
-  if (isReturnable) {
-    topLextCtx.drawImage(
-      await canvas.loadImage(__dirname.concat("/assets/returnable.png")),
-      topLeft,
-      PADDING,
-      0.1 * WIDTH,
-      0.1 * WIDTH
-    );
-    topLeft += 0.11 * WIDTH;
-  }
   return imageCanvas.toBuffer("image/png");
 }
