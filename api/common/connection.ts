@@ -3,15 +3,11 @@ import { Connection } from "@solana/web3.js";
 const networkURLs: { [key: string]: { primary: string; secondary?: string } } =
   {
     ["mainnet-beta"]: {
-      primary:
-        process.env.MAINNET_PRIMARY ||
-        "https://solana-api.syndica.io/access-token/sKMSJpn8HSu4bmAiWoDsxbFyuspVl872uSEWZjFq41K5oOO59JuGHaBfkZNcWNAf/rpc",
+      primary: process.env.MAINNET_PRIMARY || "https://ssc-dao.genesysgo.net/",
       secondary: "https://ssc-dao.genesysgo.net/",
     },
     mainnet: {
-      primary:
-        process.env.MAINNET_PRIMARY ||
-        "https://solana-api.syndica.io/access-token/sKMSJpn8HSu4bmAiWoDsxbFyuspVl872uSEWZjFq41K5oOO59JuGHaBfkZNcWNAf/rpc",
+      primary: process.env.MAINNET_PRIMARY || "https://ssc-dao.genesysgo.net/",
       secondary: "https://ssc-dao.genesysgo.net/",
     },
     devnet: { primary: "https://api.devnet.solana.com/" },
@@ -24,7 +20,8 @@ export const connectionFor = (
   defaultCluster = "mainnet"
 ) => {
   return new Connection(
-    process.env.RPC_URL || networkURLs[cluster || defaultCluster].primary,
+    process.env.MAINNET_PRIMARY ||
+      networkURLs[cluster || defaultCluster].primary,
     "recent"
   );
 };
