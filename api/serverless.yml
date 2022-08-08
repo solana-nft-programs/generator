@@ -28,6 +28,7 @@ functions:
   img-generator-base:
     environment:
       FONTCONFIG_FILE: /var/task/fonts/fonts.conf
+      MAINNET_PRIMARY: ${param:/MAINNET_PRIMARY}
     handler: img-generator/handler.generate
     timeout: 10
     events:
@@ -48,6 +49,7 @@ functions:
   img-generator:
     environment:
       FONTCONFIG_FILE: /var/task/fonts/fonts.conf
+      MAINNET_PRIMARY: ${param:/MAINNET_PRIMARY}
     handler: img-generator/handler.generate
     timeout: 10
     events:
@@ -68,6 +70,8 @@ functions:
               - name: request.querystring.cluster
   metadata-generator-base:
     handler: metadata-generator/handler.generate
+    environment:
+      MAINNET_PRIMARY: ${param:/MAINNET_PRIMARY}
     timeout: 10
     events:
       - http:
@@ -88,6 +92,8 @@ functions:
               - name: request.querystring.cluster
   metadata-generator:
     handler: metadata-generator/handler.generate
+    environment:
+      MAINNET_PRIMARY: ${param:/MAINNET_PRIMARY}
     timeout: 10
     events:
       - http:

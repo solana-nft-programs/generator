@@ -4,11 +4,13 @@ const networkURLs: { [key: string]: { primary: string; secondary?: string } } =
   {
     ["mainnet-beta"]: {
       primary:
+        process.env.MAINNET_PRIMARY ||
         "https://solana-api.syndica.io/access-token/sKMSJpn8HSu4bmAiWoDsxbFyuspVl872uSEWZjFq41K5oOO59JuGHaBfkZNcWNAf/rpc",
       secondary: "https://ssc-dao.genesysgo.net/",
     },
     mainnet: {
       primary:
+        process.env.MAINNET_PRIMARY ||
         "https://solana-api.syndica.io/access-token/sKMSJpn8HSu4bmAiWoDsxbFyuspVl872uSEWZjFq41K5oOO59JuGHaBfkZNcWNAf/rpc",
       secondary: "https://ssc-dao.genesysgo.net/",
     },
