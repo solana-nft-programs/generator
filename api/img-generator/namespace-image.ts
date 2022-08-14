@@ -52,15 +52,14 @@ export async function getNamespaceImage(
     topRightText = temp.pop();
   }
 
-  if (!IGNORE_TEXT.includes(namespace || "")) {
-    drawText(
-      imageCanvas,
-      decodeURIComponent(formatName(namespace || "", entryName))
-    );
+  if (!IGNORE_TEXT.includes(namespace)) {
+    const name = decodeURIComponent(formatName(namespace, entryName)).split(
+      "#"
+    )[0];
+    drawText(imageCanvas, name);
   }
 
   if (topRightText) {
-    drawText(imageCanvas, topRightText, {});
     const topRightCtx = imageCanvas.getContext("2d");
     topRightCtx.font = `${0.08 * WIDTH}px SFPro`;
     topRightCtx.fillStyle = "white";

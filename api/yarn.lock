@@ -55,7 +55,7 @@
     ts-mocha "^9.0.2"
     typescript "^4.5.5"
 
-"@cardinal/certificates@^2.0.0":
+"@cardinal/certificates@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@cardinal/certificates/-/certificates-2.0.1.tgz#6b76366ad11e64abfc3e0a7478560dd9c55d1c2c"
   integrity sha512-q6Ke5cq/vj3oNwj0sh94FldXGSuUcTtu0L+c+yrEMqD8hgZJHemN/kGDeA7aU4PNJJLRtWoU80d7d0CxO9z/jg==
@@ -100,14 +100,14 @@
     tiny-invariant "^1.2.0"
     tslib "^2.3.1"
 
-"@cardinal/namespaces@^4.1.26":
-  version "4.1.26"
-  resolved "https://registry.yarnpkg.com/@cardinal/namespaces/-/namespaces-4.1.26.tgz#0d64e2a0dc9e09ffb60f78e99cdb6d8f3ddef77a"
-  integrity sha512-sKg8jBlL/aKKG1EmWM38Q9NgeNgt8otSeZA27pnqkm2Igjq1lq/DlfJAX7ADzsTVoUJT1txe60T87Nw6WedLUg==
+"@cardinal/namespaces@^4.1.47":
+  version "4.1.47"
+  resolved "https://registry.yarnpkg.com/@cardinal/namespaces/-/namespaces-4.1.47.tgz#77194ccffe1feccc20df9356fb3498d4da31d82b"
+  integrity sha512-KxTELr5ddplKe8QN2nfwu4S2iaTYcNg5ilMfhs54Ori01yPIxdikffv1R6ucMVHXmGMJxqMiRByBxxqwYOfYsQ==
   dependencies:
-    "@cardinal/certificates" "^2.0.0"
+    "@cardinal/certificates" "^2.0.1"
     "@cardinal/common" "^2.0.1"
-    "@cardinal/token-manager" "^1.4.7"
+    "@cardinal/token-manager" "=1.5.6"
     "@metaplex-foundation/mpl-token-metadata" "^1.2.5"
 
 "@cardinal/quest-pool@^1.1.3":
@@ -144,10 +144,10 @@
     ts-mocha "^8.0.0"
     typescript "^4.5.5"
 
-"@cardinal/token-manager@^1.3.10":
-  version "1.3.10"
-  resolved "https://registry.yarnpkg.com/@cardinal/token-manager/-/token-manager-1.3.10.tgz#f8e0bc23f80fb2d8479394837d6feccbabc3e904"
-  integrity sha512-yMG32kl+JKvvtCUmQ+ZE/WMk5hMq1gy1AVr7SMb9wTbAFoJmKuen/MBbF8IuGn3sjzqn/EIirbW6h+LlCAtqgw==
+"@cardinal/token-manager@=1.5.6":
+  version "1.5.6"
+  resolved "https://registry.yarnpkg.com/@cardinal/token-manager/-/token-manager-1.5.6.tgz#7642964dbfc58fd45ad5c473c7265547fda36d6d"
+  integrity sha512-PDBiqFzjoifCjMDncnayPSZkzMMncph6b+MIS65Y1L3nzEXWLKNSUAesUsJVhAuhPzLkpJLspJDJfOjujYmT1g==
   dependencies:
     "@metaplex-foundation/mpl-token-metadata" "^1.2.3"
     "@solana/buffer-layout" "^4.0.0"
@@ -158,10 +158,10 @@
     tiny-invariant "^1.2.0"
     tslib "^2.3.1"
 
-"@cardinal/token-manager@^1.4.7":
-  version "1.4.8"
-  resolved "https://registry.yarnpkg.com/@cardinal/token-manager/-/token-manager-1.4.8.tgz#dea6f47bfb55a105b519fa5a71b4d8337f5691b4"
-  integrity sha512-igOfTCd+kTYVAw69rEYGT9S4hUF8AEWzJuaFuOtLo1Nu1uSSVmtIxF331ch3XcqtiZaj9VTeey/NEQO92dQvGQ==
+"@cardinal/token-manager@^1.3.10":
+  version "1.3.10"
+  resolved "https://registry.yarnpkg.com/@cardinal/token-manager/-/token-manager-1.3.10.tgz#f8e0bc23f80fb2d8479394837d6feccbabc3e904"
+  integrity sha512-yMG32kl+JKvvtCUmQ+ZE/WMk5hMq1gy1AVr7SMb9wTbAFoJmKuen/MBbF8IuGn3sjzqn/EIirbW6h+LlCAtqgw==
   dependencies:
     "@metaplex-foundation/mpl-token-metadata" "^1.2.3"
     "@solana/buffer-layout" "^4.0.0"

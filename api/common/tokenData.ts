@@ -250,10 +250,6 @@ export const accountDataById = async (
   connection: Connection,
   ids: (PublicKey | null)[]
 ): Promise<AccountDataById> => {
-  console.log(
-    "accountDataById",
-    ids.map((id) => id?.toString())
-  );
   const filteredIds = ids.filter((id): id is PublicKey => id !== null);
   const accountInfos = await getBatchedMultipleAccounts(
     connection,
