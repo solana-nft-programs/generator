@@ -18,8 +18,8 @@ export const getTwitterMetadata = (
     external_url: `https://twitter.cardinal.so/${ownerId}`,
     attributes: [],
     collection: {
-      name: "Cardinal",
-      family: "cardinal",
+      name: "Twitter",
+      family: "twitter",
     },
     properties: {
       files: [

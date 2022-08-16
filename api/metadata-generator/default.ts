@@ -1,3 +1,5 @@
+import { capitalizeFirstLetter } from "@cardinal/common";
+
 import type { NFTMetadata } from "./generator";
 
 export const getDefaultMetadata = (
@@ -17,7 +19,7 @@ export const getDefaultMetadata = (
     seller_fee_basis_points: 0,
     attributes: [],
     collection: {
-      name: namespace,
+      name: capitalizeFirstLetter(namespace),
       family: namespace,
     },
     properties: {
