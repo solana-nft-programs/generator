@@ -19,7 +19,7 @@ export const getTwitterMetadata = (
     attributes: [],
     collection: {
       name: "Twitter",
-      family: "twitter",
+      family: "Twitter",
     },
     properties: {
       files: [

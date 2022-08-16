@@ -20,7 +20,7 @@ export const getDefaultMetadata = (
     attributes: [],
     collection: {
       name: capitalizeFirstLetter(namespace),
-      family: namespace,
+      family: capitalizeFirstLetter(namespace),
     },
     properties: {
       files: [
