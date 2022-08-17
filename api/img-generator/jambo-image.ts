@@ -1,6 +1,6 @@
-import { getLevelNumber } from "@cardinal/common";
 import * as questPool from "@cardinal/quest-pool";
 import * as stakePool from "@cardinal/stake-pool";
+import { getLevelNumber } from "@cardinal/stake-pool";
 import { BN } from "@project-serum/anchor";
 import * as web3 from "@solana/web3.js";
 import * as canvas from "canvas";
