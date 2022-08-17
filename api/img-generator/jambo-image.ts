@@ -19,7 +19,7 @@ export async function getJamboImage(
     .originalMint as web3.PublicKey;
   let originalTokenData: TokenData | null = null;
 
-  // ovverride uri with original mint uri if present
+  // ovverride uri with originalMint uri if present
   if (originalMint) {
     try {
       originalTokenData = await getTokenData(connection, originalMint, true);
