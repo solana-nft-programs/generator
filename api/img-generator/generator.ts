@@ -5,6 +5,7 @@ import * as canvas from "canvas";
 import { secondaryConnectionFor } from "../common/connection";
 import type { TokenData } from "../common/tokenData";
 import { getTokenData } from "../common/tokenData";
+import { getTicketImage } from "./event-ticket-image";
 import {
   drawBackgroundImage,
   drawDefaultBackground,
@@ -55,6 +56,13 @@ export async function getImage(
       "devnet",
       proxy
     );
+  }
+
+  if (
+    tokenData?.metaplexData?.parsed.data.symbol === "NAME" &&
+    tokenData?.metaplexData?.parsed.data.name.startsWith("crd-")
+  ) {
+    return getTicketImage(tokenData);
   }
 
   if (

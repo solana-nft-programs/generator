@@ -21,7 +21,7 @@ export async function getNamespaceImage(
   tokenData: TokenData,
   nameParam: string | undefined,
   textParam: string | undefined
-) {
+): Promise<Buffer> {
   const mintName = tokenData?.metaplexData?.parsed.data.name;
   const namespace =
     (nameParam && !tokenData?.metaplexData?.parsed.data.name?.includes(".")
