@@ -17,7 +17,7 @@ import type { TokenData } from "../common/tokenData";
 import { getTokenData } from "../common/tokenData";
 import { getOwner } from "../common/utils";
 import { getDefaultMetadata } from "./default";
-import { getTicketMetadata } from "./event-ticket-metadata";
+import { getTicketMetadataLink } from "./event-ticket-metadata";
 import { getExpiredMetadata } from "./expired";
 import { getTwitterMetadata } from "./twitter";
 
@@ -77,13 +77,6 @@ export async function getMetadata(
         "devnet"
       );
     }
-  }
-
-  if (
-    tokenData?.metaplexData?.parsed.data.symbol === "NAME" &&
-    tokenData?.metaplexData?.parsed.data.name.startsWith("crd-")
-  ) {
-    return getTicketMetadata(tokenData);
   }
 
   if (
@@ -181,6 +174,26 @@ export async function getMetadata(
         nameParam,
         cluster
       );
+    } else if (tokenData?.metaplexData?.parsed.data.name.startsWith("crd-")) {
+      const metadataUri = getTicketMetadataLink(
+        tokenData?.metaplexData?.parsed.data.name
+      );
+      try {
+        const metadataResponse = await fetch(metadataUri, {});
+        if (metadataResponse.status !== 200) {
+          throw new Error("Metadata not found");
+        }
+        const metadata = await metadataResponse.json();
+        return metadata as NFTMetadata;
+      } catch (e) {
+        return getDefaultMetadata(
+          namespace,
+          mintName,
+          mintId,
+          nameParam,
+          cluster
+        );
+      }
     } else {
       const metadataUri = `https://events.cardinal.so/events/${namespace}/event.json`;
       try {
