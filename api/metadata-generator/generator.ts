@@ -17,6 +17,7 @@ import type { TokenData } from "../common/tokenData";
 import { getTokenData } from "../common/tokenData";
 import { getOwner } from "../common/utils";
 import { getDefaultMetadata } from "./default";
+import { getTicketMetadata } from "./event-ticket-metadata";
 import { getExpiredMetadata } from "./expired";
 import { getTwitterMetadata } from "./twitter";
 
@@ -76,6 +77,13 @@ export async function getMetadata(
         "devnet"
       );
     }
+  }
+
+  if (
+    tokenData?.metaplexData?.parsed.data.symbol === "NAME" &&
+    tokenData?.metaplexData?.parsed.data.name.startsWith("crd-")
+  ) {
+    return getTicketMetadata(tokenData);
   }
 
   if (
