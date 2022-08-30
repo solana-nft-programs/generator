@@ -16,6 +16,7 @@ import { secondaryConnectionFor } from "../common/connection";
 import type { TokenData } from "../common/tokenData";
 import { getTokenData } from "../common/tokenData";
 import { getOwner } from "../common/utils";
+import { getTicketImageURL } from "../img-generator/event-ticket-image";
 import { getDefaultMetadata } from "./default";
 import { getTicketMetadataLink } from "./event-ticket-metadata";
 import { getExpiredMetadata } from "./expired";
@@ -178,13 +179,16 @@ export async function getMetadata(
       const metadataUri = getTicketMetadataLink(
         tokenData?.metaplexData?.parsed.data.name
       );
+      const imageUri = getTicketImageURL(
+        tokenData?.metaplexData?.parsed.data.name
+      );
       try {
         const metadataResponse = await fetch(metadataUri, {});
         if (metadataResponse.status !== 200) {
           throw new Error("Metadata not found");
         }
-        const metadata = await metadataResponse.json();
-        return metadata as NFTMetadata;
+        const metadata = (await metadataResponse.json()) as NFTMetadata;
+        return { ...metadata, image: imageUri };
       } catch (e) {
         return getDefaultMetadata(
           namespace,
