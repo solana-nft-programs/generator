@@ -12,10 +12,6 @@ const WIDTH = 500;
 const HEIGHT = 500;
 
 const IGNORE_TEXT = ["empiredao-registration", "EmpireDAO"];
-// const IDENTITY_COLORS: { [key: string]: string } = {
-//   twitter: "#1DA1F2",
-//   discord: "#5866f2",
-// };
 
 export async function getNamespaceImage(
   tokenData: TokenData,
@@ -31,7 +27,7 @@ export async function getNamespaceImage(
     ? nameParam
     : breakIdentity(mintName || textParam || "")[1];
 
-  console.log(`Drawing namespace image for [${namespace}, ${entryName}]`);
+  console.log(`Drawing namespace image for [${entryName}, ${namespace}]`);
   const imageCanvas = canvas.createCanvas(WIDTH, HEIGHT);
 
   try {
