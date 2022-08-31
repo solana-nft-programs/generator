@@ -1,5 +1,5 @@
 import type { AccountData } from "@cardinal/common";
-import { Program, Provider } from "@project-serum/anchor";
+import { Program, AnchorProvider } from "@project-serum/anchor";
 import type * as web3 from "@solana/web3.js";
 
 import type { GENERATOR_PROGRAM, MetadataConfigData } from "./constants";
@@ -11,7 +11,7 @@ export const getMetadataConfig = async (
 ): Promise<AccountData<MetadataConfigData>> => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const provider = new Provider(connection, null, {});
+  const provider = new AnchorProvider(connection, null, {});
   const generatorProgram = new Program<GENERATOR_PROGRAM>(
     GENERATOR_IDL,
     GENERATOR_ADDRESS,

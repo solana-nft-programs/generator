@@ -5,8 +5,8 @@ import chai, { assert } from "chai";
 
 chai.use(chaiSolana);
 
-export const getProvider = (): anchor.Provider => {
-  const anchorProvider = anchor.Provider.env();
+export const getProvider = (): anchor.AnchorProvider => {
+  const anchorProvider = anchor.AnchorProvider.env();
   anchor.setProvider(anchorProvider);
   return anchorProvider;
 };

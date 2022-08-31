@@ -1,5 +1,5 @@
 import { Metadata } from "@metaplex-foundation/mpl-token-metadata";
-import { Program, Provider } from "@project-serum/anchor";
+import { Program, AnchorProvider } from "@project-serum/anchor";
 import type { Wallet } from "@saberhq/solana-contrib";
 import type {
   Connection,
@@ -19,7 +19,7 @@ export const createMetadataConfig = async (
   configName: string,
   attributes: AttributeConfig[]
 ): Promise<TransactionInstruction> => {
-  const provider = new Provider(connection, wallet, {});
+  const provider = new AnchorProvider(connection, wallet, {});
   const generatorProgram = new Program<GENERATOR_PROGRAM>(
     GENERATOR_IDL,
     GENERATOR_ADDRESS,
