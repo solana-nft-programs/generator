@@ -13,6 +13,7 @@ import * as web3 from "@solana/web3.js";
 import fetch from "node-fetch";
 
 import { secondaryConnectionFor } from "../common/connection";
+import { tryGetEvent, tryGetEventTicket } from "../common/firebase";
 import type { TokenData } from "../common/tokenData";
 import { getTokenData } from "../common/tokenData";
 import { getOwner } from "../common/utils";
@@ -188,6 +189,17 @@ export async function getMetadata(
           throw new Error("Metadata not found");
         }
         const metadata = (await metadataResponse.json()) as NFTMetadata;
+
+        const ticketid = tokenData?.metaplexData?.parsed.data.name;
+        const ticketData = await tryGetEventTicket(ticketid);
+        if (ticketData) {
+          const eventId = ticketData.eventId;
+          const eventData = await tryGetEvent(eventId);
+          if (eventData) {
+            metadata.external_url = `https://events.cardinal.so/default/${eventData?.shortLink}/verify`;
+          }
+        }
+
         return { ...metadata, image: imageUri };
       } catch (e) {
         return getDefaultMetadata(
