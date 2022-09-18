@@ -197,7 +197,7 @@ export async function getMetadata(
           const eventData = await tryGetEvent(eventId);
           if (eventData) {
             const verifyUrl = `https://events.cardinal.so/default/${eventData?.shortLink}/verify`;
-            metadata.external_url = `phantom://browse/${encodeURIComponent(
+            metadata.external_url = `https://phantom.app/ul/browse/${encodeURIComponent(
               verifyUrl
             )}`;
           }
