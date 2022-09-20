@@ -74,7 +74,18 @@ export const expirationAttributes = (tokenData: TokenData) => {
     return [
       {
         trait_type: "expiration",
-        value: `${expiration.toNumber()}`,
+        value: `${new Date(expiration.toNumber() * 1000).toLocaleTimeString(
+          "en-US",
+          {
+            month: "numeric",
+            day: "numeric",
+            year: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            timeZone: "America/New_York",
+            timeZoneName: "short",
+          }
+        )}`,
         display_type: "Expiration",
       },
     ];
