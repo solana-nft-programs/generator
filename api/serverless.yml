@@ -10,6 +10,7 @@ provider:
   lambdaHashingVersion: "20201221"
   environment:
     MAINNET_PRIMARY: ${param:MAINNET_PRIMARY}
+    MAINNET_SECONDARY: ${param:MAINNET_SECONDARY}
   http:
     cors: true
   apiGateway:

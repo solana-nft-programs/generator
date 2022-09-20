@@ -3,10 +3,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain, @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unsafe-assignment*/
 import * as namespaces from "@cardinal/namespaces";
-import {
-  InvalidationType,
-  TokenManagerState,
-} from "@cardinal/token-manager/dist/cjs/programs/tokenManager";
 import type { Idl } from "@project-serum/anchor";
 import { BorshAccountsCoder } from "@project-serum/anchor";
 import * as web3 from "@solana/web3.js";
@@ -18,6 +14,13 @@ import type { TokenData } from "../common/tokenData";
 import { getTokenData } from "../common/tokenData";
 import { getOwner } from "../common/utils";
 import { getTicketImageURL } from "../img-generator/event-ticket-image";
+import {
+  durationAttributes,
+  expirationAttributes,
+  stateAttributes,
+  typeAttributes,
+  usageAttributes,
+} from "./attributes";
 import { getDefaultMetadata } from "./default";
 import { getTicketMetadataLink } from "./event-ticket-metadata";
 import { getExpiredMetadata } from "./expired";
@@ -199,6 +202,14 @@ export async function getMetadata(
             name: eventData?.eventName,
             family: eventData?.eventName,
           };
+
+          metadata.attributes = [
+            ...(metadata.attributes || []),
+            ...typeAttributes(tokenData),
+            ...usageAttributes(tokenData),
+            ...expirationAttributes(tokenData),
+          ];
+
           if (eventData) {
             const verifyUrl = `https://events.cardinal.so/default/${eventData?.shortLink}/verify`;
             metadata.external_url = `https://phantom.app/ul/browse/${encodeURIComponent(
@@ -280,86 +291,17 @@ export async function getMetadata(
     }
   }
 
-  if (tokenData?.tokenManagerData?.parsed.state) {
-    response = {
-      ...response,
-      attributes: [
-        ...(response.attributes || []),
-        {
-          trait_type: "state",
-          value:
-            tokenData?.tokenManagerData?.parsed.state ===
-            TokenManagerState.Invalidated
-              ? "INVALIDATED"
-              : "VALID",
-          display_type: "State",
-        },
-      ],
-    };
-  }
-
-  if (
-    tokenData.tokenManagerData?.parsed.invalidationType ===
-    InvalidationType.Return
-  ) {
-    response = {
-      ...response,
-      attributes: [
-        ...(response.attributes || []),
-        {
-          trait_type: "type",
-          value: "RENTAL",
-          display_type: "Type",
-        },
-      ],
-    };
-  }
-
-  if (tokenData.useInvalidatorData?.parsed.usages) {
-    response = {
-      ...response,
-      attributes: [
-        ...(response.attributes || []),
-        {
-          trait_type: "used",
-          value: `(${tokenData.useInvalidatorData?.parsed.usages.toNumber()}${
-            tokenData.useInvalidatorData?.parsed.maxUsages
-              ? `/${tokenData.useInvalidatorData?.parsed.maxUsages.toNumber()}`
-              : ""
-          })`,
-          display_type: "Used",
-        },
-      ],
-    };
-  }
-
-  if (tokenData.timeInvalidatorData?.parsed.expiration) {
-    response = {
-      ...response,
-      attributes: [
-        ...(response.attributes || []),
-        {
-          trait_type: "expiration",
-          value: `${tokenData.timeInvalidatorData?.parsed.expiration.toNumber()}`,
-          display_type: "Expiration",
-        },
-      ],
-    };
-  }
-
-  if (tokenData.timeInvalidatorData?.parsed?.durationSeconds) {
-    response = {
-      ...response,
-      attributes: [
-        ...(response.attributes || []),
-        {
-          trait_type: "duration",
-          value: `${tokenData.timeInvalidatorData?.parsed?.durationSeconds.toNumber()}`,
-          display_type: "Duration",
-        },
-      ],
-    };
-  }
+  response = {
+    ...response,
+    attributes: [
+      ...(response.attributes || []),
+      ...stateAttributes(tokenData),
+      ...typeAttributes(tokenData),
+      ...usageAttributes(tokenData),
+      ...expirationAttributes(tokenData),
+      ...durationAttributes(tokenData),
+    ],
+  };
 
   // collection
   if (tokenData?.metaplexData?.parsed.data.symbol === "$JAMB") {
