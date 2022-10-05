@@ -162,7 +162,10 @@ export async function getMetadata(
     }
   }
 
-  if (tokenData?.metaplexData?.parsed.data.symbol === "NAME") {
+  if (
+    tokenData?.metaplexData?.parsed.data.symbol === "NAME" ||
+    tokenData?.metaplexData?.parsed.data.symbol === "TICKET"
+  ) {
     const mintName =
       originalTokenData?.metaplexData?.parsed.data.name ||
       tokenData?.metaplexData?.parsed.data.name;
