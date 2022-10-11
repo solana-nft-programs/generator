@@ -339,5 +339,12 @@ export async function getMetadata(
     };
   }
 
+  if (imgParam) {
+    response = {
+      ...response,
+      image: imgParam,
+    };
+  }
+
   return response;
 }
