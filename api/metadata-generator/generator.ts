@@ -346,5 +346,12 @@ export async function getMetadata(
     };
   }
 
+  if (nameParam) {
+    response = {
+      ...response,
+      name: nameParam,
+    };
+  }
+
   return response;
 }
