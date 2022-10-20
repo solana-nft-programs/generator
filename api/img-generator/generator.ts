@@ -60,7 +60,8 @@ export async function getImage(
 
   if (
     (tokenData?.metaplexData?.parsed.data.symbol === "NAME" ||
-      tokenData?.metaplexData?.parsed.data.symbol === "TICKET") &&
+      tokenData?.metaplexData?.parsed.data.symbol === "TICKET" ||
+      tokenData?.metaplexData?.parsed.data.symbol === "TIX") &&
     tokenData?.metaplexData?.parsed.data.name.startsWith("crd-")
   ) {
     return getTicketImage(tokenData);
