@@ -5,6 +5,12 @@ import {
 
 import type { TokenData } from "../common/tokenData";
 
+export type Attribute = {
+  trait_type: string;
+  value: string;
+  display_type: string;
+};
+
 export const stateAttributes = (tokenData: TokenData) => {
   if (tokenData?.tokenManagerData?.parsed.state) {
     return [

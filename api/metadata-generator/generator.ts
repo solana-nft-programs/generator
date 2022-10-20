@@ -24,6 +24,7 @@ import {
 import { getDefaultMetadata } from "./default";
 import { getTicketMetadataLink } from "./event-ticket-metadata";
 import { getExpiredMetadata } from "./expired";
+import { getDefaultTicketMetadata } from "./ticket";
 import { getTwitterMetadata } from "./twitter";
 
 export type NFTMetadata = {
@@ -163,9 +164,58 @@ export async function getMetadata(
   }
 
   if (
-    tokenData?.metaplexData?.parsed.data.symbol === "NAME" ||
-    tokenData?.metaplexData?.parsed.data.symbol === "TICKET"
+    (tokenData?.metaplexData?.parsed.data.symbol === "NAME" ||
+      tokenData?.metaplexData?.parsed.data.symbol === "TICKET") &&
+    tokenData?.metaplexData?.parsed.data.name.startsWith("crd-")
   ) {
+    const metadataUri = getTicketMetadataLink(
+      tokenData?.metaplexData?.parsed.data.name
+    );
+    const imageUri = getTicketImageURL(
+      tokenData?.metaplexData?.parsed.data.name
+    );
+    try {
+      const metadataResponse = await fetch(metadataUri, {});
+      if (metadataResponse.status !== 200) {
+        throw new Error("Metadata not found");
+      }
+      const metadata = (await metadataResponse.json()) as NFTMetadata;
+
+      const ticketid = tokenData?.metaplexData?.parsed.data.name;
+      const ticketData = await tryGetEventTicket(ticketid);
+      if (ticketData) {
+        const eventId = ticketData.eventId;
+        const eventData = await tryGetEvent(eventId);
+        metadata.collection = {
+          name: eventData?.eventName,
+          family: eventData?.eventName,
+        };
+
+        metadata.attributes = [
+          ...(metadata.attributes || []),
+          ...typeAttributes(tokenData),
+          ...usageAttributes(tokenData),
+          ...expirationAttributes(tokenData),
+        ];
+
+        if (eventData) {
+          const verifyUrl = `https://events.cardinal.so/default/${eventData?.shortLink}/verify`;
+          metadata.external_url = `https://phantom.app/ul/browse/${encodeURIComponent(
+            verifyUrl
+          )}`;
+        }
+      }
+      return { ...metadata, image: imageUri };
+    } catch (e) {
+      return getDefaultTicketMetadata(mintId, nameParam, cluster, [
+        ...typeAttributes(tokenData),
+        ...usageAttributes(tokenData),
+        ...expirationAttributes(tokenData),
+      ]);
+    }
+  }
+
+  if (tokenData?.metaplexData?.parsed.data.symbol === "NAME") {
     const mintName =
       originalTokenData?.metaplexData?.parsed.data.name ||
       tokenData?.metaplexData?.parsed.data.name;
@@ -182,55 +232,6 @@ export async function getMetadata(
         nameParam,
         cluster
       );
-    } else if (tokenData?.metaplexData?.parsed.data.name.startsWith("crd-")) {
-      const metadataUri = getTicketMetadataLink(
-        tokenData?.metaplexData?.parsed.data.name
-      );
-      const imageUri = getTicketImageURL(
-        tokenData?.metaplexData?.parsed.data.name
-      );
-      try {
-        const metadataResponse = await fetch(metadataUri, {});
-        if (metadataResponse.status !== 200) {
-          throw new Error("Metadata not found");
-        }
-        const metadata = (await metadataResponse.json()) as NFTMetadata;
-
-        const ticketid = tokenData?.metaplexData?.parsed.data.name;
-        const ticketData = await tryGetEventTicket(ticketid);
-        if (ticketData) {
-          const eventId = ticketData.eventId;
-          const eventData = await tryGetEvent(eventId);
-          metadata.collection = {
-            name: eventData?.eventName,
-            family: eventData?.eventName,
-          };
-
-          metadata.attributes = [
-            ...(metadata.attributes || []),
-            ...typeAttributes(tokenData),
-            ...usageAttributes(tokenData),
-            ...expirationAttributes(tokenData),
-          ];
-
-          if (eventData) {
-            const verifyUrl = `https://events.cardinal.so/default/${eventData?.shortLink}/verify`;
-            metadata.external_url = `https://phantom.app/ul/browse/${encodeURIComponent(
-              verifyUrl
-            )}`;
-          }
-        }
-
-        return { ...metadata, image: imageUri };
-      } catch (e) {
-        return getDefaultMetadata(
-          namespace,
-          mintName,
-          mintId,
-          nameParam,
-          cluster
-        );
-      }
     } else {
       const metadataUri = `https://events.cardinal.so/events/${namespace}/event.json`;
       try {
