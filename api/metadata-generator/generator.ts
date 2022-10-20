@@ -165,8 +165,10 @@ export async function getMetadata(
 
   if (
     (tokenData?.metaplexData?.parsed.data.symbol === "NAME" ||
-      tokenData?.metaplexData?.parsed.data.symbol === "TICKET") &&
-    tokenData?.metaplexData?.parsed.data.name.startsWith("crd-")
+      tokenData?.metaplexData?.parsed.data.symbol === "TICKET" ||
+      tokenData?.metaplexData?.parsed.data.symbol === "TIX") &&
+    (tokenData?.metaplexData?.parsed.data.name.startsWith("crd-") ||
+      nameParam.startsWith("crd-"))
   ) {
     const metadataUri = getTicketMetadataLink(
       tokenData?.metaplexData?.parsed.data.name
@@ -207,7 +209,7 @@ export async function getMetadata(
       }
       return { ...metadata, image: imageUri };
     } catch (e) {
-      return getDefaultTicketMetadata(mintId, nameParam, cluster, [
+      return getDefaultTicketMetadata(mintId, cluster, [
         ...typeAttributes(tokenData),
         ...usageAttributes(tokenData),
         ...expirationAttributes(tokenData),

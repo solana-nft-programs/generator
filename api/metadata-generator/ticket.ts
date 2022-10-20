@@ -3,13 +3,12 @@ import type { NFTMetadata } from "./generator";
 
 export const getDefaultTicketMetadata = (
   mintId: string,
-  nameParam: string,
   cluster: string,
   attributes: Attribute[]
 ): NFTMetadata => {
   const imageUrl = `https://nft.cardinal.so/img/${mintId}${
-    nameParam ? `?name=${encodeURIComponent(nameParam)}` : ""
-  }${cluster ? `${nameParam ? "&" : "?"}cluster=${cluster}` : ""}`;
+    cluster ? `cluster=${cluster}` : ""
+  }`;
   return {
     name: "Ticket",
     symbol: "TICKET",
