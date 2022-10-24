@@ -189,8 +189,8 @@ export async function getMetadata(
         const eventId = ticketData.eventId;
         const eventData = await tryGetEvent(eventId);
         metadata.collection = {
-          name: eventData?.eventName,
-          family: eventData?.eventName,
+          name: eventData?.name,
+          family: eventData?.name,
         };
 
         metadata.attributes = [

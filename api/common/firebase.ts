@@ -57,28 +57,46 @@ export const tryGetEvent = async (
   return eventsSnap.data() as FirebaseEvent;
 };
 
+
 export type FirebaseEvent = {
-  creatorId: string;
+  bannerImage: string | null;
+  config: string | null;
+  creatorAddress: string;
+  description: string;
   docId: string;
+  endTime: string;
   environment: string;
-  eventDescription: string;
-  eventEndTime: string;
-  eventLocation: string;
-  eventName: string;
-  eventStartTime: string;
+  location: string;
+  name: string;
+  paymentMint: string;
   shortLink: string;
-  eventBannerImage: string;
-  eventPaymentMint: string;
+  startTime: string;
+  questions: string[];
+  timezone?: string;
 };
 
 export type FirebaseTicket = {
+  additionalSigners: string[] | null;
+  description: string | null;
   docId: string;
   eventId: string;
-  ticketId: string;
-  ticketName: string;
-  ticketQuantity: string;
-  ticketShortLink: string;
-  ticketPrice: string;
-  additionalSigners?: string[];
-  feePayer?: string;
+  feePayer: string | null;
+  name: string;
+  price: number;
+  paymentMint: string | null;
+  quantity: number;
+  ticketSignerAddress: string;
+  ticketSignerId: string;
+  totalClaimed: number;
+
+  allowedCollections: string[] | null;
+  allowedVerifiedCreators: string[] | null;
+  allowedMints: string[] | null;
+
+  verifiedTokenMaximum: number | null;
+  approverAddressMaximum: number | null;
+  approverEmailMaximum: number | null;
+  claimerAddressMaximum: number | null;
+
+  includeQRCode: boolean;
 };
