@@ -203,7 +203,9 @@ export async function getMetadata(
             value:
               tokenData?.metaplexData.parsed.data.creators?.find(
                 (c) => c.verified
-              )?.address === ticketData.ticketSignerAddress,
+              )?.address === ticketData.ticketSignerAddress
+                ? "True"
+                : "False",
             display_type: "Verified",
           },
         ];
