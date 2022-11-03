@@ -198,6 +198,13 @@ export async function getMetadata(
           ...typeAttributes(tokenData),
           ...usageAttributes(tokenData),
           ...expirationAttributes(tokenData),
+          {
+            trait_type: "verified",
+            boolean:
+              tokenData?.metaplexData.parsed.data.creators?.find(
+                (c) => c.verified
+              )?.address === ticketData.ticketSignerAddress,
+          },
         ];
 
         if (eventData) {
