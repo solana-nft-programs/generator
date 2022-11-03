@@ -200,10 +200,11 @@ export async function getMetadata(
           ...expirationAttributes(tokenData),
           {
             trait_type: "verified",
-            boolean:
+            value:
               tokenData?.metaplexData.parsed.data.creators?.find(
                 (c) => c.verified
               )?.address === ticketData.ticketSignerAddress,
+            display_type: "Verified",
           },
         ];
 
