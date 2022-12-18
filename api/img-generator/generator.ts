@@ -21,8 +21,7 @@ export async function getImage(
   nameParam: string,
   imgUriParam: string,
   textParam: string,
-  cluster: string | null,
-  proxy?: string
+  cluster: string | null
 ): Promise<Buffer> {
   console.log(
     `Handling img generatation for mintIdParam (${mintIdParam}) imgUriParam (${imgUriParam}) text (${textParam}) and cluster (${
@@ -48,14 +47,7 @@ export async function getImage(
     cluster !== "devnet"
   ) {
     console.log("Falling back to devnet image");
-    return getImage(
-      mintIdParam,
-      nameParam,
-      imgUriParam,
-      textParam,
-      "devnet",
-      proxy
-    );
+    return getImage(mintIdParam, nameParam, imgUriParam, textParam, "devnet");
   }
 
   if (

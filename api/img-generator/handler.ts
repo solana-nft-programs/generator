@@ -7,8 +7,7 @@ module.exports.generate = async (event) => {
     event.queryStringParameters && event.queryStringParameters.name,
     event.queryStringParameters && event.queryStringParameters.uri,
     event.queryStringParameters && event.queryStringParameters.text,
-    event.queryStringParameters && event.queryStringParameters.cluster,
-    event.queryStringParameters && event.queryStringParameters.proxy
+    event.queryStringParameters && event.queryStringParameters.cluster
   );
 
   console.log("Returning image buffer", buffer);
