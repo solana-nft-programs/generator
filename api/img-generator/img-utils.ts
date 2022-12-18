@@ -112,7 +112,9 @@ export const drawShadow = (
 
 export const drawLogo = async (
   imageCanvas: canvas.Canvas,
-  paddingOverride?: number
+  paddingOverride?: number,
+  location?: "bottom-right" | "bottom-left",
+  pctSize = 0.16
 ) => {
   const padding = paddingOverride ?? 0.05 * imageCanvas.width;
   const logoCtx = imageCanvas.getContext("2d");
@@ -121,10 +123,12 @@ export const drawLogo = async (
   );
   logoCtx.drawImage(
     logo,
-    imageCanvas.height - padding / 1.5 - imageCanvas.height * 0.16,
-    imageCanvas.width - padding / 1.5 - imageCanvas.width * 0.16,
-    imageCanvas.width * 0.16,
-    imageCanvas.height * 0.16
+    location === "bottom-left"
+      ? padding / 1.5
+      : imageCanvas.width - padding / 1.5 - imageCanvas.width * pctSize,
+    imageCanvas.height - padding / 1.5 - imageCanvas.height * pctSize,
+    imageCanvas.width * pctSize,
+    imageCanvas.height * pctSize
   );
 };
 
@@ -150,11 +154,15 @@ export const drawDefaultBackground = (imageCanvas: canvas.Canvas) => {
 
 export const drawBackgroundImage = async (
   imageCanvas: canvas.Canvas,
-  imageUrl: string
+  imageUrl: string,
+  fill = true
 ) => {
   const imgBackgroundCtx = imageCanvas.getContext("2d");
-  imgBackgroundCtx.fillStyle = "rgba(26, 27, 32, 1)";
-  imgBackgroundCtx.fillRect(0, 0, imageCanvas.width, imageCanvas.height);
+
+  if (fill) {
+    imgBackgroundCtx.fillStyle = "rgba(26, 27, 32, 1)";
+    imgBackgroundCtx.fillRect(0, 0, imageCanvas.width, imageCanvas.height);
+  }
 
   const img = await canvas.loadImage(imageUrl);
   const imgContext = imageCanvas.getContext("2d");

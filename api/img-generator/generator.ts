@@ -15,6 +15,7 @@ import {
 } from "./img-utils";
 import { getJamboImage } from "./jambo-image";
 import { getNamespaceImage } from "./namespace-image";
+import { tryDrawStakedOverlay } from "./staked-token";
 
 export async function getImage(
   mintIdParam: string,
@@ -68,6 +69,13 @@ export async function getImage(
 
   if (tokenData?.metaplexData?.parsed.data.symbol === "$JAMB") {
     return getJamboImage(tokenData, connection, textParam, imgUriParam);
+  }
+
+  if (tokenData?.metaplexData?.parsed.data.symbol.startsWith("POOl")) {
+    const img = await tryDrawStakedOverlay(tokenData, imgUriParam);
+    if (img) {
+      return img;
+    }
   }
 
   // setup
