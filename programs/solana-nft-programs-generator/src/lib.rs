@@ -4,7 +4,7 @@ use mpl_token_metadata::state::Metadata;
 declare_id!("genSsTXZaAGH1kRUe74TXzwuernqZhJksHvpXiAxBQT");
 
 #[program]
-pub mod cardinal_generator {
+pub mod solana_nft_programs_generator {
     use super::*;
 
     pub fn create_metadata_config(ctx: Context<CreateMetadatConfigCtx>, ix: CreateMetadataConfigIx) -> Result<()> {

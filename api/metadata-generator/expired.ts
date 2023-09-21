@@ -2,13 +2,13 @@ import type { NFTMetadata } from "./generator";
 
 const burnURL = (cluster: string) => {
   if (cluster === "devnet") {
-    return "https://dev.cardinal.so/burn";
+    return "https://dev.host.so/burn";
   }
-  return "https://main.cardinal.so/burn";
+  return "https://main.host.so/burn";
 };
 
 export const getExpiredMetadata = (cluster: string): NFTMetadata => {
-  const imageUrl = `https://api.cardinal.so/img/?text=EXPIRED`;
+  const imageUrl = `https://api.host.so/img/?text=EXPIRED`;
   return {
     name: "EXPIRED",
     symbol: "RCP",

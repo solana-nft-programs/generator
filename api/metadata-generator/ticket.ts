@@ -6,13 +6,13 @@ export const getDefaultTicketMetadata = (
   cluster: string,
   attributes: Attribute[]
 ): NFTMetadata => {
-  const imageUrl = `https://nft.cardinal.so/img/${mintId}${
+  const imageUrl = `https://nft.host.so/img/${mintId}${
     cluster ? `cluster=${cluster}` : ""
   }`;
   return {
     name: "Ticket",
     symbol: "TICKET",
-    description: `This is a Cardinal-powered NFT representing your ticket for this event`,
+    description: `This is a NFT representing your ticket for this event`,
     seller_fee_basis_points: 0,
     attributes: attributes,
     collection: {

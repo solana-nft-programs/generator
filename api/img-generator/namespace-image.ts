@@ -1,4 +1,4 @@
-import { breakIdentity, formatName } from "@cardinal/namespaces";
+import { breakIdentity, formatName } from "@solana-nft-programs/namespaces";
 import * as canvas from "canvas";
 
 import type { TokenData } from "../common/tokenData";

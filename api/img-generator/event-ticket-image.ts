@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 import type { TokenData } from "../common/tokenData";
 
 export const getTicketImageURL = (ticketId: string) => {
-  return `https://firebasestorage.googleapis.com/v0/b/cardinal-events.appspot.com/o/tickets%2F${ticketId}%2Fimage.png?alt=media`;
+  return `https://firebasestorage.googleapis.com/v0/b/solana-nft-programs-events.appspot.com/o/tickets%2F${ticketId}%2Fimage.png?alt=media`;
 };
 
 export async function getTicketImage(tokenData: TokenData): Promise<Buffer> {

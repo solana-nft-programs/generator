@@ -1,4 +1,4 @@
-import type { AccountData } from "@cardinal/common";
+import type { AccountData } from "@solana-nft-programs/common";
 import { Program, AnchorProvider } from "@project-serum/anchor";
 import type * as web3 from "@solana/web3.js";
 

@@ -1,4 +1,4 @@
-import { TokenManagerState } from "@cardinal/token-manager/dist/cjs/programs/tokenManager";
+import { TokenManagerState } from "@solana-nft-programs/token-manager/dist/cjs/programs/tokenManager";
 import * as canvas from "canvas";
 
 const COLOR_RED = "rgba(200, 0, 0, 1)";
@@ -119,7 +119,7 @@ export const drawLogo = async (
   const padding = paddingOverride ?? 0.05 * imageCanvas.width;
   const logoCtx = imageCanvas.getContext("2d");
   const logo = await canvas.loadImage(
-    __dirname.concat("/assets/cardinal-crosshair.png")
+    __dirname.concat("/assets/solana-nft-programs-crosshair.png")
   );
   logoCtx.drawImage(
     logo,

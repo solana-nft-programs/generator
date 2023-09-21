@@ -1,17 +1,13 @@
 [package]
-name = "cardinal-generator"
+name = "solana-nft-programs-generator"
 version = "0.1.0"
-description = "Cardinal generator"
 edition = "2021"
-homepage = "https://cardinal.so"
-repository = "https://github.com/cardinal-labs/cardinal-generator/tree/main/programs/cardinal-generator"
-authors = ["Jeremy Bogle <jeremy@cardinal.so>"]
 license = "AGPL-3.0"
-keywords = ["solana", "cardinal", "generator"]
+keywords = ["solana", "generator"]
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "cardinal_generator"
+name = "solana_nft_programs_generator"
 
 [features]
 no-entrypoint = []

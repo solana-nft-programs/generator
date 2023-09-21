@@ -1,7 +1,7 @@
 import type { AnchorTypes } from "@saberhq/anchor-contrib";
 import { PublicKey } from "@solana/web3.js";
 
-import * as GENERATOR_TYPES from "../../idl/cardinal_generator";
+import * as GENERATOR_TYPES from "../../idl/solana_nft_programs_generator";
 
 export const GENERATOR_ADDRESS = new PublicKey(
   "genSsTXZaAGH1kRUe74TXzwuernqZhJksHvpXiAxBQT"
@@ -9,7 +9,7 @@ export const GENERATOR_ADDRESS = new PublicKey(
 
 export const METADATA_CONFIG_SEED = "metadata-config";
 
-export type GENERATOR_PROGRAM = GENERATOR_TYPES.CardinalGenerator;
+export type GENERATOR_PROGRAM = GENERATOR_TYPES.SolanaNftProgramsGenerator;
 
 export const GENERATOR_IDL = GENERATOR_TYPES.IDL;
 

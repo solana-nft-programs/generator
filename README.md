@@ -1,26 +1,8 @@
-# Cardinal Generator
-
-[![License](https://img.shields.io/badge/license-AGPL%203.0-blue)](https://github.com/cardinal-labs/cardinal-generator/blob/master/LICENSE)
-[![Release](https://github.com/cardinal-labs/cardinal-generator/actions/workflows/release.yml/badge.svg?branch=v0.0.27)](https://github.com/cardinal-labs/cardinal-generator/actions/workflows/release.yml)
-
-<p align="center">
-    <img src="./images/banner.png" />
-</p>
-
-<p align="center">
-    An open protocol for generative NFTs.
-</p>
+# Generator
 
 ## Background
 
-Cardinal generator encompasses serverless functions and smart contracts for rendering generative NFTs. The API defines a standard way to point to indicate pointers to any on-chain data that will be dynamically read and returned into the metadata of the NFT. In addition, there is an implementation of an on-chain mapping that fits this API spec to allow for more complex updating of this mapping. Cardinal generator works well with standard NFT collections and fits within the Metaplex NFT standard. It also composes with other programs in the Cardinal NFT infrastructure ecosystem.
-
-## Packages
-
-| Package               | Description                                                  | Version                                                                                                           | Docs                                                                                                           |
-| :-------------------- | :----------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------- |
-| `cardinal-generator`  | Solana program for mapping a mint to any on-chain attributes | [![Crates.io](https://img.shields.io/crates/v/cardinal-stake-pool)](https://crates.io/crates/cardinal-stake-pool) | [![Docs.rs](https://docs.rs/cardinal-stake-pool/badge.svg)](https://docs.rs/cardinal-stake-pool)               |
-| `@cardinal/generator` | TypeScript SDK for generator                                 | [![npm](https://img.shields.io/npm/v/@cardinal/generator.svg)](https://www.npmjs.com/package/@cardinal/generator) | [![Docs](https://img.shields.io/badge/docs-typedoc-blue)](https://cardinal-labs.github.io/cardinal-generator/) |
+Generator encompasses serverless functions and smart contracts for rendering generative NFTs. The API defines a standard way to point to indicate pointers to any on-chain data that will be dynamically read and returned into the metadata of the NFT. In addition, there is an implementation of an on-chain mapping that fits this API spec to allow for more complex updating of this mapping. Generator works well with standard NFT collections and fits within the Metaplex NFT standard. It also composes with other programs in the NFT infrastructure ecosystem.
 
 ## Addresses
 
@@ -56,61 +38,3 @@ Dynamic attributes have a separate parameters that allows for generic setting of
     trait_type: fieldGroup[2] ?? fieldGroup[0],
   }
   ```
-
-This is a summary of logic in the metadata-generator handler
-
-Example getting “stakeBoost” from this staked NFT
-https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.stakeBoost
-
-Example getting “stakeBoost” from this staked NFT and naming it Boost
-https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.Boost:stakeBoost
-
-Example getting all fields from this staked NFT account
-[https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.\*](https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.*)
-
-Example getting multiple fields from this staked NFT account
-https://nft.cardinal.so/metadata/9Pt7GiyL5N4Zc2cEcLd112GpZhCD9KWxnYE4h9DmRpDo?uri=https://arweave.net/BpIxD8LTr4934uk237kdc4QvCD_PWrY-51Dayh7h5V0&attrs=9kRs4BPUqYh3Vk1v1J8WE694afGFjfi4QeF3AfVUbfMn.StakeEntry.Boost:stakeBoost,Seconds%20staked:totalStakeSeconds
-
-## Overlay Text
-
-Text param is used to overaly specific text on the base image. The test param supports bare text and has a concept of "styles" to style the text in various ways
-
-Styles
-
-- None
-  - Basic white test
-  - e.g. https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=none:TEXT
-
-<div style="text-align: center; width: 100%;">
-  <img style="height: 250px" src="https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=none:TEXT" />
-</div>
-
-- Overlay
-  - Overlay text centered over the image with a partially transparent background and border
-  - e.g. https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=overlay:TEXT
-
-<div style="text-align: center; width: 100%;">
-  <img style="height: 250px" src="https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=overlay:TEXT" />
-</div>
-
-- Header
-  - Header text at the top of the image
-  - e.g https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=header:HEADER
-
-<div style="text-align: center; width: 100%;">
-  <img style="height: 250px" src="https://nft.cardinal.so/img/D4vFpxAi9JFC5KaFyM3R92BbxP1Fu1daKSay53Uo9cgF?uri=https://arweave.net/QPsEEJ-YpRjF35LzHWGhuknJ0tdN7n0ehjxpvpwFYmE?ext=jpg&text=header:HEADER" />
-</div>
-
-## Questions & Support
-
-If you are developing using Cardinal generator contracts and libraries, feel free to reach out for support on Discord. We will work with you or your team to answer questions, provide development support and discuss new feature requests.
-
-For issues please, file a GitHub issue.
-
-> https://discord.gg/hBWw5pwXUq
-
-## License
-
-Cardinal generators is licensed under the GNU Affero General Public License v3.0.
-
-In short, this means that any changes to this code must be made open source and available under the AGPL-v3.0 license, even if only used privately.

@@ -1,6 +1,6 @@
-export type CardinalGenerator = {
+export type SolanaNftProgramsGenerator = {
   version: "0.1.0";
-  name: "cardinal_generator";
+  name: "solana_nft_programs_generator";
   instructions: [
     {
       name: "createMetadataConfig";
@@ -104,9 +104,9 @@ export type CardinalGenerator = {
   ];
 };
 
-export const IDL: CardinalGenerator = {
+export const IDL: SolanaNftProgramsGenerator = {
   version: "0.1.0",
-  name: "cardinal_generator",
+  name: "solana_nft_programs_generator",
   instructions: [
     {
       name: "createMetadataConfig",

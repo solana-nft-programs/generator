@@ -1,37 +1,37 @@
 /* eslint-disable no-empty */
-import type { CertificateData } from "@cardinal/certificates";
+import type { CertificateData } from "@solana-nft-programs/certificates";
 import {
   CERTIFICATE_IDL,
   CERTIFICATE_PROGRAM_ID,
   certificateIdForMint,
-} from "@cardinal/certificates";
-import { getBatchedMultipleAccounts } from "@cardinal/common";
-import type { AccountData } from "@cardinal/token-manager";
+} from "@solana-nft-programs/certificates";
+import { getBatchedMultipleAccounts } from "@solana-nft-programs/common";
+import type { AccountData } from "@solana-nft-programs/token-manager";
 import {
   timeInvalidator,
   useInvalidator,
-} from "@cardinal/token-manager/dist/cjs/programs";
-import type { PaidClaimApproverData } from "@cardinal/token-manager/dist/cjs/programs/claimApprover";
+} from "@solana-nft-programs/token-manager/dist/cjs/programs";
+import type { PaidClaimApproverData } from "@solana-nft-programs/token-manager/dist/cjs/programs/claimApprover";
 import {
   CLAIM_APPROVER_ADDRESS,
   CLAIM_APPROVER_IDL,
-} from "@cardinal/token-manager/dist/cjs/programs/claimApprover";
-import type { TimeInvalidatorData } from "@cardinal/token-manager/dist/cjs/programs/timeInvalidator";
+} from "@solana-nft-programs/token-manager/dist/cjs/programs/claimApprover";
+import type { TimeInvalidatorData } from "@solana-nft-programs/token-manager/dist/cjs/programs/timeInvalidator";
 import {
   TIME_INVALIDATOR_ADDRESS,
   TIME_INVALIDATOR_IDL,
-} from "@cardinal/token-manager/dist/cjs/programs/timeInvalidator";
-import type { TokenManagerData } from "@cardinal/token-manager/dist/cjs/programs/tokenManager";
+} from "@solana-nft-programs/token-manager/dist/cjs/programs/timeInvalidator";
+import type { TokenManagerData } from "@solana-nft-programs/token-manager/dist/cjs/programs/tokenManager";
 import {
   TOKEN_MANAGER_ADDRESS,
   TOKEN_MANAGER_IDL,
-} from "@cardinal/token-manager/dist/cjs/programs/tokenManager";
-import { findTokenManagerAddress } from "@cardinal/token-manager/dist/cjs/programs/tokenManager/pda";
-import type { UseInvalidatorData } from "@cardinal/token-manager/dist/cjs/programs/useInvalidator";
+} from "@solana-nft-programs/token-manager/dist/cjs/programs/tokenManager";
+import { findTokenManagerAddress } from "@solana-nft-programs/token-manager/dist/cjs/programs/tokenManager/pda";
+import type { UseInvalidatorData } from "@solana-nft-programs/token-manager/dist/cjs/programs/useInvalidator";
 import {
   USE_INVALIDATOR_ADDRESS,
   USE_INVALIDATOR_IDL,
-} from "@cardinal/token-manager/dist/cjs/programs/useInvalidator";
+} from "@solana-nft-programs/token-manager/dist/cjs/programs/useInvalidator";
 import * as metaplex from "@metaplex-foundation/mpl-token-metadata";
 import {
   MasterEditionV1Data,
@@ -290,7 +290,7 @@ export async function getTokenData(
   if (
     metaplexData &&
     getMetadata &&
-    !metaplexData.parsed.data.uri.includes("cardinal")
+    !metaplexData.parsed.data.uri.includes("host")
   ) {
     try {
       const uri = metaplexData.parsed.data.uri;

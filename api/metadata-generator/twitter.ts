@@ -7,15 +7,15 @@ export const getTwitterMetadata = (
   nameParam: string,
   cluster: string
 ): NFTMetadata => {
-  const imageUrl = `https://nft.cardinal.so/img/${mintId}?${
+  const imageUrl = `https://nft.host.so/img/${mintId}?${
     nameParam ? `&name=${encodeURIComponent(nameParam)}` : ""
   }${cluster ? `&cluster=${cluster}` : ""}`;
   return {
     name: fullName,
     symbol: "NAME",
-    description: `This is a Cardinal-powered non-transferable NFT representing your ownership of ${fullName}`,
+    description: `This is a non-transferable NFT representing your ownership of ${fullName}`,
     seller_fee_basis_points: 0,
-    external_url: `https://twitter.cardinal.so/${ownerId}`,
+    external_url: `https://twitter.host.so/${ownerId}`,
     attributes: [],
     collection: {
       name: "Twitter",

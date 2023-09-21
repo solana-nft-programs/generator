@@ -5,9 +5,9 @@ import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCJgPBVSp2TokeX_UpydLf4M7yamYA0nhs",
-  authDomain: "cardinal-events.firebaseapp.com",
-  projectId: "cardinal-events",
-  storageBucket: "cardinal-events.appspot.com",
+  authDomain: "solana-nft-programs-events.firebaseapp.com",
+  projectId: "solana-nft-programs-events",
+  storageBucket: "solana-nft-programs-events.appspot.com",
   messagingSenderId: "453139651235",
   appId: "1:453139651235:web:67443d5b218b600e7f3d16",
   measurementId: "G-R9SVMD5CRT",

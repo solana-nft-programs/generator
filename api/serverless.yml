@@ -1,6 +1,6 @@
 org: jpbogle
-app: cardinal
-service: cardinal-generators
+app: solana-nft-programs-generator
+service: solana-nft-programs-generator
 frameworkVersion: "2 || 3"
 
 provider:
@@ -122,12 +122,12 @@ custom:
     enabled: true
   domains:
     main:
-      domainName: api.cardinal.so
+      domainName: api.host.so
     dev:
-      domainName: dev-api.cardinal.so
+      domainName: dev-api.host.so
   # customDomain:
   #   domainName: ${self:custom.domains.${opt:stage}.domainName}
-  #   certificateName: "*.cardinal.so"
+  #   certificateName: "*.host.so"
   #   createRoute53Record: true
   #   autoDomain: true
 

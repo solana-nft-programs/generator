@@ -1,21 +1,12 @@
 {
-  "name": "@cardinal/generator",
+  "name": "@solana-nft-programs/generator",
   "version": "0.0.1",
-  "description": "Cardinal stake pool SDK",
   "keywords": [
     "solana",
-    "anchor",
-    "cardinal"
+    "anchor"
   ],
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "repository": "git@github.com:cardinal-labs/cardinal-generator.git",
-  "author": "Jeremy Bogle <jeremy@cardinal.so>",
-  "bugs": {
-    "url": "https://github.com/cardinal-labs/cardinal-generator/issues",
-    "email": "info@cardinal.so"
-  },
-  "homepage": "https://cardinal.so",
   "license": "AGPL-3.0",
   "lint-staged": {
     "*.{ts,tsx}": "eslint --cache --fix",
@@ -45,8 +36,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@cardinal/common": "^2.0.11",
-    "@cardinal/token-manager": "^1.5.12",
+    "@solana-nft-programs/common": "1.0.0",
+    "@solana-nft-programs/token-manager": "^1.0.0",
     "@metaplex-foundation/mpl-token-metadata": "^1.2.5"
   },
   "devDependencies": {

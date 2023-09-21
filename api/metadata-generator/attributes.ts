@@ -1,7 +1,7 @@
 import {
   InvalidationType,
   TokenManagerState,
-} from "@cardinal/token-manager/dist/cjs/programs/tokenManager";
+} from "@solana-nft-programs/token-manager/dist/cjs/programs/tokenManager";
 
 import type { TokenData } from "../common/tokenData";
 

@@ -1,6 +1,6 @@
-import * as questPool from "@cardinal/quest-pool";
-import * as stakePool from "@cardinal/stake-pool";
-import { getLevelNumber } from "@cardinal/stake-pool";
+import * as questPool from "@solana-nft-programs/quest-pool";
+import * as stakePool from "@solana-nft-programs/stake-pool";
+import { getLevelNumber } from "@solana-nft-programs/stake-pool";
 import { BN } from "@project-serum/anchor";
 import * as web3 from "@solana/web3.js";
 import * as canvas from "canvas";
@@ -74,9 +74,6 @@ export async function getJamboImage(
   overlayCtx.fillRect(0, 0, WIDTH, HEIGHT);
   // // logo
   // const logoCtx = imageCanvas.getContext("2d");
-  // const logo = await canvas.loadImage(
-  //   __dirname.concat("/assets/cardinal-crosshair.png")
-  // );
   // logoCtx.drawImage(
   //   logo,
   //   HEIGHT - PADDING / 1.5 - HEIGHT * 0.16,

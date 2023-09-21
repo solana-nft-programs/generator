@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain, @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unsafe-assignment*/
-import * as namespaces from "@cardinal/namespaces";
+import * as namespaces from "@solana-nft-programs/namespaces";
 import type { Idl } from "@project-serum/anchor";
 import { BorshAccountsCoder } from "@project-serum/anchor";
 import * as web3 from "@solana/web3.js";
@@ -211,7 +211,7 @@ export async function getMetadata(
         ];
 
         if (eventData) {
-          const verifyUrl = `https://events.cardinal.so/default/${eventData?.shortLink}/verify`;
+          const verifyUrl = `https://events.host.so/default/${eventData?.shortLink}/verify`;
           metadata.external_url = `https://phantom.app/ul/browse/${encodeURIComponent(
             verifyUrl
           )}`;
@@ -245,7 +245,7 @@ export async function getMetadata(
         cluster
       );
     } else {
-      const metadataUri = `https://events.cardinal.so/events/${namespace}/event.json`;
+      const metadataUri = `https://events.host.so/events/${namespace}/event.json`;
       try {
         const metadataResponse = await fetch(metadataUri, {});
         if (metadataResponse.status !== 200) {
@@ -269,7 +269,7 @@ export async function getMetadata(
     attributes: [],
   };
   const metadataUri = eventParam
-    ? `https://events.cardinal.so/events/${eventParam}/event.json`
+    ? `https://events.host.so/events/${eventParam}/event.json`
     : uriParam;
   if (originalTokenData?.metadata || metadataUri || tokenData.metadata) {
     let metadata =
@@ -298,7 +298,7 @@ export async function getMetadata(
       response = {
         ...response,
         ...metadata,
-        image: `https://nft.cardinal.so/img/${mintId}?uri=${
+        image: `https://nft.host.so/img/${mintId}?uri=${
           metadata?.image || ""
         }${textParam ? `&text=${textParam}` : ""}${
           nameParam ? `&name=${encodeURIComponent(nameParam)}` : ""
